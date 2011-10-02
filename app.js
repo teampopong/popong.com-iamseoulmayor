@@ -38,10 +38,6 @@ var days = underscore.range(1, 32);
 var next_id = 1;
 function get_id() { return next_id++; }
 
-function format_date(year, month, day) {
-  return string.sprintf('%04d-%02d-%02d', year, month, day);
-}
-
 // Routes
 
 app.get('/', function(req, res){
@@ -51,14 +47,14 @@ app.get('/', function(req, res){
   });
 });
 
+app.get('/event', function(req, res) {
+  res.send(events);
+});
+
 app.post('/event', function(req, res) {
-  var year = parseInt(req.body.year);
-  var month = parseInt(req.body.month);
-  var day = parseInt(req.body.day);
   var id = get_id();
-  var date = format_date(year, month, day);
   var event = {
-    id: id, topic: topic, date: date,
+    id: id, topic: topic, date: req.body.date,
     text: req.body.text, link: req.body.link
   };
   events.push(event);
