@@ -1,2 +1,25 @@
-h1= title
-p Welcome to #{title}
+h1= topic
+
+form(action="/event", method="post")
+
+  select(name="year")
+    option 2011
+  년
+  select(name="month")
+    each month in months
+      option= month
+  월
+  select(name="day")
+    each day in days
+      option= day
+  일
+
+  내용
+  input(name="text")
+
+  링크
+  input(name="link")
+
+  input(type="submit", value="올리기")
+
+p= events
