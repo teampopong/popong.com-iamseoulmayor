@@ -1,18 +1,22 @@
 (function () {
 
-function getFormValue(form, name) {
-	return form.children('*[name="'+name+'"]').val();
-}
-
 $(function () {
 	var form = $('#submit form');
+
+	function getFormValue(name) {
+		return form.children('*[name="'+name+'"]').val();
+	}
+
+	function getFormDate() {
+		return _.sprintf('%04d-%02d-%02d', parseInt(getFormValue('year')),
+				parseInt(getFormValue('month')), parseInt(getFormValue('day')));
+	}
+
 	form.submit(function () {
 		var data = {
-			/* FIXME: fill zero */
-			'date': getFormValue(form, 'year') + '-' + getFormValue(form, 'month')
-					+ '-' + getFormValue(form, 'day'),
-			'text': getFormValue(form, 'text'),
-			'link': getFormValue(form, 'link')
+			'date': getFormDate(),
+			'text': getFormValue('text'),
+			'link': getFormValue('link')
 		};
 		$.post('/event', data, function () {
 			location.href = '/index.html';
