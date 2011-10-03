@@ -3,15 +3,23 @@
 var settings = {
 	STY_POINT: {
 		fill: '#aaa',
-		stroke: '#aaa'
+		stroke: '#aaa',
+		r: 3
+	},
+	STY_POINT_HOVER: {
+		r: 4
 	},
 	STY_TIMELINE: {
 		fill: '#e3e3e3',
 		stroke: '#e3e3e3'
 	},
 	STY_EVENT: {
-		fill: '#f0f0f0',
-		stroke: 'transparent'
+		fill: '#efefef',
+		'stroke-opacity': 0
+	},
+	STY_EVENT_HOVER: {
+		stroke: '#aaa',
+		'stroke-opacity': 1
 	},
 	STY_TEXT_LEFT: {
 		'text-anchor': 'start'
@@ -110,6 +118,31 @@ var Timeline = (function () {
 			this.rect(x, 0, 2, this.height).attr(s.STY_TIMELINE);
 		},
 
+		drawEvent: function (event, offsetX, offsetY) {
+			var rect, txt;
+			var rectX = (this.align === 'left' ? offsetX : offsetX - s.EVENT_WIDTH);
+			var evt = this.set();
+
+			// 이벤트 풍선 표시
+			evt.push(
+				rect = this.rect(rectX, offsetY-10, s.EVENT_WIDTH, s.EVENT_HEIGHT - s.EVENT_MARGIN, 3).attr(s.STY_EVENT),
+				txt = this.text(offsetX + this.getOffsetX(10), offsetY, summary(event.text, s.EVENT_MAX_CHARS)).attr(this.getTextStyle())
+			);
+
+			// 마우스 오버/클릭 이벤트
+			$([rect.node, txt.node]).css('cursor', 'pointer');
+			evt.hover(function () {
+				rect.attr(s.STY_EVENT_HOVER);
+			}, function () {
+				rect.attr(s.STY_EVENT);
+			}).click(function () {
+				// FIXME
+				alert(event.text);
+			});
+
+			return evt;
+		},
+
 		drawTimePoint: function (event) {
 			var ts = toTs(event);
 			var offsetX = this.getOffsetX(85, true);
@@ -117,7 +150,11 @@ var Timeline = (function () {
 
 			// 해당 날짜의 첫 이벤트라면, 타임라인에 날짜 표시
 			if (typeof this.timeline[ts] == 'undefined') {
-				this.circle(this.timelineX, offsetY, 3).attr(s.STY_POINT);
+				this.circle(this.timelineX, offsetY, 3).attr(s.STY_POINT).hover(function () {
+					this.attr(s.STY_POINT_HOVER);
+				}, function () {
+					this.attr(s.STY_POINT);
+				});
 				this.text(this.timelineX + this.getOffsetX(10), offsetY, event.date).attr(this.getTextStyle());
 				this.timeline[ts] = [];
 
@@ -128,13 +165,8 @@ var Timeline = (function () {
 
 			// 타임라인에 이벤트 표시
 			offsetY += this.timeline[ts].length * s.EVENT_HEIGHT;
-			var rectX = (this.align === 'left' ? offsetX : offsetX - s.EVENT_WIDTH);
-			var evt = this.set();
-			evt.push(
-					this.rect(rectX, offsetY-10, s.EVENT_WIDTH, s.EVENT_HEIGHT - s.EVENT_MARGIN, 3).attr(s.STY_EVENT),
-					this.text(offsetX + this.getOffsetX(10), offsetY, summary(event.text, s.EVENT_MAX_CHARS)).attr(this.getTextStyle())
-					);
-			this.timeline[ts].push(evt);
+			event = this.drawEvent(event, offsetX, offsetY);
+			this.timeline[ts].push(event);
 		},
 
 		draw: function (events) {
