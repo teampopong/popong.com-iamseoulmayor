@@ -20,8 +20,8 @@ $(function () {
 		return false;
 	});
 
-	var ltimeline = Timeline($('.leftcolumn .timeline').get(0), 359, 400, 'right');
-	var rtimeline = Timeline($('.rightcolumn .timeline').get(0), 359, 400, 'left');
+	var ltimeline = Timeline($('.leftcolumn .timeline').get(0), 341, 'right');
+	var rtimeline = Timeline($('.rightcolumn .timeline').get(0), 341, 'left');
 
 	$.get('/event', function(events) {
 		ltimeline.draw(events);
