@@ -35,8 +35,12 @@ var events = [];
 var months = underscore.range(1, 13);
 var days = underscore.range(1, 32);
 
-var next_id = 1;
-function get_id() { return next_id++; }
+var getNextId = (function () {
+	var nextId = 1;
+	return function () {
+		return nextId++;
+	};
+})();
 
 // Routes
 
@@ -52,7 +56,7 @@ app.get('/event', function(req, res) {
 });
 
 app.post('/event', function(req, res) {
-  var id = get_id();
+  var id = getNextId();
   var event = {
     id: id, topic: topic, date: req.body.date,
     text: req.body.text, link: req.body.link

@@ -107,7 +107,7 @@ body {
 }
 
 .viewport-timeline {
-	height: 300px;
+	max-height: 3000px;
 	width: 100%;
 	overflow: auto;
 }
