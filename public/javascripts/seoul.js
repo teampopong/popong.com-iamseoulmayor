@@ -20,10 +20,12 @@ $(function () {
 		return false;
 	});
 
-	var timeline = Timeline('timeline', 800, 400);
+	var ltimeline = Timeline($('.leftcolumn .timeline').get(0), 359, 400, 'right');
+	var rtimeline = Timeline($('.rightcolumn .timeline').get(0), 359, 400, 'left');
 
 	$.get('/event', function(events) {
-		timeline.draw(events);
+		ltimeline.draw(events);
+		rtimeline.draw(events);
 	});
 });
 

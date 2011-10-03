@@ -12,6 +12,9 @@ var settings = {
 	STY_TEXT_LEFT: {
 		'text-anchor': 'start'
 	},
+	STY_TEXT_RIGHT: {
+		'text-anchor': 'end'
+	},
 	TIMELINE_PADDING: 20
 };
 
@@ -27,14 +30,20 @@ var Timeline = (function () {
 	}
 
 	var Timeline = {
-		init: function (canvasId, width, height) {
+		init: function (canvasId, width, height, align) {
 			var o = $.extend(Raphael(canvasId, width, height), this);
-			o.initVars();
+			o.initVars({
+				align: align
+			});
 			return o;
 		},
 
-		initVars: function () {
-			this.midX = this.width / 2;
+		initVars: function (options) {
+			$.extend(this, options);
+
+			this.timelineX = this.align === 'left'
+					? 10
+					: this.width - 10;
 			this.startY = settings.TIMELINE_PADDING;
 			this.endY = this.height - settings.TIMELINE_PADDING;
 			this.actualHeight = this.height - settings.TIMELINE_PADDING * 2;
@@ -45,15 +54,20 @@ var Timeline = (function () {
 		},
 
 		drawTimeline: function () {
-			var x = this.midX - 1;
+			var x = this.timelineX - 1;
 			this.rect(x, 0, 2, this.height).attr(settings.STY_TIMELINE);
 		},
 
 		drawTimePoint: function (event, tsFrom, tsTo) {
 			var ts = toTs(event);
 			var offset = this.getOffset(ts, tsFrom, tsTo);
-			this.circle(this.midX, offset, 3).attr(settings.STY_POINT);
-			this.text(this.midX+10, offset, event.date).attr(settings.STY_TEXT_LEFT);
+			this.circle(this.timelineX, offset, 3).attr(settings.STY_POINT);
+
+			if (this.align === 'left') {
+				this.text(this.timelineX+10, offset, event.date).attr(settings.STY_TEXT_LEFT);
+			} else {
+				this.text(this.timelineX-10, offset, event.date).attr(settings.STY_TEXT_RIGHT);
+			}
 		},
 
 		draw: function (events) {
@@ -73,7 +87,6 @@ var Timeline = (function () {
 				tsFrom = toTs(_.min(events, toTs));
 				tsTo = toTs(_.max(events, toTs));
 			}
-			alert(tsFrom + ' ' + tsTo);
 
 			$.each(events, function (i, event) {
 				that.drawTimePoint(event, tsFrom, tsTo);
@@ -81,8 +94,11 @@ var Timeline = (function () {
 		}
 	};
 
-	return function (canvasId, width, height) {
-		return Timeline.init(canvasId, width, height);
+	return function (canvasId, width, height, align) {
+		if (!_.include(['left', 'right'], align)) {
+			align = 'left';
+		}
+		return Timeline.init(canvasId, width, height, align);
 	};
 
 })();
