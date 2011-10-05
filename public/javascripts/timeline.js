@@ -66,6 +66,23 @@ var Timeline = (function () {
 		}
 	}
 
+	var popupIssue = (function () {
+		var formatPopup = '<div class="popupEvent"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><a href="%s" class="link">링크</a></div>';
+
+		return function (event, offset) {
+			$('.popupEvent').remove();
+
+			var html = _.sprintf(formatPopup, summary(event.text, 10), event.text, event.link);
+			var popup = $(html);
+			$('body').append(popup);
+			popup.css('left', offset.left);
+			popup.css('top', offset.top - popup.height());
+			popup.find('.buttonClose').click(function () {
+				popup.remove();
+			});
+		};
+	})();
+
 	var Timeline = {
 		init: function (canvasElem, width, align) {
 			var o = $.extend(Raphael(canvasElem, width, 0), this);
@@ -136,8 +153,11 @@ var Timeline = (function () {
 			}, function () {
 				rect.attr(s.STY_EVENT);
 			}).click(function () {
-				// FIXME
-				alert(event.text);
+				var offset = $(rect.node).offset();
+				popupIssue(event, {
+					top: offset.top - rect.attr('height'),
+					left: offset.left
+				});
 			});
 
 			return evt;
