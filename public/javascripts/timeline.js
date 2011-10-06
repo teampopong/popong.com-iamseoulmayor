@@ -67,7 +67,7 @@ var Timeline = (function () {
 	}
 
 	var popupIssue = (function () {
-		var formatPopup = '<div class="popupEvent"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><a href="%s" class="link">링크</a></div>';
+		var formatPopup = '<div class="popupEvent"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><a href="%s" target="_blank" class="link">링크</a></div>';
 
 		return function (event, offset) {
 			$('.popupEvent').remove();
@@ -199,10 +199,10 @@ var Timeline = (function () {
 				this.tsTo = 0;
 			} else if (events.length == 1) {
 				var event = events[0];
-				this.tsFrom = toTs(event) - MILLISECS_PER_DAY / 2;
-				this.tsTo = toTs(event) + MILLISECS_PER_DAY / 2;
+				this.tsFrom = toTs(event) - MILLISECS_PER_DAY;
+				this.tsTo = toTs(event);
 			} else {
-				this.tsFrom = toTs(_.min(events, toTs));
+				this.tsFrom = toTs(_.min(events, toTs)) - MILLISECS_PER_DAY;
 				this.tsTo = toTs(_.max(events, toTs));
 			}
 			var numDays = tsToDay(this.tsTo - this.tsFrom);
