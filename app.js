@@ -47,7 +47,13 @@ app.get('/', function(req, res) {
 });
 
 app.get('/admin', function(req, res){
-	var backupedEvents = fs.readFileSync('events.json') || '';
+	var backupedEvents;
+	try {
+		backupedEvents = fs.readFileSync('events.json');
+	} catch (err) {
+		backupedEvents = '';
+	}
+
 	res.render('admin', {
 		title: '관리자', events: JSON.stringify(events),
 		backupedEvents: backupedEvents
