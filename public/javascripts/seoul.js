@@ -14,6 +14,7 @@ $(function () {
 
 	form.submit(function () {
 		var data = {
+			'topic': getFormValue('topic'),
 			'date': getFormDate(),
 			'text': getFormValue('text'),
 			'link': getFormValue('link')
@@ -27,8 +28,10 @@ $(function () {
 	var ltimeline = Timeline($('.leftcolumn .timeline').get(0), 341, 'right');
 	var rtimeline = Timeline($('.rightcolumn .timeline').get(0), 341, 'left');
 
-	$.get('/event', function(events) {
+	$.get('/event/%EB%82%98%EA%B2%BD%EC%9B%90', function(events) {
 		ltimeline.draw(events);
+	});
+	$.get('/event/%EB%B0%95%EC%9B%90%EC%88%9C', function(events) {
 		rtimeline.draw(events);
 	});
 });

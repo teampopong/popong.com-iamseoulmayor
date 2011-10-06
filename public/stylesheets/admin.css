@@ -1,0 +1,13 @@
+h1 {
+	font-size: 110%;
+}
+
+div#popup-import {
+	border: 1px solid #aaa;
+	padding: 5px;
+	margin: 10px 0;
+}
+
+textarea[name="events"] {
+	width: 300px;
+}

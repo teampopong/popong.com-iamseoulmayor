@@ -1,0 +1,42 @@
+//- HTML
+h1= title
+
+hr
+
+input#backup(type="button", value="백업")
+
+input#import(type="button", value="불러오기")
+
+div#popup-import(style="display:none;")
+  form#form-import(action="/import", method="post")
+    textarea(name="events")
+    br
+    input#submit-import(type="button", value="등록")
+
+hr
+
+p
+  현재 데이터
+  br
+  =events
+
+p
+  백업 데이터
+  br
+  =backupedEvents
+
+//- 자바스크립트
+script
+  document.getElementById('import').onclick = function () {
+    document.getElementById('popup-import').style.display = 'block';
+  };
+  document.getElementById('submit-import').onclick = function () {
+    if (confirm('정말 불러오시겠습니까?')) {
+      document.getElementById('form-import').submit();
+    }
+  };
+  document.getElementById('backup').onclick = function () {
+    if (confirm('정말 백업하시겠습니까?')) {
+      location.href = '/backup';
+    }
+  };
