@@ -31,7 +31,10 @@ app.configure('production', function(){
 
 // Code
 
-var events = [];
+var db = {
+	events: [],
+	likes: []
+};
 
 var getNextId = (function () {
 	var nextId = 1;
@@ -40,6 +43,10 @@ var getNextId = (function () {
 	};
 })();
 
+function getClientAddress(req) {
+	return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+};
+
 // Routes
 
 app.get('/', function(req, res) {
@@ -47,52 +54,75 @@ app.get('/', function(req, res) {
 });
 
 app.get('/admin', function(req, res){
-	var backupedEvents;
-	try {
-		backupedEvents = fs.readFileSync('events.json');
-	} catch (err) {
-		backupedEvents = '';
-	}
+	var backup = {};
+	_.each(db, function (table, name) {
+		try {
+			backup[name] = JSON.parse(
+					fs.readFileSync(_.sprintf('db/%s.json', name)));
+		} catch (err) {
+			backup[name] = [];
+		}
+	});
 
 	res.render('admin', {
-		title: '관리자', events: JSON.stringify(events),
-		backupedEvents: backupedEvents
+		title: '관리자',
+		db: JSON.stringify(db, null, 2),
+		backup: JSON.stringify(backup, null, 2)
 	});
 });
 
 app.get('/event/:topic', function(req, res) {
-	res.json(_.filter(events, function (event) {
+	res.json(_.filter(db.events, function (event) {
 		return event.topic == req.params.topic;
 	}));
 });
 
 app.post('/event', function(req, res) {
-	events.push({
+	db.events.push({
 		id: getNextId(),
-		topic: req.body.topic, date: req.body.date,
-		text: req.body.text, link: req.body.link
+		topic: req.body.topic,
+		date: req.body.date,
+		text: req.body.text,
+		link: req.body.link
 	});
 	res.send();
 });
 
-app.get('/backup', function(req, res) {
-	// TODO: multiple backup targets
-	fs.writeFile('events.json',
-			JSON.stringify(events),
-			function (err) {
-		if (err) {
-			throw res;
-		} else {
-			console.log(_.sprintf("[%s] events saved.", ''+new Date()));
-			res.redirect('/admin', 303);
-		}
+app.get('/like/:id', function(req, res) {
+	var numLiked = _.filter(db.likes, function (item) {
+		return item.id == req.params.id;
+	}).length;
+	// TODO: cache the # and the cached date
+	res.send(_.sprintf('%d', numLiked));
+});
+
+app.post('/like', function(req, res) {
+	db.likes.push({
+		id: req.body.id,
+		regdate: (new Date()).getTime(),
+		host: getClientAddress(req)
 	});
+	res.redirect('/admin');
+});
+
+app.get('/backup', function(req, res) {
+	_.each(db, function (table, name) {
+		fs.writeFile(_.sprintf('db/%s.json', name),
+				JSON.stringify(table),
+				function (err) {
+					if (err) {
+						throw res;
+					} else {
+						console.log("[%s] %s saved.", ''+new Date(), name);
+					}
+				});
+	});
+	res.redirect('/admin', 303);
 });
 
 app.post('/import', function(req, res) {
-	// TODO: multiple import targets
-	if (req.body.events) {
-		events = JSON.parse(req.body.events);
+	if (req.body.db) {
+		db = JSON.parse(req.body.db);
 	}
 	res.redirect('/admin', 303);
 });
