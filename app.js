@@ -111,7 +111,10 @@ function getBackupDb() {
 // Routes
 
 app.get('/', function(req, res) {
-	res.redirect('/index.html', 303);
+	res.render('timeline', {
+		title: '나는 서울 시장이다!',
+		style: '/stylesheets/style.css'
+	});
 });
 
 app.get('/admin', function(req, res){
