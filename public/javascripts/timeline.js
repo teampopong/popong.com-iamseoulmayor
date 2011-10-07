@@ -58,14 +58,6 @@ var Timeline = (function () {
 		return numDays * s.EVENT_HEIGHT * s.NUM_LINES_PER_DAY;
 	}
 
-	function summary(text, numChars) {
-		if (text.length > numChars) {
-			return text.substr(0, numChars) + '...';
-		} else {
-			return text;
-		}
-	}
-
 	function requestLike(id) {
 		$.post('/like', {
 			id: id
@@ -82,7 +74,7 @@ var Timeline = (function () {
 		return function (event, offset) {
 			$('.popupEvent').remove();
 
-			var html = _.sprintf(formatPopup, event.id, summary(event.text, 10), event.text, event.numLiked, event.link);
+			var html = _.sprintf(formatPopup, event.id, _.truncate(event.text, s.EVENT_MAX_CHARS), event.text, event.numLiked, event.link);
 			var popup = $(html);
 			$('body').append(popup);
 			popup.css('left', offset.left);
@@ -156,7 +148,7 @@ var Timeline = (function () {
 			// 이벤트 풍선 표시
 			evt.push(
 				rect = this.rect(rectX, offsetY-10, s.EVENT_WIDTH, s.EVENT_HEIGHT - s.EVENT_MARGIN, 3).attr(s.STY_EVENT),
-				txt = this.text(offsetX + this.getOffsetX(10), offsetY, summary(event.text, s.EVENT_MAX_CHARS)).attr(this.getTextStyle())
+				txt = this.text(offsetX + this.getOffsetX(10), offsetY, _.truncate(event.text, s.EVENT_MAX_CHARS)).attr(this.getTextStyle())
 			);
 
 			// 마우스 오버/클릭 이벤트
