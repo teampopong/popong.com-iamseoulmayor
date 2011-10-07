@@ -31,21 +31,37 @@ app.configure('production', function(){
 
 // Code
 
-var db = {
+var defaultDb = {
+	nextId: 1,
 	events: [],
 	likes: []
 };
+var db = _.clone(defaultDb);
 
-var getNextId = (function () {
-	var nextId = 1;
-	return function () {
-		return nextId++;
-	};
-})();
+function getNextId() {
+	return db.nextId++;
+}
 
 function getClientAddress(req) {
 	return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 };
+
+/**
+ * asynchronously backup the db
+ */
+function backupDb() {
+	_.each(db, function (table, name) {
+		fs.writeFile(_.sprintf('db/%s.json', name),
+				JSON.stringify(table),
+				function (err) {
+					if (err) {
+						throw res;
+					} else {
+						console.log("[%s] %s saved.", ''+new Date(), name);
+					}
+				});
+	});
+}
 
 // Routes
 
@@ -60,7 +76,8 @@ app.get('/admin', function(req, res){
 			backup[name] = JSON.parse(
 					fs.readFileSync(_.sprintf('db/%s.json', name)));
 		} catch (err) {
-			backup[name] = [];
+			backup[name] = typeof defaultDb[name] == 'object'
+					? _.clone(defaultDb[name]) : defaultDb[name];
 		}
 	});
 
@@ -106,17 +123,7 @@ app.post('/like', function(req, res) {
 });
 
 app.get('/backup', function(req, res) {
-	_.each(db, function (table, name) {
-		fs.writeFile(_.sprintf('db/%s.json', name),
-				JSON.stringify(table),
-				function (err) {
-					if (err) {
-						throw res;
-					} else {
-						console.log("[%s] %s saved.", ''+new Date(), name);
-					}
-				});
-	});
+	backupDb();
 	res.redirect('/admin', 303);
 });
 
