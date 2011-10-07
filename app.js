@@ -38,7 +38,7 @@ var defaultDb = {
 	events: [],
 	likes: []
 };
-var db = _.clone(defaultDb);
+var db = getBackupDb();
 
 function getNextId() {
 	return db.nextId++;
@@ -94,15 +94,9 @@ function backupDb() {
 	});
 }
 
-// Routes
-
-app.get('/', function(req, res) {
-	res.redirect('/index.html', 303);
-});
-
-app.get('/admin', function(req, res){
+function getBackupDb() {
 	var backup = {};
-	_.each(db, function (table, name) {
+	_.each(defaultDb, function (table, name) {
 		try {
 			backup[name] = JSON.parse(
 					fs.readFileSync(_.sprintf('db/%s.json', name)));
@@ -111,6 +105,17 @@ app.get('/admin', function(req, res){
 					? _.clone(defaultDb[name]) : defaultDb[name];
 		}
 	});
+	return backup;
+}
+
+// Routes
+
+app.get('/', function(req, res) {
+	res.redirect('/index.html', 303);
+});
+
+app.get('/admin', function(req, res){
+	var backup = getBackupDb();
 
 	res.render('admin', {
 		title: '관리자',
