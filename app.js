@@ -48,18 +48,24 @@ function getClientAddress(req) {
 	return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 }
 
+function getEventsByTopic(topic) {
+	return _.filter(db.events, function (event) {
+		return event.topic == topic;
+	});
+}
+
 function validateNumLiked(event) {
 	var expectedNumLiked = _.filter(db.likes, function (item) {
 		return item.id == event.id;
 	}).length;
 
-	if (expectedNumLiked !== event.numLiked) {
+	if (expectedNumLiked !== event.like) {
 		console.warn('Like count for #%d does not match: '
 			+ 'expected: %d, actual: %d'
-			, event.id, expectedNumLiked, event.numLiked);
+			, event.id, expectedNumLiked, event.like);
 
 		// assume that expected one is always right
-		event.numLiked = expectedNumLiked;
+		event.like = expectedNumLiked;
 	}
 }
 
@@ -67,14 +73,14 @@ function getNumLiked(id) {
 	var event = _.detect(db.events, function (item) {
 		return item.id == id;
 	});
-	event.numLiked = (event.numLiked || 0) + 1;
+	event.like = (event.like || 0) + 1;
 
 	// occationally validate
-	if (event.numLiked % VALIDATE_CYCLE === 0) {
+	if (event.like % VALIDATE_CYCLE === 0) {
 		_.delay(validateNumLiked, 0, event);
 	}
 
-	return event.numLiked;
+	return event.like;
 }
 
 /**
@@ -111,9 +117,11 @@ function getBackupDb() {
 // Routes
 
 app.get('/', function(req, res) {
-	res.render('timeline', {
+	res.render('index', {
 		title: '나는 서울 시장이다!',
-		style: '/stylesheets/style.css'
+		style: '/stylesheets/style.css',
+		left_events: getEventsByTopic('나경원'),
+		right_events: getEventsByTopic('박원순')
 	});
 });
 
@@ -128,9 +136,7 @@ app.get('/admin', function(req, res){
 });
 
 app.get('/event/:topic', function(req, res) {
-	res.json(_.filter(db.events, function (event) {
-		return event.topic == req.params.topic;
-	}));
+	res.json(getEventsByTopic(req.params.topic));
 });
 
 app.post('/event', function(req, res) {
@@ -140,7 +146,7 @@ app.post('/event', function(req, res) {
 		date: req.body.date,
 		text: req.body.text,
 		link: req.body.link,
-		numLiked: 0
+		like: 0
 	});
 	res.send();
 });
