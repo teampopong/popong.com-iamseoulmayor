@@ -46,7 +46,22 @@ function getNextId() {
 
 function getClientAddress(req) {
 	return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-};
+}
+
+function validateNumLiked(event) {
+	var expectedNumLiked = _.filter(db.likes, function (item) {
+		return item.id == event.id;
+	}).length;
+
+	if (expectedNumLiked !== event.numLiked) {
+		console.warn('Like count for #%d does not match: '
+			+ 'expected: %d, actual: %d'
+			, event.id, expectedNumLiked, event.numLiked);
+
+		// assume that expected one is always right
+		event.numLiked = expectedNumLiked;
+	}
+}
 
 function getNumLiked(id) {
 	var event = _.detect(db.events, function (item) {
@@ -56,18 +71,7 @@ function getNumLiked(id) {
 
 	// occationally validate
 	if (event.numLiked % VALIDATE_CYCLE === 0) {
-		var expectedNumLiked = _.filter(db.likes, function (item) {
-			return item.id == id;
-		}).length;
-
-		if (expectedNumLiked !== event.numLiked) {
-			console.warn('Like count for #%d does not match: '
-				+ 'expected: %d, actual: %d'
-				, id, expectedNumLiked, event.numLiked);
-
-			// assume that expected one is always right
-			event.numLiked = expectedNumLiked;
-		}
+		_.delay(validateNumLiked, 0, event);
 	}
 
 	return event.numLiked;
