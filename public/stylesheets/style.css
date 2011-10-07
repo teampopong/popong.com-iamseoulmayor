@@ -13,25 +13,6 @@ body {
 	font-size: 90%;
 }
 
-/* FIXME: 디자인 다시 */
-#submit {
-	width: 100%;
-	background: white;
-	padding: 10px 20px;
-}
-
-#submit input[name="year"] {
-	width: 4em;
-}
-
-#submit input[name="month"] {
-	width: 2em;
-}
-
-#submit input[name="day"] {
-	width: 2em;
-}
-
 #logo {
 	width: 800px;
 	margin: 40px auto 20px;
@@ -112,13 +93,10 @@ body {
 	overflow: auto;
 }
 
-.popupEvent {
+#popupEvent,#popupRegisterIssue {
 	position: absolute;
 
 	width: 200px;
-	padding: 7px;
-
-	z-index: 5;
 
 	background: white;
 	border: 1px solid #aaa;
@@ -129,43 +107,88 @@ body {
 	font-size: 80%;
 }
 
-.popupEvent h1 {
+#popupEvent {
+	padding: 7px;
+	z-index: 5;
+}
+
+#popupEvent h1 {
 	font-size: 100%;
 }
 
-.popupEvent p {
+#popupEvent p {
 	margin: 5px 0;
 }
 
-.popupEvent .link {
+#popupEvent .link {
 	float: right;
 	text-decoration: none;
 	color: blue;
 }
 
-.popupEvent .like {
+#popupEvent .like {
 	font-weight: bold;
 }
 
-.popupEvent .text {
+#popupEvent .text {
 	margin: 10px 0;
 }
 
-.popupEvent .text-like {
+#popupEvent .text-like {
 	font-style: italic;
 	color: #555;
 }
 
-.popupEvent .buttonClose {
+#popupEvent .buttonClose {
 	position: absolute;
 	top: 7px;
 	right: 7px;
 	cursor: pointer;
 }
 
-.popupEvent .buttonLike {
+#popupEvent .buttonLike {
 	float: right;
 	text-decoration: none;
 	color: blue;
 	margin: 0 3px;
+}
+
+#popupRegisterIssue {
+	padding: 2px 7px;
+	z-index: 7;
+	line-height: 1.5em;
+}
+
+#popupRegisterIssue input,select {
+	margin: 5px 0;
+}
+
+#popupRegisterIssue .topic {
+	font-weight: bold;
+	font-size: 110%;
+}
+
+#popupRegisterIssue input[name="year"] {
+	width: 4em;
+}
+
+#popupRegisterIssue input[name="month"] {
+	width: 2em;
+}
+
+#popupRegisterIssue input[name="day"] {
+	width: 2em;
+}
+
+#popupRegisterIssue textarea[name="text"] {
+	width: 100%;
+	resize: none;
+}
+
+#popupRegisterIssue input[name="link"] {
+	width: 100%;
+}
+
+#popupRegisterIssue input[type="submit"] {
+	float: right;
 }

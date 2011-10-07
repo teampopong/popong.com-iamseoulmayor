@@ -58,6 +58,16 @@ var Timeline = (function () {
 		return numDays * s.EVENT_HEIGHT * s.NUM_LINES_PER_DAY;
 	}
 
+	function getMouseX(evt) {
+		return evt.clientX
+			+ (document.documentElement.scrollLeft || document.body.scrollLeft);
+	}
+
+	function getMouseY(evt) {
+		return evt.clientY
+			+ (document.documentElement.scrollTop || document.body.scrollTop);
+	}
+
 	function requestLike(id) {
 		$.post('/like', {
 			id: id
@@ -69,14 +79,15 @@ var Timeline = (function () {
 	}
 
 	var popupIssue = (function () {
-		var formatPopup = '<div class="popupEvent popupEvent%d"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><span class="text-like"><span class="like">%d</span> people liked</span><a href="%s" target="_blank" class="link">링크</a><a href="#" class="buttonLike">Like</a></div>';
+		var formatPopup = '<div id="popupEvent" class="popupEvent%d"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><span class="text-like"><span class="like">%d</span> people liked</span><a href="%s" target="_blank" class="link">링크</a><a href="#" class="buttonLike">Like</a></div>';
 
 		return function (event, offset) {
-			$('.popupEvent').remove();
+			$('#popupEvent').remove();
 
 			var html = _.sprintf(formatPopup, event.id, _.truncate(event.text, s.EVENT_MAX_CHARS), event.text, event.numLiked, event.link);
 			var popup = $(html);
 			$('body').append(popup);
+
 			popup.css('left', offset.left);
 			popup.css('top', offset.top - popup.height());
 			popup.find('.buttonClose').click(function () {
@@ -88,10 +99,59 @@ var Timeline = (function () {
 		};
 	})();
 
+	var popupRegisterIssue = (function () {
+		var formatPopup = '<div id="popupRegisterIssue"><form><input type="hidden" name="topic" value="%s"><span class="topic">%s</span><br><input type="text" name="year" value="%d">년<input type="text" name="month" value="%d">월<input type="text" name="day" value="%d">일<br>내용<br><textarea name="text" rows="3"></textarea><br>링크<br><input type="text" name="link"><br><input type="submit" value="올리기"></form></div>';
+
+		function getFormValue(form, name) {
+			return form.children('*[name="'+name+'"]').val();
+		}
+
+		function getFormDate(form) {
+			return _.sprintf('%04d-%02d-%02d',
+					parseInt(getFormValue(form, 'year')),
+					parseInt(getFormValue(form, 'month')),
+					parseInt(getFormValue(form, 'day')));
+		}
+
+		function onSubmit() {
+			var form = $('#popupRegisterIssue form');
+			var popup = this;
+
+			var data = {
+				'topic': getFormValue(form, 'topic'),
+				'date': getFormDate(form),
+				'text': getFormValue(form, 'text'),
+				'link': getFormValue(form, 'link')
+			};
+
+			$.post('/event', data, function () {
+				location.href = '/index.html';
+				popup.remove();
+			});
+
+			return false;
+		}
+
+		return function (topic, x, y) {
+			$('#popupRegisterIssue').remove();
+
+			var today = new Date();
+			var html = _.sprintf(formatPopup, topic, topic, today.getFullYear(),
+					today.getMonth()+1, today.getDate())
+			var popup = $(html);
+			$('body').append(popup);
+
+			popup.css('top', y);
+			popup.css('left', x);
+			popup.children('form').submit(onSubmit);
+		};
+	})();
+
 	var Timeline = {
-		init: function (canvasElem, width, align) {
+		init: function (topic, canvasElem, width, align) {
 			var o = $.extend(Raphael(canvasElem, width, 0), this);
 			$.extend(o, {
+				topic: topic,
 				align: align
 			});
 			return o;
@@ -105,7 +165,7 @@ var Timeline = (function () {
 			this.endY = this.height - s.TIMELINE_PADDING;
 			this.actualHeight = this.height - s.TIMELINE_PADDING * 2;
 
-			this.timeline = {};
+			this.events = {};
 		},
 
 
@@ -136,8 +196,15 @@ var Timeline = (function () {
 		},
 
 		drawTimeline: function () {
+			var that = this;
 			var x = this.timelineX - 1;
-			this.rect(x, 0, 2, this.height).attr(s.STY_TIMELINE);
+			var timeline = this.rect(x, 0, 2, this.height).attr(s.STY_TIMELINE);
+			timeline.hover(function (evt) {
+				// TODO: implement
+			});
+			timeline.click(function (evt) {
+				popupRegisterIssue(that.topic, getMouseX(evt), getMouseY(evt));
+			});
 		},
 
 		drawEvent: function (event, offsetX, offsetY) {
@@ -174,24 +241,24 @@ var Timeline = (function () {
 			var offsetY = this.getOffsetY(ts);
 
 			// 해당 날짜의 첫 이벤트라면, 타임라인에 날짜 표시
-			if (typeof this.timeline[ts] == 'undefined') {
+			if (typeof this.events[ts] == 'undefined') {
 				this.circle(this.timelineX, offsetY, 3).attr(s.STY_POINT).hover(function () {
 					this.attr(s.STY_POINT_HOVER);
 				}, function () {
 					this.attr(s.STY_POINT);
 				});
 				this.text(this.timelineX + this.getOffsetX(10), offsetY, event.date).attr(this.getTextStyle());
-				this.timeline[ts] = [];
+				this.events[ts] = [];
 
 			// 한 날짜에 이벤트 3개 이상 보여주지 않음
-			} else if (this.timeline[ts].length >= 3) {
+			} else if (this.events[ts].length >= 3) {
 				return;
 			}
 
 			// 타임라인에 이벤트 표시
-			offsetY += this.timeline[ts].length * s.EVENT_HEIGHT;
+			offsetY += this.events[ts].length * s.EVENT_HEIGHT;
 			event = this.drawEvent(event, offsetX, offsetY);
-			this.timeline[ts].push(event);
+			this.events[ts].push(event);
 		},
 
 		draw: function (events) {
@@ -221,11 +288,11 @@ var Timeline = (function () {
 		}
 	};
 
-	return function (canvasElem, width, align) {
+	return function (topic, canvasElem, width, align) {
 		if (!_.include(['left', 'right'], align)) {
 			align = 'left';
 		}
-		return Timeline.init(canvasElem, width, align);
+		return Timeline.init(topic, canvasElem, width, align);
 	};
 
 })();
