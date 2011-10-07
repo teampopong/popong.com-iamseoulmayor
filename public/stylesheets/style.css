@@ -140,6 +140,20 @@ body {
 .popupEvent .link {
 	float: right;
 	text-decoration: none;
+	color: blue;
+}
+
+.popupEvent .like {
+	font-weight: bold;
+}
+
+.popupEvent .text {
+	margin: 10px 0;
+}
+
+.popupEvent .text-like {
+	font-style: italic;
+	color: #555;
 }
 
 .popupEvent .buttonClose {
@@ -147,4 +161,11 @@ body {
 	top: 7px;
 	right: 7px;
 	cursor: pointer;
+}
+
+.popupEvent .buttonLike {
+	float: right;
+	text-decoration: none;
+	color: blue;
+	margin: 0 3px;
 }

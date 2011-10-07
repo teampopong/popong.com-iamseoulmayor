@@ -31,6 +31,8 @@ app.configure('production', function(){
 
 // Code
 
+var VALIDATE_CYCLE = 25; // like 캐시 validation 주기
+
 var defaultDb = {
 	nextId: 1,
 	events: [],
@@ -45,6 +47,31 @@ function getNextId() {
 function getClientAddress(req) {
 	return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 };
+
+function getNumLiked(id) {
+	var event = _.detect(db.events, function (item) {
+		return item.id == id;
+	});
+	event.numLiked = (event.numLiked || 0) + 1;
+
+	// occationally validate
+	if (event.numLiked % VALIDATE_CYCLE === 0) {
+		var expectedNumLiked = _.filter(db.likes, function (item) {
+			return item.id == id;
+		}).length;
+
+		if (expectedNumLiked !== event.numLiked) {
+			console.warn('Like count for #%d does not match: '
+				+ 'expected: %d, actual: %d'
+				, id, expectedNumLiked, event.numLiked);
+
+			// assume that expected one is always right
+			event.numLiked = expectedNumLiked;
+		}
+	}
+
+	return event.numLiked;
+}
 
 /**
  * asynchronously backup the db
@@ -100,26 +127,24 @@ app.post('/event', function(req, res) {
 		topic: req.body.topic,
 		date: req.body.date,
 		text: req.body.text,
-		link: req.body.link
+		link: req.body.link,
+		numLiked: 0
 	});
 	res.send();
 });
 
 app.get('/like/:id', function(req, res) {
-	var numLiked = _.filter(db.likes, function (item) {
-		return item.id == req.params.id;
-	}).length;
-	// TODO: cache the # and the cached date
-	res.send(_.sprintf('%d', numLiked));
+	res.send(''+getNumLiked(req.params.id));
 });
 
 app.post('/like', function(req, res) {
+	// TODO: 중복 추천 체크
 	db.likes.push({
 		id: req.body.id,
 		regdate: (new Date()).getTime(),
 		host: getClientAddress(req)
 	});
-	res.redirect('/admin');
+	res.send(''+getNumLiked(req.body.id));
 });
 
 app.get('/backup', function(req, res) {

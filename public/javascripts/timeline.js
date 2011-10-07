@@ -66,19 +66,32 @@ var Timeline = (function () {
 		}
 	}
 
+	function requestLike(id) {
+		$.post('/like', {
+			id: id
+		}, function (numLiked) {
+			$(_.sprintf('.popupEvent%d .like', id)).text(numLiked);
+		}).error(function () {
+			alert('추천 실패');
+		});
+	}
+
 	var popupIssue = (function () {
-		var formatPopup = '<div class="popupEvent"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><a href="%s" target="_blank" class="link">링크</a></div>';
+		var formatPopup = '<div class="popupEvent popupEvent%d"><img class="buttonClose" src="images/x.png"><h1>%s</h1><p class="text">%s</p><span class="text-like"><span class="like">%d</span> people liked</span><a href="%s" target="_blank" class="link">링크</a><a href="#" class="buttonLike">Like</a></div>';
 
 		return function (event, offset) {
 			$('.popupEvent').remove();
 
-			var html = _.sprintf(formatPopup, summary(event.text, 10), event.text, event.link);
+			var html = _.sprintf(formatPopup, event.id, summary(event.text, 10), event.text, event.numLiked, event.link);
 			var popup = $(html);
 			$('body').append(popup);
 			popup.css('left', offset.left);
 			popup.css('top', offset.top - popup.height());
 			popup.find('.buttonClose').click(function () {
 				popup.remove();
+			});
+			popup.find('.buttonLike').click(function () {
+				requestLike(event.id);
 			});
 		};
 	})();
