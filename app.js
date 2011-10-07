@@ -130,13 +130,10 @@ app.get('/admin', function(req, res){
 
 	res.render('admin', {
 		title: '관리자',
+		style: '/stylesheets/admin.css',
 		db: JSON.stringify(db, null, 2),
 		backup: JSON.stringify(backup, null, 2)
 	});
-});
-
-app.get('/event/:topic', function(req, res) {
-	res.json(getEventsByTopic(req.params.topic));
 });
 
 app.post('/event', function(req, res) {
@@ -149,10 +146,6 @@ app.post('/event', function(req, res) {
 		like: 0
 	});
 	res.send();
-});
-
-app.get('/like/:id', function(req, res) {
-	res.send(''+getNumLiked(req.params.id));
 });
 
 app.post('/like', function(req, res) {
