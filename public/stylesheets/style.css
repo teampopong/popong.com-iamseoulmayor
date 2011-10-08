@@ -102,12 +102,44 @@ body {
 
 .event {
 	border: 1px solid #aaa;
+	border-radius: 10px;
+	margin: 5px 0;
+	padding: 5px;
 }
 
-.content {
-	width: 257px;
+.event .content {
+	width: 75%;
 }
 
-.extra {
-	width: 100px;
+.event .extra {
+	width: 25%;
+}
+
+.event .title {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.event .like {
+	text-align: center;
+	width: 100%;
+	display: block;
+	font-size: 30pt;
+	font-weight: bold;
+	color: hotpink;
+}
+
+.event .date {
+	text-align: center;
+	width: 100%;
+	display: block;
+}
+
+.event .content.right {
+	text-align: right;
+}
+
+.event .link {
+	text-decoration: none;
+	color: blue;
 }

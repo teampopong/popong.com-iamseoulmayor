@@ -137,6 +137,7 @@ app.get('/admin', function(req, res){
 });
 
 app.post('/event', function(req, res) {
+	// TODO: insert title field
 	db.events.push({
 		id: getNextId(),
 		topic: req.body.topic,

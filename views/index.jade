@@ -1,5 +1,6 @@
 extends timeline
 
+//- TODO: truncate fields
 block left-timeline
   each event in left_events
     div.event
@@ -8,10 +9,9 @@ block left-timeline
         br
         span.text= event.text
         br
-        a.link(href=event.link, target='_blank') 링크
+        a.link(href=event.link, target='_blank')= event.link
       div.extra.right
         span.like= event.like
-        br
         span.date= event.date
       div.clear
 
@@ -23,9 +23,8 @@ block right-timeline
         br
         span.text= event.text
         br
-        a.link(href=event.link, target='_blank') 링크
+        a.link(href=event.link, target='_blank')= event.link
       div.extra.left
         span.like= event.like
-        br
         span.date= event.date
       div.clear
