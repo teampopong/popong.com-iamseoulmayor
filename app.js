@@ -120,6 +120,8 @@ app.get('/', function(req, res) {
 	res.render('index', {
 		title: '나는 서울 시장이다!',
 		style: '/stylesheets/style.css',
+		jsfiles: ['/javascripts/jquery-1.6.2.min.js'
+			, '/javascripts/timeline.js'],
 		left_events: getEventsByTopic('나경원'),
 		right_events: getEventsByTopic('박원순')
 	});

@@ -7,11 +7,13 @@ block left-timeline
       div.content.left
         span.title= event.title
         br
-        span.text= event.text
-        br
-        a.link(href=event.link, target='_blank')= event.link
+        p.text= event.text
+        div.link
+          a(href=event.link, target='_blank')= event.link
       div.extra.right
         span.like= event.like
+        div.button-pong.hidden(target_id=event.id)
+          span PONG
         span.date= event.date
       div.clear
 
@@ -21,10 +23,12 @@ block right-timeline
       div.content.right
         span.title= event.title
         br
-        span.text= event.text
-        br
-        a.link(href=event.link, target='_blank')= event.link
+        p.text= event.text
+        div.link
+          a(href=event.link, target='_blank')= event.link
       div.extra.left
         span.like= event.like
+        div.button-pong.hidden(target_id=event.id)
+          span PONG
         span.date= event.date
       div.clear
