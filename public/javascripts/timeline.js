@@ -22,6 +22,12 @@ $('.event').click(function () {
 	$('.extra .button-pong:not(.hidden)').not(pong).addClass('hidden');
 });
 
+$('.event').hover(function () {
+	$(this).prev('.prong').children('.prong-lt').addClass('hover');
+}, function () {
+	$(this).prev('.prong').children('.prong-lt').removeClass('hover');
+});
+
 $('.event .button-pong').click(function () {
 	var $this = $(this);
 	requestPong($this.attr('target_id'), function (numPonged) {
