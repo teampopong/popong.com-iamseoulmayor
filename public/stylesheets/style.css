@@ -167,7 +167,14 @@ body {
 	display: block;
 	font-size: 30pt;
 	font-weight: bold;
-	color: hotpink;
+}
+
+.leftcolumn .event .like {
+	color: orangered;
+}
+
+.rightcolumn .event .like {
+	color: steelblue;
 }
 
 .event .date {
@@ -206,15 +213,75 @@ body {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	background: lightpink;
 	width: 80%;
 	height: 20px;
 	margin: 5px auto;
+	padding: 1px 0;
 	text-align: center;
 }
 
-.event .button-pong:hover {
-	background: hotpink;
+.leftcolumn .event .button-pong {
+	background-image: linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
+	background-image: -o-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
+	background-image: -moz-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
+	background-image: -webkit-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
+	background-image: -ms-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.22, rgb(255,162,122)),
+		color-stop(0.61, rgb(255,141,99))
+	);
+}
+
+.leftcolumn .event .button-pong:hover {
+	background-image: linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
+	background-image: -o-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
+	background-image: -moz-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
+	background-image: -webkit-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
+	background-image: -ms-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.22, rgb(255,135,84)),
+		color-stop(0.61, rgb(255,108,54))
+	);
+}
+
+.rightcolumn .event .button-pong {
+	background-image: linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
+	background-image: -o-linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
+	background-image: -moz-linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
+	background-image: -webkit-linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
+	background-image: -ms-linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.22, rgb(133,212,255)),
+		color-stop(0.61, rgb(99,200,255))
+	)
+}
+
+.rightcolumn .event .button-pong:hover {
+	background-image: linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
+	background-image: -o-linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
+	background-image: -moz-linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
+	background-image: -webkit-linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
+	background-image: -ms-linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.22, rgb(99,200,255)),
+		color-stop(0.61, rgb(59,186,255))
+	);
 }
 
 .event .button-pong span {
