@@ -32,6 +32,7 @@ app.configure('production', function(){
 // Code
 
 var VALIDATE_CYCLE = 25; // like 캐시 validation 주기
+var BACKUP_CYCLE = 1;
 
 var defaultDb = {
 	nextId: 1,
@@ -82,6 +83,20 @@ function getNumLiked(id) {
 
 	return event.like;
 }
+
+var updateCount = (function () {
+	var backupCount = 0,
+		nextBackupCount = 0;
+
+	return function (num) {
+		num = num || 1;
+		backupCount += num;
+		if (backupCount >= nextBackupCount) {
+			backupDb();
+			nextBackupCount = backupCount + BACKUP_CYCLE;
+		}
+	};
+})();
 
 /**
  * asynchronously backup the db
@@ -148,6 +163,7 @@ app.post('/event', function(req, res) {
 		link: req.body.link,
 		like: 0
 	});
+	updateCount(5);
 	res.send();
 });
 
@@ -158,6 +174,7 @@ app.post('/like', function(req, res) {
 		regdate: (new Date()).getTime(),
 		host: getClientAddress(req)
 	});
+	updateCount();
 	res.send(''+getNumLiked(req.body.id));
 });
 
