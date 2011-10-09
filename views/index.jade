@@ -1,6 +1,30 @@
 extends timeline
 
 block left-timeline
+  div.event-container.addevent(style='display: none;')
+    div.prong
+      div.prong-dk
+      div.prong-lt
+    div.event
+      form
+        input(type='hidden', name='topic')
+        img.img-close(src="images/x.png")
+        input(type='text', name='year')
+        년&nbsp;
+        input(type='text', name='month')
+        월&nbsp;
+        input(type='text', name='day')
+        일
+        br
+        제목&nbsp;
+        input(type='text', name='title')
+        textarea(name='text', rows='3')
+        div.charleft
+        img.img-link(src='images/link_chain.jpg')
+        &nbsp;
+        input(type='text', name='link')
+        br
+        input.submit(type='submit', value='등록')
   each event in left_events
     div.event-container
       div.prong
@@ -21,6 +45,30 @@ block left-timeline
         div.clear
 
 block right-timeline
+  div.event-container.addevent(style='display: none;')
+    div.prong
+      div.prong-dk
+      div.prong-lt
+    div.event
+      form
+        input(type='hidden', name='topic')
+        img.img-close(src="images/x.png")
+        input(type='text', name='year')
+        년&nbsp;
+        input(type='text', name='month')
+        월&nbsp;
+        input(type='text', name='day')
+        일
+        br
+        제목&nbsp;
+        input(type='text', name='title')
+        textarea(name='text', rows='3')
+        div.charleft
+        img.img-link(src='images/link_chain.jpg')
+        &nbsp;
+        input(type='text', name='link')
+        br
+        input.submit(type='submit', value='등록')
   each event in right_events
     div.event-container
       div.prong

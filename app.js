@@ -168,6 +168,7 @@ app.get('/', function(req, res) {
 		title: '나는 서울 시장이다!',
 		style: '/stylesheets/style.css',
 		jsfiles: ['/javascripts/jquery-1.6.2.min.js'
+			, '/javascripts/underscore.string.js',
 			, '/javascripts/timeline.js'],
 		left_events: getSortedEventsByTopic('나경원'),
 		right_events: getSortedEventsByTopic('박원순')
@@ -186,9 +187,17 @@ app.get('/admin', function(req, res){
 });
 
 app.post('/event', function(req, res) {
-	// TODO: insert title field
+	if (req.body.text && req.body.text.length > 140) {
+		res.json({
+			success: 0,
+			message: '140자가 넘는 글은 등록할 수 없습니다.'
+		});
+		return;
+	}
+
 	db.events.push({
 		id: getNextId(),
+		title: req.body.title,
 		topic: req.body.topic,
 		date: req.body.date,
 		text: req.body.text,
@@ -196,7 +205,10 @@ app.post('/event', function(req, res) {
 		like: 0
 	});
 	updateCount(5);
-	res.send();
+
+	res.json({
+		success: 1
+	});
 });
 
 app.post('/like', function(req, res) {

@@ -1,16 +1,39 @@
 (function () {
 
+// constants
+var MAX_TEXT_LENGTH = 140;
+
 // functions
 function requestPong(id, callback) {
 	$.post('/like', {
 		id: id
-	}, function (data) {
-		if (data.success) {
-			callback(data.numLiked);
+	}, function (res) {
+		if (res.success) {
+			callback(res.numLiked);
 		} else {
-			alert(data.message);
+			alert(res.message);
 		}
 	});
+}
+
+function showAddevent(topic, column) {
+	var $addevent = $(_.sprintf('.%scolumn .addevent', column));
+
+	if ($addevent.is(':visible')) {
+		$addevent.slideUp();
+	} else {
+		$('.addevent').hide();
+
+		var today = new Date();
+		$addevent.find('.topic').text(topic);
+		$addevent.find('input[name="topic"]').val(topic);
+		$addevent.find('input[name="year"]').val(today.getFullYear());
+		$addevent.find('input[name="month"]').val(today.getMonth() + 1);
+		$addevent.find('input[name="day"]').val(today.getDate());
+		$addevent.find('.charleft').text(MAX_TEXT_LENGTH);
+
+		$addevent.slideDown();
+	}
 }
 
 // events
@@ -24,7 +47,7 @@ $('.event').click(function () {
 	$('.extra .button-pong:not(.hidden)').not(pong).addClass('hidden');
 });
 
-$('.event').hover(function () {
+$('.event').not('.addevent .event').hover(function () {
 	$(this).prev('.prong').children('.prong-lt').addClass('hover');
 }, function () {
 	$(this).prev('.prong').children('.prong-lt').removeClass('hover');
@@ -41,4 +64,70 @@ $('.event .button-pong').click(function () {
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
 });
+
+$('.button-addevent').click(function () {
+	var $this = $(this);
+	var topic = $this.prev('.name').text();
+	var column = $this.parent('.leftcolumn').size() ? 'left' : 'right';
+	showAddevent(topic, column);
+});
+
+$('.addevent form').submit((function () {
+	function getFormValue(form, name) {
+		return form.children('*[name="'+name+'"]').val();
+	}
+
+	function getFormDate(form) {
+		return _.sprintf('%04d-%02d-%02d',
+			parseInt(getFormValue(form, 'year')),
+			parseInt(getFormValue(form, 'month')),
+			parseInt(getFormValue(form, 'day')));
+	}
+
+	return function () {
+		var form = $(this);
+
+		var data = {
+			'title': getFormValue(form, 'title'),
+			'topic': getFormValue(form, 'topic'),
+			'date': getFormDate(form),
+			'text': getFormValue(form, 'text'),
+			'link': getFormValue(form, 'link')
+		};
+
+		if (data.text.length > 140) {
+			alert('140자가 넘는 글은 등록할 수 없습니다.');
+			return false;
+		}
+
+		$.post('/event', data, function (res) {
+			if (res.success) {
+				location.href = '/';
+			} else {
+				alert(res.message || '');
+			}
+		});
+
+		return false;
+	};
+})());
+
+$('.addevent textarea[name="text"]').keyup(function () {
+	var $this = $(this),
+		len = $(this).val().length,
+		lenleft = MAX_TEXT_LENGTH - len,
+		$charleft = $this.next('.charleft');
+
+	$charleft.text(lenleft);
+	if (lenleft < 0) {
+		$charleft.addClass('exceed');
+	} else {
+		$charleft.removeClass('exceed');
+	}
+});
+
+$('.img-close').click(function () {
+	$(this).parents('.event-container').slideUp();
+});
+
 })();

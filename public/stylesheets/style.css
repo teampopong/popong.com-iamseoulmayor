@@ -44,9 +44,86 @@ body {
 }
 
 .notice {
-  float:right;
-  color: #555;
-  font-size: 8px;
+	position: relative;
+	float:right;
+	color: #555;
+	font-size: 8px;
+}
+
+.button-addevent {
+	position: absolute;
+	background: white;
+	cursor: pointer;
+}
+
+.addevent input,textarea {
+	margin: 5px 0;
+	border: 1px solid #aaa;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.addevent .img-close {
+	float: right;
+	cursor: pointer;
+}
+
+.addevent input[name="year"] {
+	width: 4em;
+}
+
+.addevent input[name="month"] {
+	width: 2em;
+}
+
+.addevent input[name="day"] {
+	width: 2em;
+}
+
+.addevent input[name="title"] {
+	width: 298px;
+}
+
+.addevent textarea[name="text"] {
+	width: 333px;
+	resize: none;
+}
+
+.addevent .charleft {
+	width: 333px;
+	text-align: right;
+	font-size: 9px;
+	font-weight: bold;
+	margin-top: -5px;
+}
+
+.addevent .charleft.exceed {
+	color: red;
+}
+
+.addevent .img-link {
+	height: 1em;
+	vertical-align: middle;
+}
+
+.addevent input[name="link"] {
+	width: 310px;
+}
+
+.addevent input.submit {
+	width: 100%;
+	background: whitesmoke;
+	padding: 3px 0;
+	cursor: pointer;
+}
+
+.leftcolumn .button-addevent {
+	margin-left: 350px;
+}
+
+.rightcolumn .button-addevent {
+	margin-left: -10px;
 }
 
 .leftcolumn {
@@ -96,7 +173,7 @@ body {
 	position: relative;
 	width: 100%;
 	text-align: left;
-	margin-top: 20px;
+	margin-top: 24px;
 }
 
 .leftcolumn .timeline {
@@ -140,6 +217,11 @@ body {
 .event:hover {
 	background: #f5f5f5;
 	cursor: pointer;
+}
+
+.addevent .event:hover {
+	background: white;
+	cursor: auto;
 }
 
 .event .content {
