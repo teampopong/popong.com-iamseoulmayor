@@ -22,7 +22,7 @@ block left-timeline
         div.charleft
         img.img-link(src='images/link_chain.jpg')
         &nbsp;
-        input(type='text', name='link')
+        input(type='text', name='link', placeholder='출처(필수)')
         br
         input.submit(type='submit', value='등록')
   each event in left_events
@@ -66,7 +66,7 @@ block right-timeline
         div.charleft
         img.img-link(src='images/link_chain.jpg')
         &nbsp;
-        input(type='text', name='link')
+        input(type='text', name='link', placeholder='출처(필수)')
         br
         input.submit(type='submit', value='등록')
   each event in right_events

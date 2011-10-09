@@ -39,6 +39,7 @@ app.configure('production', function(){
 
 var VALIDATE_CYCLE = 25; // like 캐시 validation 주기
 var BACKUP_CYCLE = 1;
+var MAX_TEXT_LENGTH = 140;
 
 var defaultDb = {
 	nextId: 1,
@@ -130,6 +131,23 @@ var updateCount = (function () {
 	};
 })();
 
+function validateEvent(event) {
+	if (_.isUndefined(event.text) || event.text.length > 140) {
+		throw '140자가 넘는 글은 등록할 수 없습니다.';
+	}
+	if (_.isUndefined(event.link) || event.link.length <= 0) {
+		throw '링크(출처)는 반드시 입력해야 합니다';
+	}
+}
+
+function getAbsoluteUrl(link) {
+	if (_.startsWith(link, 'http://') || _.startsWith(link, 'https://')) {
+		return link;
+	} else {
+		return 'http://' + link;
+	}
+}
+
 /**
  * asynchronously backup the db
  */
@@ -187,10 +205,12 @@ app.get('/admin', function(req, res){
 });
 
 app.post('/event', function(req, res) {
-	if (req.body.text && req.body.text.length > 140) {
+	try {
+		validateEvent(req.body);
+	} catch (message) {
 		res.json({
 			success: 0,
-			message: '140자가 넘는 글은 등록할 수 없습니다.'
+			message: message
 		});
 		return;
 	}
@@ -201,7 +221,7 @@ app.post('/event', function(req, res) {
 		topic: req.body.topic,
 		date: req.body.date,
 		text: req.body.text,
-		link: req.body.link,
+		link: getAbsoluteUrl(req.body.link),
 		like: 0
 	});
 	updateCount(5);
@@ -212,7 +232,7 @@ app.post('/event', function(req, res) {
 });
 
 app.post('/like', function(req, res) {
-	if (typeof req.session.liked == 'undefined') {
+	if (_.isUndefined(req.session.liked)) {
 		req.session.liked = {};
 	}
 

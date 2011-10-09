@@ -84,6 +84,15 @@ $('.addevent form').submit((function () {
 			parseInt(getFormValue(form, 'day')));
 	}
 
+	function validate(data) {
+		if (data.text.length > 140) {
+			throw '140자가 넘는 글은 등록할 수 없습니다.';
+		}
+		if (data.link.length <= 0) {
+			throw '링크(출처)는 반드시 입력해야 합니다';
+		}
+	}
+
 	return function () {
 		var form = $(this);
 
@@ -95,8 +104,10 @@ $('.addevent form').submit((function () {
 			'link': getFormValue(form, 'link')
 		};
 
-		if (data.text.length > 140) {
-			alert('140자가 넘는 글은 등록할 수 없습니다.');
+		try {
+			validate(data);
+		} catch (message) {
+			alert(message);
 			return false;
 		}
 
