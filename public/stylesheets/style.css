@@ -43,6 +43,12 @@ body {
 	-moz-border-radius: 3px;
 }
 
+.notice {
+  float:right;
+  color: #555;
+  font-size: 8px;
+}
+
 .leftcolumn {
 	float: left;
 	width: 360px;
@@ -147,6 +153,7 @@ body {
 .event .title {
 	font-size: 22px;
 	font-weight: bold;
+	overflow: hidden;
 }
 
 .event .text {

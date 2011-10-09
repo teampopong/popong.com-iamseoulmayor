@@ -55,6 +55,32 @@ function getEventsByTopic(topic) {
 	});
 }
 
+var getSortedEventsByTopic = (function () {
+	var sortedEventsList = [];
+
+	return function (topic) {
+		var sortedEvents = sortedEventsList[topic];
+
+		// 캐시 생성 이후에 변하지 않았으면
+		if (sortedEvents && sortedEvents.nextIdWhenLastSorted == db.nextId) {
+			return sortedEvents.events;
+
+		// 새로 캐시를 생성해야 한다면
+		} else {
+			sortedEvents = _.sortBy(getEventsByTopic(topic), function (event) {
+				return -(new Date(event.date)).getTime();
+			});
+
+			sortedEventsList[topic] = {
+				events: sortedEvents,
+				nextIdWhenLastSorted: db.nextId
+			};
+
+			return sortedEvents;
+		}
+	};
+})();
+
 function validateNumLiked(event) {
 	var expectedNumLiked = _.filter(db.likes, function (item) {
 		return item.id == event.id;
@@ -137,8 +163,8 @@ app.get('/', function(req, res) {
 		style: '/stylesheets/style.css',
 		jsfiles: ['/javascripts/jquery-1.6.2.min.js'
 			, '/javascripts/timeline.js'],
-		left_events: getEventsByTopic('나경원'),
-		right_events: getEventsByTopic('박원순')
+		left_events: getSortedEventsByTopic('나경원'),
+		right_events: getSortedEventsByTopic('박원순')
 	});
 });
 
