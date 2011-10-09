@@ -181,7 +181,7 @@ function getBackupDb() {
 
 // Routes
 
-app.get('/', function(req, res) {
+app.get('/(event/:id)?', function(req, res) {
 	res.render('index', {
 		title: '나는 서울 시장이다!',
 		style: '/stylesheets/style.css',
@@ -189,7 +189,8 @@ app.get('/', function(req, res) {
 			, '/javascripts/underscore.string.js',
 			, '/javascripts/timeline.js'],
 		left_events: getSortedEventsByTopic('나경원'),
-		right_events: getSortedEventsByTopic('박원순')
+		right_events: getSortedEventsByTopic('박원순'),
+		event_id: req.params.id || ''
 	});
 });
 

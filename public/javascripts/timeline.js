@@ -36,8 +36,19 @@ function showAddevent(topic, column) {
 	}
 }
 
-// events
-$('.event').click(function () {
+function focusEvent(event_id) {
+	if (event_id.length) {
+		var sel = _.sprintf('.event-container[event_id="%s"]', event_id);
+		var $event = $(sel);
+		$('body').animate({
+			scrollTop: $event.offset().top
+		}, 300, function () {
+			expandEvent.apply($event);
+		});
+	}
+}
+
+function expandEvent() {
 	// expand content
 	var content = $('.content .text', this).toggleClass('expand');
 	$('.content .text.expand').not(content).removeClass('expand');
@@ -45,6 +56,24 @@ $('.event').click(function () {
 	// show 'pong' button
 	var pong = $('.extra .button-pong', this).toggleClass('hidden');
 	$('.extra .button-pong:not(.hidden)').not(pong).addClass('hidden');
+}
+
+// on load
+
+$(function () {
+	// load parameters passed
+	var params = {};
+	$('#params *[name]').each(function () {
+		var $this = $(this);
+		params[$this.attr('name')] = $this.val();
+	});
+
+	focusEvent(params.event_id);
+});
+
+// events
+$('.event').click(function () {
+	expandEvent.apply(this);
 });
 
 $('.event').not('.addevent .event').hover(function () {

@@ -7,22 +7,25 @@ div#container
     br
 
     div.leftcolumn.member_panel
-      img.photo(src='images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
+      img.photo(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
       div.name 나경원
       div.button-addevent
-        img(src='images/button_plus.gif')
+        img(src='/images/button_plus.gif')
       div.timeline
         block left-timeline
 
     div.rightcolumn.member_panel
-      img.photo(src='images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
+      img.photo(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
       div.name 박원순
       div.button-addevent
-        img(src='images/button_plus.gif')
+        img(src='/images/button_plus.gif')
       div.timeline
         block right-timeline
 
     div.clear
+
+div#params(style='display: none;')
+  input(type='hidden', name='event_id', value=event_id)
 
 style(type='text/css')
   @import url('http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css');
