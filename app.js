@@ -7,8 +7,10 @@ var express = require('express');
 var _ = require('underscore');
 _.mixin(require('underscore.string'));
 var fs = require('fs');
+var connect = require('connect');
 
 var app = module.exports = express.createServer();
+var MemoryStore = connect.session.MemoryStore;
 
 // Configuration
 
@@ -17,8 +19,12 @@ app.configure(function(){
 	app.set('view engine', 'jade');
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
-	app.use(app.router);
+	app.use(express.cookieParser());
+	// session longs for two weeks
+	app.use(express.session({ secret: 'keyboard cat',
+		store: new MemoryStore({ maxAge: 1000*60*60*24*7*2 })}));
 	app.use(express.static(__dirname + '/public'));
+	app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -194,14 +200,33 @@ app.post('/event', function(req, res) {
 });
 
 app.post('/like', function(req, res) {
-	// TODO: 중복 추천 체크
+	if (typeof req.session.liked == 'undefined') {
+		req.session.liked = {};
+	}
+
+	// 이미 추천한 이슈
+	if (req.session.liked[req.body.id]) {
+		res.json({
+			success: 0,
+			message: '이미 추천했습니다'
+		});
+		return;
+	}
+
 	db.likes.push({
 		id: req.body.id,
 		regdate: (new Date()).getTime(),
 		host: getClientAddress(req)
 	});
 	updateCount();
-	res.send(''+getNumLiked(req.body.id));
+
+	// 세션에 추천 정보 기록
+	req.session.liked[req.body.id] = true;
+
+	res.json({
+		success: 1,
+		numLiked: getNumLiked(req.body.id)
+	});
 });
 
 app.get('/backup', function(req, res) {

@@ -4,10 +4,12 @@
 function requestPong(id, callback) {
 	$.post('/like', {
 		id: id
-	}, function (numPonged) {
-		callback(numPonged);
-	}).error(function () {
-		alert('실패');
+	}, function (data) {
+		if (data.success) {
+			callback(data.numLiked);
+		} else {
+			alert(data.message);
+		}
 	});
 }
 
