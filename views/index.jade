@@ -1,6 +1,7 @@
 extends timeline
 
 block left-timeline
+  //- event input box
   div.event-container.addevent(style='display: none;')
     div.prong
       div.prong-dk
@@ -17,7 +18,7 @@ block left-timeline
         일
         br
         제목&nbsp;
-        input(type='text', name='title')
+        input(type='text', name='title', maxlength='20')
         textarea(name='text', rows='3')
         div.charleft
         img.img-link(src='/images/link_chain.jpg')
@@ -25,6 +26,8 @@ block left-timeline
         input(type='text', name='link', placeholder='출처(필수)')
         br
         input.submit(type='submit', value='등록')
+
+  //- existing events
   each event in left_events
     div.event-container(event_id=event.id)
       div.prong
@@ -37,6 +40,15 @@ block left-timeline
           p.text= event.text
           div.link
             a(href=event.link, target='_blank')= event.link
+          div.share
+            a.twitter-share-button(
+              href='https://twitter.com/share',
+              data-url='http://dev.popong.com/event/'+event.id,
+              data-text='나는서울시장이다!::'+event.topic+', &quot;'+event.title+'&quot; #popong',
+              data-count='none',
+              data-via='popongc',
+              data-lang='ko'
+              ) Tweet
         div.extra.right
           span.like= event.like
           div.button-pong.hidden(target_id=event.id)
@@ -45,6 +57,7 @@ block left-timeline
         div.clear
 
 block right-timeline
+  //- event input box
   div.event-container.addevent(style='display: none;')
     div.prong
       div.prong-dk
@@ -61,7 +74,7 @@ block right-timeline
         일
         br
         제목&nbsp;
-        input(type='text', name='title')
+        input(type='text', name='title', maxlength='20')
         textarea(name='text', rows='3')
         div.charleft
         img.img-link(src='/images/link_chain.jpg')
@@ -69,6 +82,8 @@ block right-timeline
         input(type='text', name='link', placeholder='출처(필수)')
         br
         input.submit(type='submit', value='등록')
+
+  //- existing events
   each event in right_events
     div.event-container(event_id=event.id)
       div.prong
@@ -81,6 +96,15 @@ block right-timeline
           p.text= event.text
           div.link
             a(href=event.link, target='_blank')= event.link
+          div.share
+            a.twitter-share-button(
+              href='https://twitter.com/share',
+              data-url='http://dev.popong.com/event/'+event.id,
+              data-text='나는서울시장이다!::'+event.topic+', &quot;'+event.title+'&quot; #popong',
+              data-count='none',
+              data-via='popongc',
+              data-lang='ko'
+              ) Tweet
         div.extra.left
           span.like= event.like
           div.button-pong.hidden(target_id=event.id)

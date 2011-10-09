@@ -43,19 +43,15 @@ function focusEvent(event_id) {
 		$('body').animate({
 			scrollTop: $event.offset().top
 		}, 300, function () {
-			expandEvent.apply($event);
+			expandEvent.apply($event.children('.event'));
 		});
 	}
 }
 
 function expandEvent() {
-	// expand content
-	var content = $('.content .text', this).toggleClass('expand');
-	$('.content .text.expand').not(content).removeClass('expand');
-
-	// show 'pong' button
-	var pong = $('.extra .button-pong', this).toggleClass('hidden');
-	$('.extra .button-pong:not(.hidden)').not(pong).addClass('hidden');
+	var $this = $(this);
+	$this.addClass('expand');
+	$('.event').not(this).removeClass('expand');
 }
 
 // on load

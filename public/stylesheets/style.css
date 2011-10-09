@@ -245,7 +245,7 @@ body {
 	height: 1.1em;
 }
 
-.event .text.expand {
+.event.expand .text {
 	word-wrap: break-word;
 	overflow: visible;
 	color: #333;
@@ -300,7 +300,17 @@ body {
 	color: blue;
 }
 
+.event .share {
+	margin-top: 5px;
+	display: none;
+}
+
+.event.expand .share {
+	display: block;
+}
+
 .event .button-pong {
+	display: none;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -309,6 +319,10 @@ body {
 	margin: 5px auto;
 	padding: 1px 0;
 	text-align: center;
+}
+
+.event.expand .button-pong {
+	display: block;
 }
 
 .leftcolumn .event .button-pong {
@@ -377,10 +391,6 @@ body {
 
 .event .button-pong span {
 	font-weight: bold;
-}
-
-.hidden {
-	display: none;
 }
 
 .prong {
