@@ -15,10 +15,19 @@ body {
 
 #logo {
 	width: 900px;
-	margin: 40px auto 20px;
+	margin: 40px auto 10px;
 
 	color: #3E3E3E;
 	font-weight: normal;
+}
+
+#logo iframe.twitter-share-button {
+	margin-left: 3px;
+	vertical-align: bottom;
+}
+
+#logo .twitter-feedback {
+	font-size: 9pt;
 }
 
 #container {
