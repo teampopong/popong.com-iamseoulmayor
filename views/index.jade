@@ -61,8 +61,9 @@ block left-timeline
               )
         div.extra.right
           span.like= event.like
-          div.button-pong.hidden(target_id=event.id)
-            span PONG
+          div.button-pong-wrapper.rounded-corner
+            div.button-pong.rounded-corner(target_id=event.id)
+              span PONG
           span.date= event.date
         div.clear
 
@@ -127,7 +128,8 @@ block right-timeline
               )
         div.extra.left
           span.like= event.like
-          div.button-pong.hidden(target_id=event.id)
-            span PONG
+          div.button-pong-wrapper.rounded-corner
+            div.button-pong.rounded-corner(target_id=event.id)
+              span PONG
           span.date= event.date
         div.clear
