@@ -22,15 +22,14 @@ function requestPong(id, callback) {
 	});
 }
 
-function requestDeleteEvent(id, passwd) {
+function requestDeleteEvent(id, passwd, callback) {
 	$.post('/iamseoulmayor/event', {
 		_method: 'delete',
 		id: id,
 		passwd: passwd
 	}, function (res) {
 		if (res.success) {
-			alert('이슈를 삭제했습니다.');
-			location.href = '/iamseoulmayor';
+			callback();
 		} else {
 			alert(res.message);
 		}
@@ -200,8 +199,16 @@ $('.event-container[event_id] .img-close').click(function () {
 	if (!passwd) {
 		return;
 	}
-	var id = $(this).parents('.event-container').attr('event_id');
-	requestDeleteEvent(id, passwd);
+
+	var container = $(this).parents('.event-container'),
+		id = container.attr('event_id');
+
+	requestDeleteEvent(id, passwd, function () {
+		alert('이슈를 삭제했습니다.');
+		container.slideUp(function () {
+			container.remove();
+		});
+	});
 });
 
 })();
