@@ -28,6 +28,13 @@ div#container
 div#params(style='display: none;')
   input(type='hidden', name='event_id', value=event_id)
 
+div#floating
+  div#tooltip-pong.rounded-corner(style='display:none;')
+    span.bold pong~
+    하고 이 이슈의
+    span.bold 관심도
+    를 올려주세요!
+
 //- feedback widget
 style(type='text/css')
   @import url('http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css');

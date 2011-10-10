@@ -211,4 +211,20 @@ $('.event-container[event_id] .img-close').click(function () {
 	});
 });
 
+// pong 지수 설명
+$('.like').hover(function (evt) {
+	var tooltip = $('#tooltip-pong');
+	tooltip.css('top', evt.clientY - tooltip.height());
+	tooltip.css('left', evt.clientX);
+	tooltip.slideDown('fast');
+
+}, function () {
+	var $this = $(this);
+	setTimeout(function () {
+		if (!$this.is(':hover')) {
+			$('#tooltip-pong').hide();
+		}
+	}, 100);
+});
+
 })();
