@@ -232,6 +232,7 @@ app.namespace('/iamseoulmayor', function () {
 		});
 	});
 
+	/*
 	app.get('/admin', function(req, res){
 		var backup = getBackupDb();
 
@@ -242,6 +243,7 @@ app.namespace('/iamseoulmayor', function () {
 			backup: JSON.stringify(backup, null, 2)
 		});
 	});
+	*/
 
 	app.post('/event', function(req, res) {
 		try {
@@ -337,17 +339,21 @@ app.namespace('/iamseoulmayor', function () {
 		});
 	});
 
+	/*
 	app.get('/backup', function(req, res) {
 		backupDb();
 		res.redirect('/admin', 303);
 	});
+	*/
 
+	/*
 	app.post('/import', function(req, res) {
 		if (req.body.db) {
 			db = JSON.parse(req.body.db);
 		}
 		res.redirect('/admin', 303);
 	});
+	*/
 });
 
 app.listen(3000);
