@@ -184,10 +184,10 @@ function getBackupDb() {
 app.get('/(event/:id)?', function(req, res) {
 	res.render('index', {
 		title: '나는 서울 시장이다!',
-		style: '/stylesheets/style.css',
-		jsfiles: ['/javascripts/jquery-1.6.2.min.js'
-			, '/javascripts/underscore.string.js'
-			, '/javascripts/timeline.js'
+		style: '/iamseoulmayor/stylesheets/style.css',
+		jsfiles: ['/iamseoulmayor/javascripts/jquery-1.6.2.min.js'
+			, '/iamseoulmayor/javascripts/underscore.string.js'
+			, '/iamseoulmayor/javascripts/timeline.js'
 			, 'http://platform.twitter.com/widgets.js'],
 		left_events: getSortedEventsByTopic('나경원'),
 		right_events: getSortedEventsByTopic('박원순'),
@@ -200,7 +200,7 @@ app.get('/admin', function(req, res){
 
 	res.render('admin', {
 		title: '관리자',
-		style: '/stylesheets/admin.css',
+		style: '/iamseoulmayor/stylesheets/admin.css',
 		db: JSON.stringify(db, null, 2),
 		backup: JSON.stringify(backup, null, 2)
 	});
