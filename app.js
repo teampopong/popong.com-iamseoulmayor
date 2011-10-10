@@ -132,11 +132,24 @@ var updateCount = (function () {
 })();
 
 function validateEvent(event) {
+
+	function validateDate(date) {
+		var t = date.split(/-/g);
+		if (t.length !== 3) return false;
+		if (t[0] < 1900 || t[0] > (new Date()).getFullYear()) return false;
+		if (t[1] < 1 || t[1] > 13) return false;
+		if (t[2] < 1 || t[2] > 31) return false;
+		return true;
+	}
+
 	if (_.isUndefined(event.text) || event.text.length > 140) {
 		throw '140자가 넘는 글은 등록할 수 없습니다.';
 	}
 	if (_.isUndefined(event.link) || event.link.length <= 0) {
 		throw '링크(출처)는 반드시 입력해야 합니다';
+	}
+	if (_.isUndefined(event.date) || !validateDate(event.date)) {
+		throw '잘못된 날짜입니다.';
 	}
 }
 

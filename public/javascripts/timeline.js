@@ -104,9 +104,9 @@ $('.addevent form').submit((function () {
 
 	function getFormDate(form) {
 		return _.sprintf('%04d-%02d-%02d',
-			parseInt(getFormValue(form, 'year')),
-			parseInt(getFormValue(form, 'month')),
-			parseInt(getFormValue(form, 'day')));
+			parseInt(getFormValue(form, 'year'), 10),
+			parseInt(getFormValue(form, 'month'), 10),
+			parseInt(getFormValue(form, 'day'), 10));
 	}
 
 	function validate(data) {
