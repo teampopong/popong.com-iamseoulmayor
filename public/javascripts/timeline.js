@@ -4,6 +4,12 @@
 var MAX_TEXT_LENGTH = 140;
 
 // functions
+function stopPropagation() {
+	if (!e) var e = window.event;
+	e.cancelBubble = true;
+	if (e.stopPropagation) e.stopPropagation();
+}
+
 function requestPong(id, callback) {
 	$.post('/iamseoulmayor/like', {
 		id: id
@@ -94,15 +100,12 @@ $('.event').not('.addevent .event').hover(function () {
 });
 
 $('.event .button-pong').click(function () {
+	stopPropagation();
+
 	var $this = $(this);
 	requestPong($this.attr('target_id'), function (numPonged) {
 		$this.parents('.event').find('.like').text(numPonged);
 	});
-
-	// cancel event propagation
-	if (!e) var e = window.event;
-	e.cancelBubble = true;
-	if (e.stopPropagation) e.stopPropagation();
 });
 
 $('.button-addevent').click(function () {
@@ -185,10 +188,14 @@ $('.addevent textarea[name="text"]').keyup(function () {
 });
 
 $('.addevent .img-close').click(function () {
+	stopPropagation();
+
 	$(this).parents('.event-container').slideUp();
 });
 
 $('.event-container[event_id] .img-close').click(function () {
+	stopPropagation();
+
 	var passwd = prompt('이슈를 등록할 때 사용한 비밀번호를 입력해 주세요.');
 	if (!passwd) {
 		return;
