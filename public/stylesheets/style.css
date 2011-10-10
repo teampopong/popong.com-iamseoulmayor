@@ -64,11 +64,6 @@ body {
 	-webkit-border-radius: 2px;
 }
 
-.addevent .img-close {
-	float: right;
-	cursor: pointer;
-}
-
 .addevent input[name="year"] {
 	width: 4em;
 }
@@ -214,14 +209,40 @@ body {
 	margin-left: 8px;
 }
 
+.event .img-close {
+	display: none;
+}
+
 .event:hover {
 	background: #f5f5f5;
+	cursor: default;
+}
+
+.event:hover .img-close {
+	position: absolute;
+	display: block;
 	cursor: pointer;
 }
 
 .addevent .event:hover {
 	background: white;
 	cursor: auto;
+}
+
+.leftcolumn .img-close {
+	top: 7px;
+	right: 7px;
+}
+
+.rightcolumn .img-close {
+	top: 7px;
+	left: 7px;
+}
+
+.addevent .img-close {
+	top: 7px;
+	left: auto !important;
+	right: 7px;
 }
 
 .event .content {

@@ -40,6 +40,7 @@ app.configure('production', function(){
 var VALIDATE_CYCLE = 25; // like 캐시 validation 주기
 var BACKUP_CYCLE = 1;
 var MAX_TEXT_LENGTH = 140;
+var MASTER_PASSWD = _(fs.readFileSync('master_passwd', 'utf-8')).trim();
 
 var defaultDb = {
 	nextId: 1,
@@ -56,9 +57,15 @@ function getClientAddress(req) {
 	return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 }
 
+function getEvent(id) {
+	return _.detect(db.events, function (item) {
+		return item.id == id && !item.deleted;
+	});
+}
+
 function getEventsByTopic(topic) {
 	return _.filter(db.events, function (event) {
-		return event.topic == topic;
+		return event.topic == topic && !event.deleted;
 	});
 }
 
@@ -104,9 +111,7 @@ function validateNumLiked(event) {
 }
 
 function getNumLiked(id) {
-	var event = _.detect(db.events, function (item) {
-		return item.id == id;
-	});
+	var event = getEvent(id);
 	event.like = (event.like || 0) + 1;
 
 	// occationally validate
@@ -135,22 +140,33 @@ function validateEvent(event) {
 
 	function validateDate(date) {
 		var t = date.split(/-/g);
-		if (t.length !== 3) return false;
-		if (t[0] < 1900 || t[0] > (new Date()).getFullYear()) return false;
-		if (t[1] < 1 || t[1] > 13) return false;
-		if (t[2] < 1 || t[2] > 31) return false;
-		return true;
+		var currentYear = (new Date()).getFullYear();
+
+		if (t.length !== 3) {
+			throw '잘못된 날짜 형식입니다.';
+		}
+		if (t[0] < 1900 || t[0] > currentYear) {
+			throw _.sprintf('%d년부터 %d년 사이를 입력해 주세요.', 1900, currentYear);
+		}
+		if (t[1] < 1 || t[1] > 12) {
+			throw '1월부터 12월 사이를 입력해 주세요.';
+		}
+		if (t[2] < 1 || t[2] > 31) {
+			throw '1일부터 31일 사이를 입력해 주세요.';
+		}
 	}
 
 	if (_.isUndefined(event.text) || event.text.length > 140) {
 		throw '140자가 넘는 글은 등록할 수 없습니다.';
 	}
 	if (_.isUndefined(event.link) || event.link.length <= 0) {
-		throw '링크(출처)는 반드시 입력해야 합니다';
+		throw '링크(출처)는 반드시 입력해야 합니다.';
 	}
-	if (_.isUndefined(event.date) || !validateDate(event.date)) {
-		throw '잘못된 날짜입니다.';
+	if (_.isUndefined(event.date)) {
+		throw '날짜는 반드시 입력해야 합니다.';
 	}
+
+	validateDate(event.date);
 }
 
 function getAbsoluteUrl(link) {
@@ -183,7 +199,7 @@ function getBackupDb() {
 	_.each(defaultDb, function (table, name) {
 		try {
 			backup[name] = JSON.parse(
-					fs.readFileSync(_.sprintf('db/%s.json', name)));
+					fs.readFileSync(_.sprintf('db/%s.json', name, 'utf-8')));
 		} catch (err) {
 			backup[name] = typeof defaultDb[name] == 'object'
 					? _.clone(defaultDb[name]) : defaultDb[name];
@@ -248,9 +264,43 @@ app.post('/event', function(req, res) {
 	});
 });
 
+app.del('/event', function(req, res) {
+	var event = getEvent(req.body.id);
+	if (!event) {
+		res.json({
+			success: 0,
+			message: '잘못된 이벤트 ID입니다.'
+		});
+		return;
+	}
+	if (req.body.passwd != event.passwd
+		&& req.body.passwd != MASTER_PASSWD) {
+		res.json({
+			success: 0,
+			message: '비밀번호가 잘못되었습니다.'
+		});
+		return;
+	}
+
+	event.deleted = 1;
+	getNextId(); // to clear sortedEvents cache
+	updateCount(5);
+
+	res.json({
+		success: 1
+	});
+});
+
 app.post('/like', function(req, res) {
 	if (_.isUndefined(req.session.liked)) {
 		req.session.liked = {};
+	}
+
+	if (!getEvent(req.body.id)) {
+		res.json({
+			success: 0,
+			message: '잘못된 이벤트입니다.'
+		});
 	}
 
 	// 이미 추천한 이슈
