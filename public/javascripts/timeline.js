@@ -128,8 +128,14 @@ $('.addevent form').submit((function () {
 		if (data.text.length > 140) {
 			throw '140자가 넘는 글은 등록할 수 없습니다.';
 		}
-		if (data.link.length <= 0) {
+		if (data.link.length === 0) {
 			throw '링크(출처)는 반드시 입력해야 합니다';
+		}
+		if (data.passwd.length == 0) {
+			throw '비밀번호는 반드시 입력해야 합니다.';
+		}
+		if (data.passwd.length < 4) {
+			throw '비밀번호는 4자 이상 입력해야 합니다.';
 		}
 	}
 
@@ -141,7 +147,8 @@ $('.addevent form').submit((function () {
 			'topic': getFormValue(form, 'topic'),
 			'date': getFormDate(form),
 			'text': getFormValue(form, 'text'),
-			'link': getFormValue(form, 'link')
+			'link': getFormValue(form, 'link'),
+			'passwd': getFormValue(form, 'passwd')
 		};
 
 		try {

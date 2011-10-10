@@ -159,8 +159,14 @@ function validateEvent(event) {
 	if (_.isUndefined(event.text) || event.text.length > 140) {
 		throw '140자가 넘는 글은 등록할 수 없습니다.';
 	}
-	if (_.isUndefined(event.link) || event.link.length <= 0) {
+	if (_.isUndefined(event.link) || event.link.length == 0) {
 		throw '링크(출처)는 반드시 입력해야 합니다.';
+	}
+	if (_.isUndefined(event.passwd) || event.passwd.length == 0) {
+		throw '비밀번호는 반드시 입력해야 합니다.';
+	}
+	if (event.passwd.length < 4) {
+		throw '비밀번호는 4자 이상 입력해야 합니다.';
 	}
 	if (_.isUndefined(event.date)) {
 		throw '날짜는 반드시 입력해야 합니다.';
@@ -253,6 +259,7 @@ app.post('/event', function(req, res) {
 		topic: req.body.topic,
 		date: req.body.date,
 		text: req.body.text,
+		passwd: req.body.passwd,
 		link: getAbsoluteUrl(req.body.link),
 		like: 0
 	});
