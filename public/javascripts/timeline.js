@@ -50,7 +50,7 @@ function focusEvent(event_id) {
 
 function expandEvent() {
 	var $this = $(this);
-	$this.addClass('expand');
+	$this.toggleClass('expand');
 	$('.event').not(this).removeClass('expand');
 }
 
