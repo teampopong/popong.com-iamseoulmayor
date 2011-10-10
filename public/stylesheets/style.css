@@ -14,7 +14,7 @@ body {
 }
 
 #logo {
-	width: 800px;
+	width: 900px;
 	margin: 40px auto 20px;
 
 	color: #3E3E3E;
@@ -22,7 +22,7 @@ body {
 }
 
 #container {
-	width: 840px;
+	width: 940px;
 	margin: 0 auto;
 	margin-bottom: 40px;
 
@@ -34,7 +34,7 @@ body {
 }
 
 #container2 {
-	width: 800px;
+	width: 900px;
 	padding: 20px;
 
 	background: transparent url('/images/rightborder.png') repeat-y right top;
@@ -118,7 +118,7 @@ body {
 }
 
 .leftcolumn .button-addevent {
-	margin-left: 350px;
+	margin-left: 400px;
 }
 
 .rightcolumn .button-addevent {
@@ -127,7 +127,7 @@ body {
 
 .leftcolumn {
 	float: left;
-	width: 360px;
+	width: 410px;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -137,7 +137,7 @@ body {
 
 .rightcolumn {
 	float: left;
-	width: 360px;
+	width: 410px;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
