@@ -217,8 +217,9 @@ app.post('/event', function(req, res) {
 		return;
 	}
 
+	var newid = getNextId();
 	db.events.push({
-		id: getNextId(),
+		id: newid,
 		title: req.body.title,
 		topic: req.body.topic,
 		date: req.body.date,
@@ -229,7 +230,8 @@ app.post('/event', function(req, res) {
 	updateCount(5);
 
 	res.json({
-		success: 1
+		success: 1,
+		event_id: newid
 	});
 });
 

@@ -5,7 +5,7 @@ var MAX_TEXT_LENGTH = 140;
 
 // functions
 function requestPong(id, callback) {
-	$.post('/like', {
+	$.post('/iamseoulmayor/like', {
 		id: id
 	}, function (res) {
 		if (res.success) {
@@ -136,9 +136,9 @@ $('.addevent form').submit((function () {
 			return false;
 		}
 
-		$.post('/event', data, function (res) {
+		$.post('/iamseoulmayor/event', data, function (res) {
 			if (res.success) {
-				location.href = '/';
+				location.href = _.sprintf('/iamseoulmayor/event/%s', res.event_id);
 			} else {
 				alert(res.message || '');
 			}
