@@ -27,7 +27,7 @@ body {
 	margin-bottom: 40px;
 
 	color: #3E3E3E;
-	background: white url('/iamseoulmayor/images/leftborder.png') repeat-y left top;
+	background: white url('/images/leftborder.png') repeat-y left top;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -37,7 +37,7 @@ body {
 	width: 800px;
 	padding: 20px;
 
-	background: transparent url('/iamseoulmayor/images/rightborder.png') repeat-y right top;
+	background: transparent url('/images/rightborder.png') repeat-y right top;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;

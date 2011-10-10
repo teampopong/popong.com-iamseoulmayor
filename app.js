@@ -8,6 +8,7 @@ var _ = require('underscore');
 _.mixin(require('underscore.string'));
 var fs = require('fs');
 var connect = require('connect');
+require('express-namespace');
 
 var app = module.exports = express.createServer();
 var MemoryStore = connect.session.MemoryStore;
@@ -216,135 +217,137 @@ function getBackupDb() {
 
 // Routes
 
-app.get('/(event/:id)?', function(req, res) {
-	res.render('index', {
-		title: '나는 서울 시장이다!',
-		style: '/iamseoulmayor/stylesheets/style.css',
-		jsfiles: ['/iamseoulmayor/javascripts/jquery-1.6.2.min.js'
-			, '/iamseoulmayor/javascripts/underscore.string.js'
-			, '/iamseoulmayor/javascripts/timeline.js'
-			, 'http://platform.twitter.com/widgets.js'],
-		left_events: getSortedEventsByTopic('나경원'),
-		right_events: getSortedEventsByTopic('박원순'),
-		event_id: req.params.id || ''
-	});
-});
-
-app.get('/admin', function(req, res){
-	var backup = getBackupDb();
-
-	res.render('admin', {
-		title: '관리자',
-		style: '/iamseoulmayor/stylesheets/admin.css',
-		db: JSON.stringify(db, null, 2),
-		backup: JSON.stringify(backup, null, 2)
-	});
-});
-
-app.post('/event', function(req, res) {
-	try {
-		validateEvent(req.body);
-	} catch (message) {
-		res.json({
-			success: 0,
-			message: message
+app.namespace('/iamseoulmayor', function () {
+	app.get('/(event/:id)?', function(req, res) {
+		res.render('index', {
+			title: '나는 서울 시장이다!',
+			style: '/stylesheets/style.css',
+			jsfiles: ['/javascripts/jquery-1.6.2.min.js'
+				, '/javascripts/underscore.string.js'
+				, '/javascripts/timeline.js'
+				, 'http://platform.twitter.com/widgets.js'],
+			left_events: getSortedEventsByTopic('나경원'),
+			right_events: getSortedEventsByTopic('박원순'),
+			event_id: req.params.id || ''
 		});
-		return;
-	}
-
-	var newid = getNextId();
-	db.events.push({
-		id: newid,
-		title: req.body.title,
-		topic: req.body.topic,
-		date: req.body.date,
-		text: req.body.text,
-		passwd: req.body.passwd,
-		link: getAbsoluteUrl(req.body.link),
-		like: 0
 	});
-	updateCount(5);
 
-	res.json({
-		success: 1,
-		event_id: newid
-	});
-});
+	app.get('/admin', function(req, res){
+		var backup = getBackupDb();
 
-app.del('/event', function(req, res) {
-	var event = getEvent(req.body.id);
-	if (!event) {
-		res.json({
-			success: 0,
-			message: '잘못된 이벤트 ID입니다.'
+		res.render('admin', {
+			title: '관리자',
+			style: '/stylesheets/admin.css',
+			db: JSON.stringify(db, null, 2),
+			backup: JSON.stringify(backup, null, 2)
 		});
-		return;
-	}
-	if (req.body.passwd != event.passwd
-		&& req.body.passwd != MASTER_PASSWD) {
-		res.json({
-			success: 0,
-			message: '비밀번호가 잘못되었습니다.'
-		});
-		return;
-	}
-
-	event.deleted = 1;
-	getNextId(); // to clear sortedEvents cache
-	updateCount(5);
-
-	res.json({
-		success: 1
 	});
-});
 
-app.post('/like', function(req, res) {
-	if (_.isUndefined(req.session.liked)) {
-		req.session.liked = {};
-	}
+	app.post('/event', function(req, res) {
+		try {
+			validateEvent(req.body);
+		} catch (message) {
+			res.json({
+				success: 0,
+				message: message
+			});
+			return;
+		}
 
-	if (!getEvent(req.body.id)) {
-		res.json({
-			success: 0,
-			message: '잘못된 이벤트입니다.'
+		var newid = getNextId();
+		db.events.push({
+			id: newid,
+			title: req.body.title,
+			topic: req.body.topic,
+			date: req.body.date,
+			text: req.body.text,
+			passwd: req.body.passwd,
+			link: getAbsoluteUrl(req.body.link),
+			like: 0
 		});
-	}
+		updateCount(5);
 
-	// 이미 추천한 이슈
-	if (req.session.liked[req.body.id]) {
 		res.json({
-			success: 0,
-			message: '이미 추천했습니다'
+			success: 1,
+			event_id: newid
 		});
-		return;
-	}
-
-	db.likes.push({
-		id: req.body.id,
-		regdate: (new Date()).getTime(),
-		host: getClientAddress(req)
 	});
-	updateCount();
 
-	// 세션에 추천 정보 기록
-	req.session.liked[req.body.id] = true;
+	app.del('/event', function(req, res) {
+		var event = getEvent(req.body.id);
+		if (!event) {
+			res.json({
+				success: 0,
+				message: '잘못된 이벤트 ID입니다.'
+			});
+			return;
+		}
+		if (req.body.passwd != event.passwd
+			&& req.body.passwd != MASTER_PASSWD) {
+			res.json({
+				success: 0,
+				message: '비밀번호가 잘못되었습니다.'
+			});
+			return;
+		}
 
-	res.json({
-		success: 1,
-		numLiked: getNumLiked(req.body.id)
+		event.deleted = 1;
+		getNextId(); // to clear sortedEvents cache
+		updateCount(5);
+
+		res.json({
+			success: 1
+		});
 	});
-});
 
-app.get('/backup', function(req, res) {
-	backupDb();
-	res.redirect('/admin', 303);
-});
+	app.post('/like', function(req, res) {
+		if (_.isUndefined(req.session.liked)) {
+			req.session.liked = {};
+		}
 
-app.post('/import', function(req, res) {
-	if (req.body.db) {
-		db = JSON.parse(req.body.db);
-	}
-	res.redirect('/admin', 303);
+		if (!getEvent(req.body.id)) {
+			res.json({
+				success: 0,
+				message: '잘못된 이벤트입니다.'
+			});
+		}
+
+		// 이미 추천한 이슈
+		if (req.session.liked[req.body.id]) {
+			res.json({
+				success: 0,
+				message: '이미 추천했습니다'
+			});
+			return;
+		}
+
+		db.likes.push({
+			id: req.body.id,
+			regdate: (new Date()).getTime(),
+			host: getClientAddress(req)
+		});
+		updateCount();
+
+		// 세션에 추천 정보 기록
+		req.session.liked[req.body.id] = true;
+
+		res.json({
+			success: 1,
+			numLiked: getNumLiked(req.body.id)
+		});
+	});
+
+	app.get('/backup', function(req, res) {
+		backupDb();
+		res.redirect('/admin', 303);
+	});
+
+	app.post('/import', function(req, res) {
+		if (req.body.db) {
+			db = JSON.parse(req.body.db);
+		}
+		res.redirect('/admin', 303);
+	});
 });
 
 app.listen(3000);
