@@ -212,19 +212,29 @@ $('.event-container[event_id] .img-close').click(function () {
 });
 
 // pong 지수 설명
-$('.like').hover(function (evt) {
+$('.like, .button-pong').mouseover(function (evt) {
+	$(this).addClass('hover');
 	var tooltip = $('#tooltip-pong');
-	tooltip.css('top', evt.clientY - tooltip.height());
-	tooltip.css('left', evt.clientX);
-	tooltip.slideDown('fast');
-
-}, function () {
+	tooltip.css('top', evt.pageY - tooltip.height() + 10);
+	tooltip.css('left', evt.pageX + 10);
+	if (!tooltip.is(':visible')) {
+		tooltip.fadeIn('fast');
+	}
+}).mouseout(function () {
 	var $this = $(this);
+	$this.removeClass('hover');
+	var tooltip = $('#tooltip-pong');
 	setTimeout(function () {
-		if (!$this.is(':hover')) {
+		if (!$this.hasClass('hover')) {
 			$('#tooltip-pong').hide();
 		}
-	}, 100);
+	}, 20);
+});
+
+$('.like, .button-pong, #tooltip-pong').mousemove(function (evt) {
+	var tooltip = $('#tooltip-pong');
+	tooltip.css('top', evt.pageY - tooltip.height() + 10);
+	tooltip.css('left', evt.pageX + 10);
 });
 
 })();
