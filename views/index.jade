@@ -30,6 +30,17 @@ block left-timeline
         br
         input.submit(type='submit', value='등록')
 
+  //- profile
+  div.event-container.profile(style='display: none;')
+    div.prong
+      div.prong-dk
+      div.prong-lt
+    div.event
+      img.img-close(src="/images/x.png")
+      a(href='/images/nakw.png', target='_blank')
+        img.profile-content(src='/images/nakw.png')
+      span.notice ※ 프로필은 선거캠프 공식 홈페이지에서 가져왔습니다.
+
   //- existing events
   each event in left_events
     div.event-container(event_id=event.id)
@@ -65,8 +76,8 @@ block left-timeline
               )
         div.extra.right
           span.like= event.like
-          div.button-pong-wrapper.rounded-corner
-            div.button-pong.rounded-corner(target_id=event.id)
+          div.button-pong-wrapper.rounded-corner5
+            div.button-pong.rounded-corner5(target_id=event.id)
               span PONG
           span.date= event.date
         div.clear
@@ -100,6 +111,17 @@ block right-timeline
         input(type='password', name='passwd')
         br
         input.submit(type='submit', value='등록')
+
+  //- profile
+  div.event-container.profile(style='display: none;')
+    div.prong
+      div.prong-dk
+      div.prong-lt
+    div.event
+      img.img-close(src="/images/x.png")
+      a(href='/images/wonsoonpark.jpg', target='_blank')
+        img.profile-content(src='/images/wonsoonpark.jpg')
+        span.notice ※ 프로필은 선거캠프 공식 홈페이지에서 가져왔습니다.
 
   //- existing events
   each event in right_events
@@ -136,8 +158,8 @@ block right-timeline
               )
         div.extra.left
           span.like= event.like
-          div.button-pong-wrapper.rounded-corner
-            div.button-pong.rounded-corner(target_id=event.id)
+          div.button-pong-wrapper.rounded-corner5
+            div.button-pong.rounded-corner5(target_id=event.id)
               span PONG
           span.date= event.date
         div.clear

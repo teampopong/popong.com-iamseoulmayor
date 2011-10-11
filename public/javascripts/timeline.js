@@ -186,7 +186,7 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
-$('.addevent .img-close').click(function (evt) {
+$('.addevent .img-close, .profile .img-close').click(function (evt) {
 	stopPropagation(evt);
 
 	$(this).parents('.event-container').slideUp();
@@ -209,6 +209,16 @@ $('.event-container[event_id] .img-close').click(function (evt) {
 			container.remove();
 		});
 	});
+});
+
+$('.show-profile').click(function (evt) {
+	stopPropagation(evt);
+	$(this).parents('.member_panel').find('.profile').slideToggle();
+});
+
+$('.show-pledges').click(function (evt) {
+	stopPropagation(evt);
+	alert('준비 중입니다.');
 });
 
 // pong 지수 설명

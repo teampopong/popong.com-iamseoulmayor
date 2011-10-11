@@ -11,14 +11,16 @@ div#logo
       data-lang='ko'
       ) Tweet
 
-div#container
-  div#container2
+div#container.rounded-corner3
+  div#container2.rounded-corner3
     span.notice ※ 후보 표시 순서는 가나다순입니다.
     br
 
-    div.leftcolumn.member_panel
-      img.photo(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
+    div.leftcolumn.member_panel.rounded-corner3
+      img.photo.rounded-corner5(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
       div.name 나경원
+        a.show-profile.rounded-corner3(href='#') 프로필
+        a.show-pledges.rounded-corner3(href='#') 공약
         a(href='http://www.naseoul.com/', target='_blank')
           img.icon(src='/images/icon_homepage.png')
         a(href='http://twitter.com/nakw', target='_blank')
@@ -28,9 +30,11 @@ div#container
       div.timeline
         block left-timeline
 
-    div.rightcolumn.member_panel
-      img.photo(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
+    div.rightcolumn.member_panel.rounded-corner3
+      img.photo.rounded-corner5(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
       div.name 박원순
+        a.show-profile.rounded-corner3(href='#') 프로필
+        a.show-pledges.rounded-corner3(href='#') 공약
         a(href='http://wonsoon.com/', target='_blank')
           img.icon(src='/images/icon_homepage.png')
         a(href='http://twitter.com/wonsoonpark', target='_blank')
@@ -46,7 +50,7 @@ div#params(style='display: none;')
   input(type='hidden', name='event_id', value=event_id)
 
 div#floating
-  div#tooltip-pong.rounded-corner(style='display:none;')
+  div#tooltip-pong.rounded-corner5(style='display:none;')
     span.bold pong~
     하고 이 이슈의
     span.bold 관심도

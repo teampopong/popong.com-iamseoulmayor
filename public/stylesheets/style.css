@@ -37,9 +37,6 @@ body {
 
 	color: #3E3E3E;
 	background: white url('/images/leftborder.png') repeat-y left top;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 }
 
 #container2 {
@@ -47,9 +44,6 @@ body {
 	padding: 20px;
 
 	background: transparent url('/images/rightborder.png') repeat-y right top;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 }
 
 .notice {
@@ -57,6 +51,10 @@ body {
 	float:right;
 	color: #555;
 	font-size: 8px;
+}
+
+.profile .notice {
+	float: none;
 }
 
 .button-addevent {
@@ -126,6 +124,10 @@ body {
 	cursor: pointer;
 }
 
+.profile .event .profile-content {
+	width: 100%;
+}
+
 .leftcolumn .button-addevent {
 	margin-left: 430px;
 }
@@ -137,20 +139,12 @@ body {
 .leftcolumn {
 	float: left;
 	width: 440px;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-
 	padding: 0 20px;
 }
 
 .rightcolumn {
 	float: left;
 	width: 440px;
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-
 	padding: 0 20px;
 }
 
@@ -165,9 +159,6 @@ body {
 .member_panel img.photo {
 	height: 160px;
 	margin-top: 10px;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 }
 
 .member_panel div.name {
@@ -181,6 +172,21 @@ body {
 	margin-left: 3px;
 	width: 15px;
 	height: 15px;
+	vertical-align: text-bottom;
+}
+
+.name .show-profile, .name .show-pledges {
+	margin-left: 3px;
+	text-decoration: none;
+	font-size: 8pt;
+	padding: 2px;
+	color: #5e5e5e;
+	border: 1px solid #aaa;
+	background: whitesmoke;
+}
+
+.name .show-profile:hover, .name .show-pledges:hover {
+	background: #e5e5e5;
 }
 
 .timeline {
@@ -230,6 +236,7 @@ body {
 
 .event .img-close {
 	display: none;
+	z-index: 3;
 }
 
 .event:hover {
@@ -528,7 +535,13 @@ body {
 	z-index: 15;
 }
 
-.rounded-corner {
+.rounded-corner3 {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.rounded-corner5 {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
