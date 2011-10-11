@@ -177,6 +177,12 @@ body {
 	margin-bottom: 5px;
 }
 
+.name .icon {
+	margin-left: 3px;
+	width: 15px;
+	height: 15px;
+}
+
 .timeline {
 	position: relative;
 	width: 100%;
@@ -278,6 +284,10 @@ body {
 	font-size: 10pt;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+.rightcolumn .event .text {
+	text-align: left;
 }
 
 .event.expand .text {
