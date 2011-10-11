@@ -4,8 +4,8 @@
 var MAX_TEXT_LENGTH = 140;
 
 // functions
-function stopPropagation() {
-	if (!e) var e = window.event;
+function stopPropagation(e) {
+	e = e || window.event;
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
 }
@@ -98,8 +98,8 @@ $('.event').not('.addevent .event').hover(function () {
 	$(this).prev('.prong').children('.prong-lt').removeClass('hover');
 });
 
-$('.event .button-pong').click(function () {
-	stopPropagation();
+$('.event .button-pong').click(function (evt) {
+	stopPropagation(evt);
 
 	var $this = $(this);
 	requestPong($this.attr('target_id'), function (numPonged) {
@@ -186,14 +186,14 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
-$('.addevent .img-close').click(function () {
-	stopPropagation();
+$('.addevent .img-close').click(function (evt) {
+	stopPropagation(evt);
 
 	$(this).parents('.event-container').slideUp();
 });
 
-$('.event-container[event_id] .img-close').click(function () {
-	stopPropagation();
+$('.event-container[event_id] .img-close').click(function (evt) {
+	stopPropagation(evt);
 
 	var passwd = prompt('이슈를 등록할 때 사용한 비밀번호를 입력해 주세요.');
 	if (!passwd) {
