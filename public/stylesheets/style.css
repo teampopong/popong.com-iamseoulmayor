@@ -36,14 +36,16 @@ body {
 	margin-bottom: 40px;
 
 	color: #3E3E3E;
-	background: white url('/images/leftborder.png') repeat-y left top;
+	background: white;
+	overflow:hidden;
 }
 
 #container2 {
 	width: 960px;
-	padding: 20px;
+	padding: 20px 10px;
 
-	background: transparent url('/images/rightborder.png') repeat-y right top;
+	border-left: 10px solid #00ccff;
+	border-right: 10px solid #159301;
 }
 
 .notice {
@@ -172,7 +174,7 @@ body {
 	margin-left: 3px;
 	width: 15px;
 	height: 15px;
-	vertical-align: text-bottom;
+	border: 0;
 }
 
 .name .show-profile, .name .show-pledges {
@@ -314,11 +316,11 @@ body {
 }
 
 .leftcolumn .event .like {
-	color: orangered;
+	color: #00ccff;
 }
 
 .rightcolumn .event .like {
-	color: steelblue;
+	color: #159301;
 }
 
 .event .date {
@@ -382,43 +384,45 @@ body {
 	padding: 1px 0;
 }
 
-.leftcolumn .event .button-pong {
-	background-image: linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
-	background-image: -o-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
-	background-image: -moz-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
-	background-image: -webkit-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
-	background-image: -ms-linear-gradient(bottom, rgb(255,162,122) 22%, rgb(255,141,99) 61%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFA27A, endColorstr=#ff8d63);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFA27A, endColorstr=#ff8d63)";
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.22, rgb(255,162,122)),
-		color-stop(0.61, rgb(255,141,99))
-	);
-}
-
-.leftcolumn .event .button-pong:hover {
-	background-image: linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
-	background-image: -o-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
-	background-image: -moz-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
-	background-image: -webkit-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
-	background-image: -ms-linear-gradient(bottom, rgb(255,135,84) 22%, rgb(255,108,54) 61%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8754, endColorstr=#ff6c36);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8754, endColorstr=#ff6c36)";
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.22, rgb(255,135,84)),
-		color-stop(0.61, rgb(255,108,54))
-	);
-}
-
 .rightcolumn .event .button-pong {
+	background-image: linear-gradient(bottom, #27D604 9%, #22C904 55%);
+	background-image: -o-linear-gradient(bottom, #27D604 9%, #22C904 55%);
+	background-image: -moz-linear-gradient(bottom, #27D604 9%, #22C904 55%);
+	background-image: -webkit-linear-gradient(bottom, #27D604 9%, #22C904 55%);
+	background-image: -ms-linear-gradient(bottom, #27D604 9%, #22C904 55%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.09, #27D604),
+		color-stop(0.55, #22C904)
+	);
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#27D604, endColorstr=#22C904);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#27D604, endColorstr=#22C904)";
+}
+
+.rightcolumn .event .button-pong:hover {
+	background-image: linear-gradient(bottom, #1FC402 9%, #1CB002 55%);
+	background-image: -o-linear-gradient(bottom, #1FC402 9%, #1CB002 55%);
+	background-image: -moz-linear-gradient(bottom, #1FC402 9%, #1CB002 55%);
+	background-image: -webkit-linear-gradient(bottom, #1FC402 9%, #1CB002 55%);
+	background-image: -ms-linear-gradient(bottom, #1FC402 9%, #1CB002 55%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.09, #1FC402),
+		color-stop(0.55, #1CB002)
+	);
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#1FC402, endColorstr=#1CB002);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#1FC402, endColorstr=#1CB002)";
+}
+
+.leftcolumn .event .button-pong {
 	background-image: linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
 	background-image: -o-linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
 	background-image: -moz-linear-gradient(bottom, rgb(133,212,255) 22%, rgb(99,200,255) 61%);
@@ -436,7 +440,7 @@ body {
 	)
 }
 
-.rightcolumn .event .button-pong:hover {
+.leftcolumn .event .button-pong:hover {
 	background-image: linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
 	background-image: -o-linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
 	background-image: -moz-linear-gradient(bottom, rgb(99,200,255) 22%, rgb(59,186,255) 61%);
