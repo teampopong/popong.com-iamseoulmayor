@@ -37,23 +37,27 @@ function requestDeleteEvent(id, passwd, callback) {
 }
 
 function showAddevent(topic, column) {
-	var $addevent = $(_.sprintf('.%scolumn .addevent', column));
+	var $addevent = $(_.sprintf('.%scolumn .addevent', column)),
+		form = $addevent.find('.form-addevent'),
+		button = $addevent.find('.button-addevent');
 
-	if ($addevent.is(':visible')) {
-		$addevent.slideUp();
-	} else {
-		$('.addevent').hide();
+	hideAddevent();
 
-		var today = new Date();
-		$addevent.find('.topic').text(topic);
-		$addevent.find('input[name="topic"]').val(topic);
-		$addevent.find('input[name="year"]').val(today.getFullYear());
-		$addevent.find('input[name="month"]').val(today.getMonth() + 1);
-		$addevent.find('input[name="day"]').val(today.getDate());
-		$addevent.find('.charleft').text(MAX_TEXT_LENGTH);
+	var today = new Date();
+	form.find('.topic').text(topic);
+	form.find('input[name="topic"]').val(topic);
+	form.find('input[name="year"]').val(today.getFullYear());
+	form.find('input[name="month"]').val(today.getMonth() + 1);
+	form.find('input[name="day"]').val(today.getDate());
+	form.find('.charleft').text(MAX_TEXT_LENGTH);
 
-		$addevent.slideDown();
-	}
+	button.hide();
+	form.slideDown();
+}
+
+function hideAddevent() {
+	$('.form-addevent').slideUp();
+	$('.button-addevent').slideDown();
 }
 
 function focusEvent(event_id) {
@@ -110,7 +114,7 @@ $('.event .button-pong').click(function (evt) {
 $('.button-addevent').click(function () {
 	var $this = $(this);
 	var topic = $this.prev('.name').text();
-	var column = $this.parent('.leftcolumn').size() ? 'left' : 'right';
+	var column = $this.parents('.leftcolumn').size() ? 'left' : 'right';
 	showAddevent(topic, column);
 });
 
@@ -186,10 +190,16 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
-$('.addevent .img-close, .profile .img-close').click(function (evt) {
+$('.profile .img-close').click(function (evt) {
 	stopPropagation(evt);
 
 	$(this).parents('.event-container').slideUp();
+});
+
+$('.addevent .img-close').click(function (evt) {
+	stopPropagation(evt);
+
+	hideAddevent();
 });
 
 $('.event-container[event_id] .img-close').click(function (evt) {

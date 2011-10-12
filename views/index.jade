@@ -2,12 +2,13 @@ extends timeline
 
 block left-timeline
   //- event input box
-  div.event-container.addevent(style='display: none;')
+  div.event-container.addevent
     div.prong
       div.prong-dk
       div.prong-lt
     div.event
-      form
+      div.button-addevent 이슈 등록
+      form.form-addevent(style='display: none;')
         input(type='hidden', name='topic')
         img.img-close(src="/images/x.png")
         input(type='text', name='year')
@@ -72,12 +73,13 @@ block left-timeline
 
 block right-timeline
   //- event input box
-  div.event-container.addevent(style='display: none;')
+  div.event-container.addevent
     div.prong
       div.prong-dk
       div.prong-lt
     div.event
-      form
+      div.button-addevent 이슈 등록
+      form.form-addevent(style='display:none')
         input(type='hidden', name='topic')
         img.img-close(src="/images/x.png")
         input(type='text', name='year')

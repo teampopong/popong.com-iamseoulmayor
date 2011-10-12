@@ -60,8 +60,9 @@ body {
 }
 
 .button-addevent {
-	position: absolute;
-	background: white;
+	text-align: center;
+	padding: 3px 0;
+	font-weight: bold;
 	cursor: pointer;
 }
 
@@ -130,14 +131,6 @@ body {
 	width: 100%;
 }
 
-.leftcolumn .button-addevent {
-	margin-left: 430px;
-}
-
-.rightcolumn .button-addevent {
-	margin-left: -10px;
-}
-
 .leftcolumn {
 	float: left;
 	width: 440px;
@@ -195,15 +188,33 @@ body {
 	position: relative;
 	width: 100%;
 	text-align: left;
-	margin-top: 24px;
 }
 
 .leftcolumn .timeline {
-	border-right: 5px solid #d7d7d7;
+	border-right: 5px solid #d5d5d5;
 }
 
 .rightcolumn .timeline {
-	border-left: 5px solid #d7d7d7;
+	border-left: 5px solid #d5d5d5;
+}
+
+.caption-timeline {
+	width: 80%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 13pt;
+	margin: 30px auto 15px;
+	padding-bottom: 5px;
+}
+
+.leftcolumn .caption-timeline {
+	color: #00aaff; /* since #00ccff is too bright for text */
+	border-bottom: 2px solid #00ccff;
+}
+
+.rightcolumn .caption-timeline {
+	color: #159301;
+	border-bottom: 2px solid #159301;
 }
 
 .left {
@@ -241,7 +252,7 @@ body {
 	z-index: 3;
 }
 
-.event:hover {
+.event-container[event_id] .event:hover {
 	background: #f5f5f5;
 	cursor: default;
 }
@@ -252,7 +263,7 @@ body {
 	cursor: pointer;
 }
 
-.addevent .event:hover {
+.addevent .event .form-addevent:hover {
 	background: white;
 	cursor: auto;
 }
