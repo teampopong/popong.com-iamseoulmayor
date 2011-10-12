@@ -221,6 +221,31 @@ $('.show-pledges').click(function (evt) {
 	alert('준비 중입니다.');
 });
 
+$('.button-twitter').click(function (evt) {
+	stopPropagation(evt);
+
+	var id = $(this).parents('.event-container').attr('event_id');
+	var name = $(this).parents('.member_panel').find('.name').attr('topic');
+	var title = $(this).parents('.event').find('.title').text();
+
+	var url = 'http://twitter.com/share'
+			+ '?url=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id
+			+ '&via=PopongC&text=나는 서울 시장이다!::'+name
+			+ ', "'+title
+			+ '" #popong';
+	var w = window.open(url, "twitter", "width=600, height=255, menubar=0");
+	w.focus();
+});
+
+$('.button-facebook').click(function (evt) {
+	stopPropagation(evt);
+
+	var id = $(this).parents('.event-container').attr('event_id');
+	var url = 'http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id;
+	var w = window.open(url, "Facebook", "width=600, height=400, menubar=0");
+	w.focus();
+});
+
 // pong 지수 설명
 $('.like, .button-pong').mouseover(function (evt) {
 	$(this).addClass('hover');

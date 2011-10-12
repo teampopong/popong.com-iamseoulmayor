@@ -57,23 +57,11 @@ block left-timeline
             a(href=event.link, target='_blank')= event.link
           div.share
             //- twitter button
-            a.twitter-share-button(
-              href='https://twitter.com/share',
-              data-url='http://www.popong.com/iamseoulmayor/event/'+event.id,
-              data-text='나는서울시장이다!::'+event.topic+', &quot;'+event.title+'&quot; #popong',
-              data-count='none',
-              data-via='popongc',
-              data-lang='ko'
-              ) Tweet
-            &nbsp;
+            a.button-twitter(href='#')
+              img(src='/images/img_button_twitter.png')
             //- facebook button
-            iframe(
-              src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+event.id+'&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=recommend&amp;colorscheme=light&amp;font=tahoma&amp;height=21',
-              scrolling='no',
-              frameborder='0',
-              style='border:none; overflow:hidden; width:50px; height:21px;',
-              allowTransparency='true'
-              )
+            a.button-facebook(href='#')
+              img(src='/images/img_button_facebook.gif')
         div.extra.right
           span.like= event.like
           div.button-pong-wrapper.rounded-corner5
@@ -139,23 +127,11 @@ block right-timeline
             a(href=event.link, target='_blank')= event.link
           div.share
             //- twitter button
-            a.twitter-share-button(
-              href='https://twitter.com/share',
-              data-url='http://www.popong.com/iamseoulmayor/event/'+event.id,
-              data-text='나는서울시장이다!::'+event.topic+', &quot;'+event.title+'&quot; #popong',
-              data-count='none',
-              data-via='popongc',
-              data-lang='ko'
-              ) Tweet
-            &nbsp;
+            a.button-twitter(href='#')
+              img(src='/images/img_button_twitter.png')
             //- facebook button
-            iframe(
-              src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+event.id+'&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=recommend&amp;colorscheme=light&amp;font=tahoma&amp;height=21',
-              scrolling='no',
-              frameborder='0',
-              style='border:none; overflow:hidden; width:50px; height:21px;',
-              allowTransparency='true'
-              )
+            a.button-facebook(href='#')
+              img(src='/images/img_button_facebook.gif')
         div.extra.left
           span.like= event.like
           div.button-pong-wrapper.rounded-corner5

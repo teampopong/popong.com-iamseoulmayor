@@ -365,6 +365,10 @@ body {
 	display: block;
 }
 
+.event .share .button-facebook {
+	margin: 0 3px;
+}
+
 .event .button-pong-wrapper {
 	display: none;
 	overflow: hidden;
