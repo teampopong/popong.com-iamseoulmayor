@@ -641,6 +641,11 @@ body {
 	background: #888;
 }
 
+#menu .separator {
+	border-top: 1px solid #777;
+	margin: 5px 0;
+}
+
 .rounded-corner3 {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
