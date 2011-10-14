@@ -16,53 +16,59 @@ div#container.rounded-corner5
     span.notice ※ 후보 표시 순서는 가나다순입니다.
     br
 
-    div.leftcolumn.member_panel.rounded-corner3
-      img.photo.rounded-corner5(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
-      div.name(topic='나경원') 나경원
-        a(href='http://www.naseoul.com/', target='_blank')
-          img.icon(src='/images/icon_homepage.png')
-        a(href='http://twitter.com/nakw', target='_blank')
-          img.icon(src='/images/icon_twitter.png')
-        br
-        a.show-profile.rounded-corner3(href='#') 프로필
-        a.show-pledges.rounded-corner3(href='#') 공약
+    div.member-panel
+      div.leftcolumn
+        img.photo.rounded-corner5(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
+        div.name 나경원
+          a(href='http://www.naseoul.com/', target='_blank')
+            img.icon(src='/images/icon_homepage.png')
+          a(href='http://twitter.com/nakw', target='_blank')
+            img.icon(src='/images/icon_twitter.png')
+          br
+          a.show-profile.rounded-corner3(href='#') 프로필
+          a.show-pledges.rounded-corner3(href='#') 공약
 
-      //- profile
-      div.event-container.profile(style='display: none;')
-        div.event
-          img.img-close(src="/images/x.png")
-          a(href='/images/nakw.png', target='_blank')
-            img.profile-content(src='/images/nakw.png')
-          span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
+      div.rightcolumn
+        img.photo.rounded-corner5(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
+        div.name 박원순
+          a(href='http://wonsoon.com/', target='_blank')
+            img.icon(src='/images/icon_homepage.png')
+          a(href='http://twitter.com/wonsoonpark', target='_blank')
+            img.icon(src='/images/icon_twitter.png')
+          br
+          a.show-profile.rounded-corner3(href='#') 프로필
+          a.show-pledges.rounded-corner3(href='#') 공약
+      div.clear
 
-      div.caption-timeline 타임라인
-      div.timeline
-        block left-timeline
+    div.profile-panel(style='display: none')
+      div.leftcolumn
+        div.event-container.profile
+          div.event
+            img.img-close(src="/images/x.png")
+            a(href='/images/nakw.png', target='_blank')
+              img.profile-content(src='/images/nakw.png')
+            span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
 
-    div.rightcolumn.member_panel.rounded-corner3
-      img.photo.rounded-corner5(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
-      div.name(topic='박원순') 박원순
-        a(href='http://wonsoon.com/', target='_blank')
-          img.icon(src='/images/icon_homepage.png')
-        a(href='http://twitter.com/wonsoonpark', target='_blank')
-          img.icon(src='/images/icon_twitter.png')
-        br
-        a.show-profile.rounded-corner3(href='#') 프로필
-        a.show-pledges.rounded-corner3(href='#') 공약
+      div.rightcolumn
+        div.event-container.profile
+          div.event
+            img.img-close(src="/images/x.png")
+            a(href='/images/wonsoonpark.jpg', target='_blank')
+              img.profile-content(src='/images/wonsoonpark.jpg')
+            span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
+      div.clear
 
-      //- profile
-      div.event-container.profile(style='display: none;')
-        div.event
-          img.img-close(src="/images/x.png")
-          a(href='/images/wonsoonpark.jpg', target='_blank')
-            img.profile-content(src='/images/wonsoonpark.jpg')
-          span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
+    div.timeline-panel
+      div.leftcolumn
+        div.caption-timeline 타임라인
+        div.timeline(topic='나경원')
+          block left-timeline
 
-      div.caption-timeline 타임라인
-      div.timeline
-        block right-timeline
-
-    div.clear
+      div.rightcolumn
+        div.caption-timeline 타임라인
+        div.timeline(topic='박원순')
+          block right-timeline
+      div.clear
 
 div#params(style='display: none;')
   input(type='hidden', name='event_id', value=event_id)

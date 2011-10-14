@@ -36,28 +36,14 @@ function requestDeleteEvent(id, passwd, callback) {
 	});
 }
 
-function showAddevent(topic, column) {
-	var $addevent = $(_.sprintf('.%scolumn .addevent', column)),
-		form = $addevent.find('.form-addevent'),
-		button = $addevent.find('.button-addevent');
-
-	hideAddevent();
-
-	var today = new Date();
-	form.find('.topic').text(topic);
-	form.find('input[name="topic"]').val(topic);
-	form.find('input[name="year"]').val(today.getFullYear());
-	form.find('input[name="month"]').val(today.getMonth() + 1);
-	form.find('input[name="day"]').val(today.getDate());
-	form.find('.charleft').text(MAX_TEXT_LENGTH);
-
-	button.hide();
-	form.slideDown();
-}
-
-function hideAddevent() {
+function hideAddevents() {
 	$('.form-addevent').slideUp();
 	$('.button-addevent').slideDown();
+}
+
+function expandEvent(event) {
+	$(event).toggleClass('expand');
+	$('.event').not(event).removeClass('expand');
 }
 
 function focusEvent(event_id) {
@@ -67,15 +53,9 @@ function focusEvent(event_id) {
 		$('body').animate({
 			scrollTop: $event.offset().top
 		}, 300, function () {
-			expandEvent.apply($event.children('.event'));
+			expandEvent($event.children('.event'));
 		});
 	}
-}
-
-function expandEvent() {
-	var $this = $(this);
-	$this.toggleClass('expand');
-	$('.event').not(this).removeClass('expand');
 }
 
 // on load
@@ -92,8 +72,9 @@ $(function () {
 });
 
 // events
+
 $('.event').click(function () {
-	expandEvent.apply(this);
+	expandEvent(this);
 });
 
 $('.event').not('.addevent .event').hover(function () {
@@ -112,10 +93,21 @@ $('.event .button-pong').click(function (evt) {
 });
 
 $('.button-addevent').click(function () {
-	var $this = $(this);
-	var topic = $this.parents('.member_panel').find('.name').attr('topic');
-	var column = $this.parents('.leftcolumn').size() ? 'left' : 'right';
-	showAddevent(topic, column);
+
+	function setDate() {
+		var today = new Date();
+		form.find('input[name="year"]').val(today.getFullYear());
+		form.find('input[name="month"]').val(today.getMonth() + 1);
+		form.find('input[name="day"]').val(today.getDate());
+	}
+
+	var button = $(this),
+		form = $(this).parent().children('.form-addevent');
+
+	hideAddevents();
+	setDate();
+	button.slideUp();
+	form.slideDown();
 });
 
 $('.addevent form').submit((function () {
@@ -180,7 +172,7 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	var $this = $(this),
 		len = $(this).val().length,
 		lenleft = MAX_TEXT_LENGTH - len,
-		$charleft = $this.next('.charleft');
+		$charleft = $this.siblings('.charleft');
 
 	$charleft.text(lenleft);
 	if (lenleft < 0) {
@@ -192,14 +184,12 @@ $('.addevent textarea[name="text"]').keyup(function () {
 
 $('.profile .img-close').click(function (evt) {
 	stopPropagation(evt);
-
-	$(this).parents('.event-container').slideUp();
+	$('.profile-panel').slideUp();
 });
 
 $('.addevent .img-close').click(function (evt) {
 	stopPropagation(evt);
-
-	hideAddevent();
+	hideAddevents();
 });
 
 $('.event-container[event_id] .img-close').click(function (evt) {
@@ -223,7 +213,7 @@ $('.event-container[event_id] .img-close').click(function (evt) {
 
 $('.show-profile').click(function (evt) {
 	stopPropagation(evt);
-	$(this).parents('.member_panel').find('.profile').slideToggle();
+	$('.profile-panel').slideToggle();
 });
 
 $('.show-pledges').click(function (evt) {
@@ -235,7 +225,7 @@ $('.button-twitter').click(function (evt) {
 	stopPropagation(evt);
 
 	var id = $(this).parents('.event-container').attr('event_id');
-	var name = $(this).parents('.member_panel').find('.name').attr('topic');
+	var name = $(this).parents('.timeline').attr('topic');
 	var title = $(this).parents('.event').find('.title').text();
 
 	var url = 'http://twitter.com/share'
