@@ -113,7 +113,7 @@ $('.event .button-pong').click(function (evt) {
 
 $('.button-addevent').click(function () {
 	var $this = $(this);
-	var topic = $this.prev('.name').text();
+	var topic = $this.parents('.member_panel').find('.name').attr('topic');
 	var column = $this.parents('.leftcolumn').size() ? 'left' : 'right';
 	showAddevent(topic, column);
 });
