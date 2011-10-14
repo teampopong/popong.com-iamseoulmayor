@@ -1,8 +1,5 @@
 div#container.rounded-corner5
   div#container2
-    span.notice ※ 후보 표시 순서는 가나다순입니다.
-    br
-
     div#member-panel
       div#logo
         h1 나는 서울 시장이다!
@@ -35,10 +32,11 @@ div#container.rounded-corner5
             img.icon(src='/images/icon_twitter.png')
       div.clear
 
-    div(style="height: 100px;") &nbsp;
+    div#spaceholder &nbsp;
 
-    div#profile-panel(style='display: none')
+    div#profile-panel
       div.leftcolumn
+        div.caption 프로필
         div.event-container.profile
           div.event
             img.img-close(src="/images/x.png")
@@ -47,6 +45,7 @@ div#container.rounded-corner5
             span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
 
       div.rightcolumn
+        div.caption 프로필
         div.event-container.profile
           div.event
             img.img-close(src="/images/x.png")
@@ -55,14 +54,14 @@ div#container.rounded-corner5
             span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
       div.clear
 
-    div.timeline-panel
+    div#timeline-panel
       div.leftcolumn
-        div.caption-timeline 타임라인
+        div.caption 타임라인
         div.timeline(topic='나경원')
           block left-timeline
 
       div.rightcolumn
-        div.caption-timeline 타임라인
+        div.caption 타임라인
         div.timeline(topic='박원순')
           block right-timeline
       div.clear
@@ -76,6 +75,14 @@ div#floating
     하고 이 이슈의
     span.bold 관심도
     를 올려주세요!
+  div#menu.rounded-corner5(style='display:none;')
+    ul
+      a(href='#profile-panel')
+        li.rounded-corner5 프로필
+      a(href='#')
+        li.rounded-corner5 공약
+      a(href='#timeline-panel')
+        li.rounded-corner5 타임라인
 
 //- feedback widget
 style(type='text/css')

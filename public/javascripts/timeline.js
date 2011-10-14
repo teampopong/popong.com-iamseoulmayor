@@ -47,23 +47,34 @@ function expandEvent(event) {
 	$('.event').not(event).removeClass('expand');
 }
 
+function scrollTo(top, callback) {
+	callback = callback || (function () {});
+	$('body').animate({
+		scrollTop: top - HEIGHT_MEMBER_PANEL
+	}, 300, callback);
+}
+
 function focusEvent(event_id) {
 	if (event_id.length) {
 		var sel = _.sprintf('.event-container[event_id="%s"]', event_id);
 		var $event = $(sel);
 		if ($event.size() > 0) {
-			$('body').animate({
-				scrollTop: $event.offset().top - HEIGHT_MEMBER_PANEL
-			}, 300, function () {
+			scrollTo($event.offset().top, function () {
 				expandEvent($event.children('.event'));
 			});
 		}
 	}
 }
 
-// on load
-
+// on DOM load
 $(function () {
+	HEIGHT_MEMBER_PANEL = $('#member-panel').height();
+	$('#spaceholder').css('height', HEIGHT_MEMBER_PANEL+'px');
+	$('#menu').css('top', HEIGHT_MEMBER_PANEL+'px').fadeIn();
+});
+
+// on full load
+$(window).load(function () {
 	// load parameters passed
 	var params = {};
 	$('#params *[name]').each(function () {
@@ -71,8 +82,11 @@ $(function () {
 		params[$this.attr('name')] = $this.val();
 	});
 
-	HEIGHT_MEMBER_PANEL = $('#member-panel').height();
-	focusEvent(params.event_id);
+	if (params.event_id) {
+		focusEvent(params.event_id);
+	} else {
+		scrollTo($('#timeline-panel').offset().top);
+	}
 });
 
 // events
@@ -186,13 +200,6 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
-/*
-$('.profile .img-close').click(function (evt) {
-	stopPropagation(evt);
-	$('.profile-panel').slideUp();
-});
-*/
-
 $('.addevent .img-close').click(function (evt) {
 	stopPropagation(evt);
 	hideAddevents();
@@ -217,19 +224,12 @@ $('.event-container[event_id] .img-close').click(function (evt) {
 	});
 });
 
-/*
-$('.show-profile').click(function (evt) {
+$('#menu a').click(function (evt) {
 	stopPropagation(evt);
-	$('.profile-panel').slideToggle();
-});
-*/
 
-/*
-$('.show-pledges').click(function (evt) {
-	stopPropagation(evt);
-	alert('준비 중입니다.');
+	var target = $(this).attr('href');
+	scrollTo($(target).offset().top);
 });
-*/
 
 $('.button-twitter').click(function (evt) {
 	stopPropagation(evt);

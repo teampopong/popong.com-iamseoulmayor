@@ -183,6 +183,14 @@ body {
 	border: 0;
 }
 
+#profile-panel {
+	padding-top: 40px;
+}
+
+#timeline-panel {
+	padding-top: 40px;
+}
+
 .timeline {
 	position: relative;
 	width: 100%;
@@ -197,7 +205,7 @@ body {
 	border-left: 5px solid #d5d5d5;
 }
 
-.caption-timeline {
+.caption {
 	width: 80%;
 	text-align: center;
 	font-weight: bold;
@@ -206,12 +214,12 @@ body {
 	padding-bottom: 5px;
 }
 
-.leftcolumn .caption-timeline {
+.leftcolumn .caption {
 	color: #00aaff; /* since #00ccff is too bright for text */
 	border-bottom: 2px solid #00ccff;
 }
 
-.rightcolumn .caption-timeline {
+.rightcolumn .caption {
 	color: #159301;
 	border-bottom: 2px solid #159301;
 }
@@ -551,6 +559,43 @@ body {
 	padding: 5px;
 	color: #555;
 	z-index: 15;
+}
+
+#menu {
+	position: fixed;
+	right: 30px;
+
+	width: 80px;
+	padding: 5px;
+
+	border: 1px solid #aaa;
+	background: #555;
+
+	text-align: center;
+	font-weight: bold;
+	color: whitesmoke;
+
+	z-index: 10;
+}
+
+#menu ul {
+	list-style: none;
+}
+
+#menu a {
+	color: whitesmoke;
+	text-decoration: none;
+}
+
+#menu li {
+	border: 1px solid #575757;
+	background: #666;
+	margin: 2px 0;
+	padding: 3px;
+}
+
+#menu li:hover {
+	background: #777;
 }
 
 .rounded-corner3 {
