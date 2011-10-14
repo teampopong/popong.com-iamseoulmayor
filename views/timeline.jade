@@ -1,22 +1,23 @@
-div#logo
-  h2 나는 서울 시장이다!
-    span.super &nbsp;beta
-  div.twitter-feedback
-    span 개선 사항 및 의견을 트위터로 바로 보내주세요!
-    a.twitter-share-button(
-      href='https://twitter.com/share',
-      data-url='http://',
-      data-text='@PopongC ',
-      data-count='none',
-      data-lang='ko'
-      ) Tweet
-
 div#container.rounded-corner5
   div#container2
     span.notice ※ 후보 표시 순서는 가나다순입니다.
     br
 
-    div.member-panel
+    div#member-panel
+      div#logo
+        h1 나는 서울 시장이다!
+          span.super &nbsp;beta
+        //
+          div.twitter-feedback
+            span 개선 사항 및 의견을 트위터로 바로 보내주세요!
+            a.twitter-share-button(
+              href='https://twitter.com/share',
+              data-url='http://',
+              data-text='@PopongC ',
+              data-count='none',
+              data-lang='ko'
+              ) Tweet
+
       div.leftcolumn
         img.photo.rounded-corner5(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
         div.name 나경원
@@ -24,9 +25,6 @@ div#container.rounded-corner5
             img.icon(src='/images/icon_homepage.png')
           a(href='http://twitter.com/nakw', target='_blank')
             img.icon(src='/images/icon_twitter.png')
-          br
-          a.show-profile.rounded-corner3(href='#') 프로필
-          a.show-pledges.rounded-corner3(href='#') 공약
 
       div.rightcolumn
         img.photo.rounded-corner5(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
@@ -35,12 +33,11 @@ div#container.rounded-corner5
             img.icon(src='/images/icon_homepage.png')
           a(href='http://twitter.com/wonsoonpark', target='_blank')
             img.icon(src='/images/icon_twitter.png')
-          br
-          a.show-profile.rounded-corner3(href='#') 프로필
-          a.show-pledges.rounded-corner3(href='#') 공약
       div.clear
 
-    div.profile-panel(style='display: none')
+    div(style="height: 100px;") &nbsp;
+
+    div#profile-panel(style='display: none')
       div.leftcolumn
         div.event-container.profile
           div.event

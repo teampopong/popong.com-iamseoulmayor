@@ -2,6 +2,7 @@
 
 // constants
 var MAX_TEXT_LENGTH = 140;
+var HEIGHT_MEMBER_PANEL;
 
 // functions
 function stopPropagation(e) {
@@ -50,11 +51,13 @@ function focusEvent(event_id) {
 	if (event_id.length) {
 		var sel = _.sprintf('.event-container[event_id="%s"]', event_id);
 		var $event = $(sel);
-		$('body').animate({
-			scrollTop: $event.offset().top
-		}, 300, function () {
-			expandEvent($event.children('.event'));
-		});
+		if ($event.size() > 0) {
+			$('body').animate({
+				scrollTop: $event.offset().top - HEIGHT_MEMBER_PANEL
+			}, 300, function () {
+				expandEvent($event.children('.event'));
+			});
+		}
 	}
 }
 
@@ -68,6 +71,7 @@ $(function () {
 		params[$this.attr('name')] = $this.val();
 	});
 
+	HEIGHT_MEMBER_PANEL = $('#member-panel').height();
 	focusEvent(params.event_id);
 });
 
@@ -182,10 +186,12 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
+/*
 $('.profile .img-close').click(function (evt) {
 	stopPropagation(evt);
 	$('.profile-panel').slideUp();
 });
+*/
 
 $('.addevent .img-close').click(function (evt) {
 	stopPropagation(evt);
@@ -211,15 +217,19 @@ $('.event-container[event_id] .img-close').click(function (evt) {
 	});
 });
 
+/*
 $('.show-profile').click(function (evt) {
 	stopPropagation(evt);
 	$('.profile-panel').slideToggle();
 });
+*/
 
+/*
 $('.show-pledges').click(function (evt) {
 	stopPropagation(evt);
 	alert('준비 중입니다.');
 });
+*/
 
 $('.button-twitter').click(function (evt) {
 	stopPropagation(evt);

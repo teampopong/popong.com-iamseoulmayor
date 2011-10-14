@@ -13,25 +13,8 @@ body {
 	font-size: 90%;
 }
 
-#logo {
-	width: 960px;
-	margin: 40px auto 10px;
-
-	color: #3E3E3E;
-	font-weight: normal;
-}
-
-#logo iframe.twitter-share-button {
-	margin-left: 3px;
-	vertical-align: bottom;
-}
-
-#logo .twitter-feedback {
-	font-size: 9pt;
-}
-
 #container {
-	width: 1000px;
+	width: 980px;
 	margin: 0 auto;
 	margin-bottom: 40px;
 
@@ -42,7 +25,7 @@ body {
 
 #container2 {
 	width: 960px;
-	padding: 20px 10px;
+	padding: 0 0 20px;
 
 	border-left: 10px solid #00ccff;
 	border-right: 10px solid #159301;
@@ -147,41 +130,57 @@ body {
 	clear: both;
 }
 
-.member-panel {
+#member-panel {
+	position: fixed;
+	top: 0;
+	margin: 0 auto;
+
+	background: #f9f9f9;
+	border-bottom: 1px solid #aaa;
+
+	z-index: 20;
+}
+
+#member-panel #logo {
+	margin: 0 auto 5px;
+
+	color: #3E3E3E;
+	font-weight: normal;
+}
+
+#member-panel #logo h1 {
+	font-size: 16pt;
 	text-align: center;
+
+	padding: 5px 0;
+	border-bottom: 1px solid #e0e0e0;
 }
 
-.member-panel img.photo {
-	height: 160px;
-	margin-top: 10px;
+#member-panel #logo iframe.twitter-share-button {
+	margin-left: 3px;
+	vertical-align: bottom;
 }
 
-.member-panel div.name {
+#member-panel #logo .twitter-feedback {
+	font-size: 9pt;
+}
+
+#member-panel img.photo {
+	height: 50px;
+}
+
+#member-panel div.name {
+	display: inline-block;
 	font-weight: bold;
 	font-size: 110%;
-	margin-top: 20px;
-	margin-bottom: 5px;
+	margin: 20px 0 5px 5px;
 }
 
-.name .icon {
+#member-panel .name .icon {
 	margin-left: 3px;
 	width: 15px;
 	height: 15px;
 	border: 0;
-}
-
-.name .show-profile, .name .show-pledges {
-	margin-left: 3px;
-	text-decoration: none;
-	font-size: 8pt;
-	padding: 2px;
-	color: #5e5e5e;
-	border: 1px solid #aaa;
-	background: whitesmoke;
-}
-
-.name .show-profile:hover, .name .show-pledges:hover {
-	background: #e5e5e5;
 }
 
 .timeline {
@@ -203,7 +202,7 @@ body {
 	text-align: center;
 	font-weight: bold;
 	font-size: 13pt;
-	margin: 30px auto 15px;
+	margin: 0 auto 15px;
 	padding-bottom: 5px;
 }
 
