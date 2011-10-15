@@ -14,6 +14,15 @@ body {
 	line-height: 1.4;
 }
 
+a {
+	color: #2a4b82;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: #3662a9;
+}
+
 #container {
 	width: 980px;
 	margin: 0 auto;
@@ -238,9 +247,10 @@ body {
 	float: none;
 }
 
-.profile .button {
-	margin-left: 0.5em;
-	font-size: 80%;
+.profile .more {
+	margin-left: 0.6em;
+	font-size: 75%;
+	display: inline-block;
 }
 
 #pledge-panel {
