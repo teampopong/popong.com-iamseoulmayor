@@ -211,12 +211,12 @@ $('.timeline-addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
-$('.timeline-addevent .img-close').click(function (evt) {
+$('.timeline-addevent .close').click(function (evt) {
 	stopPropagation(evt);
 	hideAddevents();
 });
 
-$('.event-container[event_id] .img-close').click(function (evt) {
+$('.event-container[event_id] .close').click(function (evt) {
 	stopPropagation(evt);
 
 	var passwd = prompt('이슈를 등록할 때 사용한 비밀번호를 입력해 주세요.');

@@ -1,3 +1,7 @@
+@charset "UTF-8";
+
+/* Common styles */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -25,24 +29,6 @@ a:hover {
 	color: #3662a9;
 }
 
-#container {
-	width: 980px;
-	margin: 0 auto;
-	margin-bottom: 40px;
-
-	color: #3E3E3E;
-	background: white;
-	overflow:hidden;
-}
-
-#container2 {
-	width: 960px;
-	padding: 0 0 20px;
-
-	border-left: 10px solid #00ccff;
-	border-right: 10px solid #159301;
-}
-
 .notice {
 	position: relative;
 	float:right;
@@ -55,6 +41,19 @@ a:hover {
 	width: 15px;
 	height: 15px;
 	border: 0;
+}
+
+.close {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	background: url(/images/close-16x16.png) no-repeat 0 0;
+	width: 16px;
+	height: 16px;
+	opacity: 0.5;
+}
+.close:hover {
+	opacity: 0.8;
 }
 
 .button {
@@ -92,6 +91,26 @@ a:hover {
 	padding: 3px 0;
 	font-weight: bold;
 	cursor: pointer;
+}
+
+/* Layout/page-specific styles */
+
+#container {
+	width: 980px;
+	margin: 0 auto;
+	margin-bottom: 40px;
+
+	color: #3E3E3E;
+	background: white;
+	overflow:hidden;
+}
+
+#container2 {
+	width: 960px;
+	padding: 0 0 20px;
+
+	border-left: 10px solid #00ccff;
+	border-right: 10px solid #159301;
 }
 
 .timeline-addevent {
@@ -338,20 +357,18 @@ a:hover {
 	margin-left: 8px;
 }
 
-.img-close {
-	position: absolute;
-	display: block;
-	cursor: pointer;
-}
-
-.event .img-close {
+.event .close {
 	visibility: hidden;
 	z-index: 3;
 }
 
-.event:hover .img-close {
+.event:hover .close {
 	visibility: visible;
 	cursor: pointer;
+	opacity: 0.3;
+}
+.event:hover .close:hover {
+	opacity: 0.6;
 }
 
 .event-container[event_id] .event:hover {
@@ -359,17 +376,17 @@ a:hover {
 	cursor: default;
 }
 
-.leftcolumn .img-close {
+.leftcolumn .close {
 	top: 7px;
 	right: 20px;
 }
 
-.rightcolumn .img-close {
+.rightcolumn .close {
 	top: 7px;
 	left: 7px;
 }
 
-.rightcolumn .timeline-addevent .img-close {
+.rightcolumn .timeline-addevent .close {
 	left: auto;
 	right: 7px;
 }
