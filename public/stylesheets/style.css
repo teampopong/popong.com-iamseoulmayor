@@ -82,6 +82,7 @@ a:hover {
 	background-image: -webkit-linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
 	background-image: -ms-linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,0.4);
+	color: #222;
 }
 
 .button-addevent {
@@ -301,6 +302,11 @@ a:hover {
 
 #timeline-panel {
 	padding-top: 40px;
+}
+
+#timeline-panel .sort {
+	text-align: center;
+	margin-bottom: -22px;
 }
 
 .timeline {

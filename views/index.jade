@@ -86,11 +86,11 @@ div#container.rounded-corner5
       include pledges
 
     div#timeline-panel
-      div.sort //- TODO: design
+      div.sort
         if sort_by == 'date'
-          a(href='?sortby=like') Pong 순으로 정렬하기
+          a.button(href='?sortby=like') Pong 순으로 정렬하기
         else
-          a(href='?sortby=date') 날짜 순으로 정렬하기
+          a.button(href='?sortby=date') 날짜 순으로 정렬하기
       include timeline
       div.leftcolumn
         div.caption 타임라인
