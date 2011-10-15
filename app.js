@@ -217,6 +217,10 @@ function getBackupDb() {
 
 // Routes
 
+app.get('/', function(req, res) {
+	res.redirect('/iamseoulmayor');
+});
+
 app.namespace('/iamseoulmayor', function () {
 	app.get('/(event/:id)?', function(req, res) {
 		res.render('index', {
