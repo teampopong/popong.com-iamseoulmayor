@@ -9,13 +9,13 @@
 }
 
 body,input,textarea,button {
-	font-family: "NanumGothic", "나눔고딕", "Malgun Gothic", "맑은 고딕", sans-serif;
+	font-family: Tahoma, Helvetica, Arial, "NanumGothic", "나눔고딕", "Malgun Gothic", "맑은 고딕", sans-serif;
 	font-size: 11pt;
-	line-height: 1.4;
 }
 
 body {
 	background: #f5f5f5;
+	line-height: 1.4;
 }
 
 a {
