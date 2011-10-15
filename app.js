@@ -193,6 +193,11 @@ function getAbsoluteUrl(link) {
  * asynchronously backup the db
  */
 function backupDb() {
+	try {
+		assert.ok(fs.statSync('db/').isDirectory());
+	} catch (err) {
+		fs.mkdirSync('db/', 0755);
+	}
 	_.each(db, function (table, name) {
 		fs.writeFile(_.sprintf('db/%s.json', name),
 				JSON.stringify(table),
