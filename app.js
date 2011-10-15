@@ -265,7 +265,7 @@ function backupDb() {
 
 function getBackupDb() {
 	var backup = {};
-	console.log('restoring database...');
+	console.log('retrieving database...');
 	_.each(defaultDb, function (table, name) {
 		try {
 			backup[name] = JSON.parse(
@@ -300,18 +300,42 @@ app.namespace('/iamseoulmayor', function () {
 		});
 	});
 
-	/*
-	app.get('/admin', function(req, res){
-		var backup = getBackupDb();
+	app.namespace('/admin', function () {
+		app.get('/', function(req, res){
+			res.render('admin_notlogged');
+		});
 
-		res.render('admin', {
-			title: '관리자',
-			style: '/stylesheets/admin.css',
-			db: JSON.stringify(db, null, 2),
-			backup: JSON.stringify(backup, null, 2)
+		app.post('/', function (req, res) {
+			if (req.body.key == MASTER_PASSWD) {
+				var backup = getBackupDb();
+
+				res.render('admin', {
+					title: '관리자',
+					style: '/stylesheets/admin.css',
+					key: req.body.key,
+					db: JSON.stringify(db, null, 2),
+					backup: JSON.stringify(backup, null, 2)
+				});
+			} else {
+				res.redirect('/iamseoulmayor/admin');
+			}
+		});
+
+		app.post('/backup', function(req, res) {
+			if (req.body.key == MASTER_PASSWD) {
+				backupDb();
+			}
+			res.redirect('/iamseoulmayor/admin', 303);
+		});
+
+		app.post('/import', function(req, res) {
+			if (req.body.db && req.body.key == MASTER_PASSWD) {
+				console.log('importing database...');
+				db = JSON.parse(req.body.db);
+			}
+			res.redirect('/iamseoulmayor/admin', 303);
 		});
 	});
-	*/
 
 	app.post('/event', function(req, res) {
 		try {
@@ -408,22 +432,6 @@ app.namespace('/iamseoulmayor', function () {
 			numLiked: getNumLiked(req.body.id)
 		});
 	});
-
-	/*
-	app.get('/backup', function(req, res) {
-		backupDb();
-		res.redirect('/admin', 303);
-	});
-	*/
-
-	/*
-	app.post('/import', function(req, res) {
-		if (req.body.db) {
-			db = JSON.parse(req.body.db);
-		}
-		res.redirect('/admin', 303);
-	});
-	*/
 });
 
 var port = 3000;
