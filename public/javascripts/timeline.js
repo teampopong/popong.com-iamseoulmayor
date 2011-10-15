@@ -106,7 +106,7 @@ $('.event').click(function () {
 	expandEvent(this);
 });
 
-$('.event').not('.addevent .event').hover(function () {
+$('.event').not('.timeline-addevent .event').hover(function () {
 	$(this).prev('.prong').children('.prong-lt').addClass('hover');
 }, function () {
 	$(this).prev('.prong').children('.prong-lt').removeClass('hover');
@@ -139,7 +139,7 @@ $('.button-addevent').click(function () {
 	form.slideDown();
 });
 
-$('.addevent form').submit((function () {
+$('.timeline-addevent form').submit((function () {
 	function getFormValue(form, name) {
 		return form.children('*[name="'+name+'"]').val();
 	}
@@ -197,7 +197,7 @@ $('.addevent form').submit((function () {
 	};
 })());
 
-$('.addevent textarea[name="text"]').keyup(function () {
+$('.timeline-addevent textarea[name="text"]').keyup(function () {
 	var $this = $(this),
 		len = $(this).val().length,
 		lenleft = MAX_TEXT_LENGTH - len,
@@ -211,7 +211,7 @@ $('.addevent textarea[name="text"]').keyup(function () {
 	}
 });
 
-$('.addevent .img-close').click(function (evt) {
+$('.timeline-addevent .img-close').click(function (evt) {
 	stopPropagation(evt);
 	hideAddevents();
 });
