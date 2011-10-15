@@ -90,12 +90,12 @@ div#container.rounded-corner5
       div.leftcolumn
         div.caption 타임라인
         div.timeline(topic='나경원')
-          mixin timeline('left')
+          mixin timeline('left', '나경원', left_events)
 
       div.rightcolumn
         div.caption 타임라인
         div.timeline(topic='박원순')
-          mixin timeline('right')
+          mixin timeline('right', '박원순', right_events)
       div.clear
 
 div#params(style='display: none;')

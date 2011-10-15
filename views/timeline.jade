@@ -55,14 +55,14 @@ mixin timeline_events(column, events)
             span.date= event.date
           div.clear
 
-mixin timeline(column)
+mixin timeline(column, topic, events)
   if column == 'left'
     div.timeline-left
-      mixin timeline_addevent(column, '나경원')
-      mixin timeline_events(column, left_events)
+      mixin timeline_addevent(column, topic)
+      mixin timeline_events(column, events)
   else
     div.timeline-right
-      mixin timeline_addevent(column, '박원순')
-      mixin timeline_events(column, right_events)
+      mixin timeline_addevent(column, topic)
+      mixin timeline_events(column, events)
 
 //- vim: ts=8 sts=2 sw=2 expandtab
