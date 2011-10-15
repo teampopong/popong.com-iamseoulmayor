@@ -1,10 +1,10 @@
 mixin timeline_addevent(column, topic)
   //- event input box
   div.timeline-addevent
-    div.button-addevent 중요 이슈를 직접 등록해 주세요!
+    div.button-addevent 후보 관련 이슈 직접 등록하기
     form.form-addevent(style='display: none;', method='post', action='/iamseoulmayor/event')
       input(type='hidden', name='topic', value=topic)
-      img.img-close(src="/images/x.png")
+      span.close
       input(type='text', name='year')
       년&nbsp;
       input(type='text', name='month')
@@ -23,7 +23,7 @@ mixin timeline_addevent(column, topic)
       비밀번호&nbsp;
       input(type='password', name='passwd')
       br
-      input.submit(type='submit', value='등록')
+      input.button.submit(type='submit', value='등록')
 
 mixin timeline_events(column, events)
   div.timeline-events
@@ -33,7 +33,7 @@ mixin timeline_events(column, events)
           div.prong-dk
           div.prong-lt
         div.event
-          img.img-close(src="/images/x.png")
+          span.close
           div.content
             span.title= event.title
             br
