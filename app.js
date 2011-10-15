@@ -169,6 +169,7 @@ function validateEvent(event) {
 	if (_.isUndefined(event.link) || event.link.length == 0) {
 		throw '링크(출처)는 반드시 입력해야 합니다.';
 	}
+	// TODO: check URL format
 	if (_.isUndefined(event.passwd) || event.passwd.length == 0) {
 		throw '비밀번호는 반드시 입력해야 합니다.';
 	}
@@ -199,6 +200,7 @@ function backupDb() {
 	} catch (err) {
 		fs.mkdirSync('db/', 0755);
 	}
+	console.log('saving database...');
 	_.each(db, function (table, name) {
 		fs.writeFile(_.sprintf('db/%s.json', name),
 				JSON.stringify(table),
@@ -214,6 +216,7 @@ function backupDb() {
 
 function getBackupDb() {
 	var backup = {};
+	console.log('restoring database...');
 	_.each(defaultDb, function (table, name) {
 		try {
 			backup[name] = JSON.parse(
@@ -284,6 +287,8 @@ app.namespace('/iamseoulmayor', function () {
 		});
 		updateCount(5);
 
+		// TODO: return redirection when called without AJAX.
+		// TODO: return the following json response when called with AJAX.
 		res.json({
 			success: 1,
 			event_id: newid

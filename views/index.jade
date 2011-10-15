@@ -1,317 +1,128 @@
-extends timeline
+//- layout.jade is automatically prepended here by the Express framework.
 
-block left-timeline
-  //- event input box
-  div.event-container.addevent
-    div.prong
-      div.prong-dk
-      div.prong-lt
-    div.event
-      div.button-addevent 중요 이슈를 직접 등록해 주세요!
-      form.form-addevent(style='display: none;')
-        input(type='hidden', name='topic', value='나경원')
-        img.img-close(src="/images/x.png")
-        input(type='text', name='year')
-        년&nbsp;
-        input(type='text', name='month')
-        월&nbsp;
-        input(type='text', name='day')
-        일
-        br
-        제목&nbsp;
-        input(type='text', name='title', maxlength='20')
-        textarea(name='text', rows='3')
-        div.charleft 140
-        img.img-link(src='/images/link_chain.jpg')
-        &nbsp;
-        input(type='text', name='link', placeholder='출처(필수)')
-        br
-        비밀번호&nbsp;
-        input(type='password', name='passwd')
-        br
-        input.submit(type='submit', value='등록')
+div#container.rounded-corner5
+  div#container2
+    div#member-panel
+      div#logo
+        h1 나는 서울 시장이다!
+          span.super &nbsp;beta
+        //
+          div.twitter-feedback
+            span 개선 사항 및 의견을 트위터로 바로 보내주세요!
+            a.twitter-share-button(
+              href='https://twitter.com/share',
+              data-url='http://',
+              data-text='@PopongC ',
+              data-count='none',
+              data-lang='ko'
+              ) Tweet
 
-  //- existing events
-  each event in left_events
-    div.event-container(event_id=event.id)
-      div.prong
-        div.prong-dk
-        div.prong-lt
-      div.event
-        img.img-close(src="/images/x.png")
-        div.content.left
-          span.title= event.title
-          br
-          p.text= event.text
-          div.link
-            a(href=event.link, target='_blank')= event.link
-          div.share
-            //- twitter button
-            a.button-twitter(href='#')
-              img(src='/images/img_button_twitter.png')
-            //- facebook button
-            a.button-facebook(href='#')
-              img(src='/images/img_button_facebook.gif')
-        div.extra.right
-          span.like= event.like
-          div.button-pong-wrapper.rounded-corner5
-            div.button-pong.rounded-corner5(target_id=event.id)
-              span PONG
-          span.date= event.date
-        div.clear
+      div.leftcolumn
+        img.photo.rounded-corner5(src='/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg')
+        div.name 나경원
+          a(href='http://www.naseoul.com/', target='_blank')
+            img.icon(src='/images/icon_homepage.png')
+          a(href='http://twitter.com/nakw', target='_blank')
+            img.icon(src='/images/icon_twitter.png')
 
-block right-timeline
-  //- event input box
-  div.event-container.addevent
-    div.prong
-      div.prong-dk
-      div.prong-lt
-    div.event
-      div.button-addevent 중요 이슈를 직접 등록해 주세요!
-      form.form-addevent(style='display: none')
-        input(type='hidden', name='topic', value='박원순')
-        img.img-close(src="/images/x.png")
-        input(type='text', name='year')
-        년&nbsp;
-        input(type='text', name='month')
-        월&nbsp;
-        input(type='text', name='day')
-        일
-        br
-        제목&nbsp;
-        input(type='text', name='title', maxlength='20')
-        textarea(name='text', rows='3')
-        div.charleft 140
-        img.img-link(src='/images/link_chain.jpg')
-        &nbsp;
-        input(type='text', name='link', placeholder='출처(필수)')
-        br
-        비밀번호&nbsp;
-        input(type='password', name='passwd')
-        br
-        input.submit(type='submit', value='등록')
+      div.rightcolumn
+        img.photo.rounded-corner5(src='/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg')
+        div.name 박원순
+          a(href='http://wonsoon.com/', target='_blank')
+            img.icon(src='/images/icon_homepage.png')
+          a(href='http://twitter.com/wonsoonpark', target='_blank')
+            img.icon(src='/images/icon_twitter.png')
+      div.clear
 
-  //- existing events
-  each event in right_events
-    div.event-container(event_id=event.id)
-      div.prong
-        div.prong-dk
-        div.prong-lt
-      div.event
-        img.img-close(src="/images/x.png")
-        div.content.right
-          span.title= event.title
-          br
-          p.text= event.text
-          div.link
-            a(href=event.link, target='_blank')= event.link
-          div.share
-            //- twitter button
-            a.button-twitter(href='#')
-              img(src='/images/img_button_twitter.png')
-            //- facebook button
-            a.button-facebook(href='#')
-              img(src='/images/img_button_facebook.gif')
-        div.extra.left
-          span.like= event.like
-          div.button-pong-wrapper.rounded-corner5
-            div.button-pong.rounded-corner5(target_id=event.id)
-              span PONG
-          span.date= event.date
-        div.clear
+    div#spaceholder &nbsp;
 
-block pledge-table
-  table.rounded-corner5
-    tr.first
-      td 
-        ul
-          li 창조지식산업의 인력양성 교육 확대
-          li (금융,관광,디지털콘텐츠 분야 등 미래산업분야 인력 집중양성)
-          li 산업현장 재직자들을 위한 전환기 교육과정 도입
-          li 청년취업지원(대학과 직업훈련기관과의 연계로 실무교육 증대)
-      th
-        인력 양성
-      td
-        ul
-          li 창조적 청년벤처기업 10,000개 육성 및 다양한 사회적 창조기업 개발
-          li 일자리 창출을 위한 <사회투자기금> 조성
-          li 서울형 마을기업, 협동조합, 사회적 기업 육성을 통한 희망 일자리 창출
-          li 대기업 SSM규제 강화 – 사업조정권한 적극적인 행사 
-          li 요양,간병, 보육등의 분야에 대한 공립시설 확충/근로조건 개선
-          li 서울시 산하기관 비정규직 정규직 전환
+    div#profile-panel
+      div.leftcolumn
+        div.caption 프로필
+        div.event-container.profile
+          div.event
+            //- h2 나경원
+            dl
+              dt 출생
+              dd 1963년 12월 6일 (서울특별시)
+              dt 소속
+              dd 한나라당 (최고위원), 한나라당 (공천개혁특별위원회 위원장), 한국장애인부모회후원회 (공동대표)
+              dt 가족
+              dd 배우자 김재호
+              dt 학력
+              dd 서울대학교 대학원 법학 석사
+              dt 수상
+              dd 2011년 아시아 소사이어티 코리아 여성 리더상
+            span.notice ※ 프로필은 공개된 인물정보를 바탕으로 하였습니다.
+            a.more(href='http://naseoul.com/board/na02.php', target='_blank') 더 자세히 보기
 
-    tr
-      td
-        ul
-          li 교육인프라 개선에 1조원 투자
-          li 워킹스쿨버스(걸어가는 안심통학버스)로 안전한 등하교
-          li 1인 2기, 체육과 음악동아리 활동 장려
-          li 방과후 공부방 확대 시행(500개 초중고, 1교당 10백만원)
-          li 원어민 영어보조교사 배치지원(95개 초중학교에 1명씩배치)
-          li 스쿨존 강력범죄 예방 지원(CCTV, 비상호출시스템 확대 등)/금연구역 추
-          li 학교내외 먹거리 감시 강화
-          li 학교복합체육문화시설 지속 건립(‘10년 66개소 -> ‘14년 98개소)
-      th
-        교육
-      td
-        ul
-          li 2014년까지 서울의 95만 초,중등학생에게 무상급식 실시
-          li 안전먹거리확보 – 권역별 친환경급식통합지원센터(로컬푸드)설치
-          li 등록금부담완화-서울시 학자금 이자지원조레 제정, 서울시립대 반값등록금추진 및 장학재단 수혜자 확대
-          li 자녀출산이후 대학등록금 목돈마련을 위한 장기저축에 이자 지원
-          li 공립형 혁신학교 확대 지원
-    tr
-      td
-        ul
-          li 예산배심원제도 및 알뜰예산기획단 구성
-          li 서울시 사업구조조정 및 행사성 사업 축소(PAYGO 원칙 준수)
-          li 종료된 사업 예산으로 부채 상환
-          li 2013년부터 지방소비세율 증가로 확보된 예산 부채 상환에 사용
-          li 추진 중인 사업의 시기 조정으로 예산 확보
-          li SH공사등 투자기관 경영혁신 및 사업구조조정
-      th
-        시정
-      td
-        ul
-          li 서울시 재정부채 25.5조->18조원으로 7조원 감축
-          li <서울공공투자관리센터>설립 – 투자평가시스템 확신
-          li 신규 투자사업 계획시 ‘ PayGO’원칙 도입
-          li - 기존사업지출을 줄이거나 사업수입을 통해 재정보전방안 확보
-          li 전시성 토건사업 예산 중심 -> 생활지원 사람예잔 중심 이동
-          li SH 공사 – 공동체 활성화와 일자리 창출을 위한 도시재생 및 줙복지의 전담기구로 역할 재정립
-          li 재정지원 사업 – 공익성 &심사 강화
-          li 한강르네상스사업 전면재검토, 정책조정기구(가칭 ‘한강복원시민위원회’) 구성, 한강 자연성회복 위한 세부추진계획 마련
-          li 시민들이 대체에너지사업에 투자, 수익을 얻는 서울형 발전차액 지원제도 도입
-          li 건물에너지 효율화 실시 – 에너지 진단 노후주택 개보수 지원, 대형보일러 점검및 폐열 회수, ESCOtkd()사업(에너지절약 전문기업) 지원
-    tr
-      td
-        ul
-          li ‘햇빛센터’설치 – 다세대,다가구 주택 밀집지역에 생활밀착형 서비스 제공 및 생활보안관 운영
-          li 비강남권지역 생활인프라에 집중 투자, 소형 생활주택 집중 공급 및 재건축 연한 완화 재검토
-          li 맞춤형 전월세 종합대책 수립(강남,비강남권 주거유형별 소득계층별 전세시장 차별화)
-          li 강남권 – 아파트 재건축시기 조정을 통한 수요관리 및 용적률 상향분에 대한 공공임대주택 확보
-          li 1인가구, 신혼부부 대상 소형주택, 부분형 임대주택 등 소형 생활주택 공급확대
-          li 주택바우처, 주거자립을 위한 주춧돌 프로그램, 순환용 임대주택 공급
-          li 노후 공공임대 주택 시설 개선에 매년 250억원 지원 
-          li 대학가 주변 단독, 다가구 주택 매입후 저렴한 생활임대 주택 공급, 기숙사 건립 지원
-          li 장기전세주택 등 공공임대주택 지속적 확대
-      th
-        주택
-      td
-        ul
-          li 서민, 중산층에게는 장기전세주택을, 저소득층에는 임대주택 공급 확대
-          li 세입자 주거안정 제고를 위한 <전세보증금센터>설치, 운영
-          li 공공시설(용지), 대학주변 재정비지고 활용, 1~2인가구 공공원룸텔 공급
-          li 재개발, 재건축 과속개발방지 및 시기조절 순환정비방식 도입
-          li 다가구, 다세대 매입주택, 대학내 기숙사건립 인센티브제공 – 대학생 주거 지원
-    tr
-      td
-        ul
-          li 서울 –인천 20분시대 구현
-          li IT융합사업 지원 – 서울형 디지털 콘텐츠 육성
-          li BT산업의 육성과 한방특구 운영 U-health산업 육성
-          li 용산을 미래신도심으로 조성 – 국제 업무지구로 육성
-          li 마곡을 첨단 R&D메카로 – IT, BT, GT, NT융복합산업을 기반으로 한 연구개발 중신 산업단
-          li 6., 상암DMC를 디지털 헐리우드 육성 – 세계 최초 e스포츠 전용경기장 운여으로 세계 e스포츠게임대회 유치
-          li 창동차량기지 및 창동역일대를 동북권 신경제거점으로 조성-동북권 공항터미널 추진 및 업무상업복합개발
-          li 국립보건원부지를 거점으로 서북권문화, 복지웰빙자족도시 육성
-          li 주민이 참여하는 재개발 정책으로 전환
-      th
-        경제
-      td
-        ul
-          li 창조형강소 서울경제 육성
-          li (중소기업, 벤처기업, 1인 청년기업 육성, 영등포,구로, 중구, 성동등 서울형 창조산업 육성)
-          li 동대문디자인플라자 활용 한류문화공간 프로그램 상설화
-          li 전통재래상권 쇼핑환경개선(동대문, 남대문)/전통문화상권 관광환경 개선(삼청동, 가회동,대학로, 인사동, 청계천 등)
-          li <동네예술창작소>, <서울상상력발전소-문화콘텐츠 개발지원, 창작공간 제공>, <서울문화예술뱅크-시민의 아이디어를 창조적 문화산업으로 사업화>
-    tr
-      td
-        ul
-          li 영아전용(0~2세)국공립어린이집 확충
-          li 육아 품앗이, 친인척 돌봄서비스 실시
-          li 보육종사자 전문성 향상 및 처우 개선 (월 5만원 인상)
-          li 안심보육 및 안심급식 실시
-      th
-        여성, 보육
-      td
-        ul
-          li 국공립보육시설 동별 2개이상 확보
-          li 초등 돌봄교실 591개소 전체 초등학교로 확대
-          li <직장맘지원센터>설치 , 남성의 육아참여 확대 및 보육관련 종합삼당서비스
-          li 노인,장애인, 아이 돌봄 일자리 확대 및 처우개선(임금과 사회보험 보장)
-          li 자율방범단 네트워킹하여 ‘여성폭력 ZERO마을 안전망’ 구축
-          li 여성암 조기검진, 갱년기 상담 등 여성건강 지원
-          li 정책결정과정 여성참여와 서울시 고위직 여성비율 확대
-    tr
-      td
-        ul
-          li 장애인 주거독립 3단계 자립프로그램/ 교통복지 향상 추진
-          li 장애인 자립센터 시설당 3천만원 운영비 지원/ 가족지원센터 권역별 확
-          li 중대형 직업재활시설 설치 운영/여성장애인 인력개발센터 설치
-          li 1자치구 2체육센터 건립(‘10년 39개소 ->’14년 53개소)
-          li 체육정보 통합 웹사이트 구축(원스톱 통합 서비스 제공), 전문체육지도자 배치사업 확대
-          li 자치구 생활체육 지원 조례 제정 독려 – 미제정 8개구 독려
-          li 장애인 대상 찾아가는 생활체육 서비스 실시 및 생활체육 클럽 비용 지원
-          li 10. 재능기부 생활체육교실 활성화/다문화가정을 위한 생활체육 기회제공
-          li 1노인복지센터 18개소, 어르신 행복타운 건립
-          li 1어르신에게 적합한 맞춤형 일자리를 제공
-          li 1테니스 등 실버스포츠단 창단/어르신 행복콘서트, 어르신 전용영화관 지원
-          li 1경로당 냉방비 지원
-      th
-        복지
-      td
-        ul
-          li 서울시민생활최전선 기준 확립, 재정취약 자취구에 서울시 지원 확대
-          li 노인에게 일자리 제공 및 각종 인센티브 채용
-          li 행복설계아카데미 설치
-          li 장애인 독립 지원 – 정착금 확대, 특별주택, 전세주책 공급 
-          li 장애인 이동권 보장 – 콜텍시, 저상버스 확충
-          li 큰 규모의 복지시설은 하지 않고 시민이 근접할 수 있는 소규모 밀착형 복지서비스 강화
-    tr
-      td
-        ul
-          li 길거리 보행 중 흡연금지 및 조례제정
-          li 음란유해 광고물 뿌리 뽑기
-          li 쓰레기 집중수거, 생활 속 소음,악취 제거
-      th
-        안전
-      td
-        ul
-          li 서울시 생활안전 선언 : 시설물, 안전종합대책, 악취 소움등 생활속 대기환경 개, 불량 유해식품과 농수ㅅ축산물 검역강화등.
-          li <아이들이 마음껏 다닐수 있는 공간 – 아마존>
-          li 교통안전시설 설치, 직업운전자 안전교육, 어린이 안전관리사 배치
-          li 보건소 이용 – 1구 1개소 야간/휴일클리닉 활용
-          li 24시간 의료상담전화 ‘응급콜’신설
-          li 재해 안전 확보. 분산식 빗물순환시스템/산사태 예경보 시스템 / 상습침수 재해지역 하수관거 처리능력 우서 확대/ 지역별 장소별 맞춤형 재난 재해 대응 안전시스템
-          li 녹물 수도관 교체를 위한 지원폭 확대
-    tr
-      td
-        ul
-          li 전통시장 불편해소(아케이드, 화장실, 주차장 편의시설 확충)
-          li 전통시장 내 문화교실 확충
-          li 3 전통시장 공동배송서비스 100개소 확충
-          li 1대학 1시장, 1기업 1시장 후원
-          li 볼거리, 즐길거리 확대(시장축제, 길모퉁이 콘서트 등 이벤트 개최)
-          li 위기 자영업자 부활프로젝트, (생계형 자영업 보호 특별자금 300억원 지원)
-          li 대박, 오뚝이 프로젝트 (경영컨설팅, 성공 소상공인 멘토 체계)
-          li 영세상인들의 카드 수수료 인하, 카드결제 단말기 무료 보급
-          li (전통시장 영세상인 카드수수료 1.6~1.8% 또는 1.5%이하로 추가 인하 요구)
-          li (서울 카드택시, 티머니&신용카드 4개사 가맹점수수료 2.4%에서 2.1%로 인하)
-          li 카드수수료 조정 신청제도 신설
-          li 10. 가맹본점 부당횡포 신문고 개설
-      th
-        소상공인<br>지원대책
-      td
-    tr
-      td
-      th
-        참여/소통
-      td
-        ul
-          li 서울형 시정지표 개발 및 시민보고서 발간
-          li <서울정보소통센터 – 시정정책과 정보 공개> 설치
-          li 예산편성과정과 실행에 시민이 직접 참여하는 <주민참여예산조례>제정 과 <주민참여예산제도>실시
-          li 시민참여정책 발굴 및 민원청취를 위한 <현장경청투어>정례화
-          li 부정부패 척결 -<청렴계약제>내실화, <시민옴부즈맨제도> 독림성강화
-          li 취약계층에 대한 ‘중장기인권증진계획’ 수립과 인권감성시정 추진
+      div.rightcolumn
+        div.caption 프로필
+        div.event-container.profile
+          div.event
+            //- h2 박원순
+            dl
+              dt 출생
+              dd 1956년 3월 26일 (경상남도 창녕)
+              dt 학력
+              dd 단국대학교 사학 학사
+              dt 수상
+              dd
+                | 2009년 제15회 불교인권상
+                br
+                | 2006년 필리핀 막사이사이상 공공봉사부문
+              dt 경력
+              dd 희망제작소 상임이사 (2006년 3월 ~ 2011년 9월)
+            span.notice ※ 프로필은 공개된 인물정보를 바탕으로 하였습니다.
+            a.more(href='http://wonsoon.com/3335', target='_blank') 더 자세히 보기
+      div.clear
+
+    div#pledge-panel
+      div.caption 공약
+      include pledge-table
+
+    div#timeline-panel
+      include timeline
+      div.leftcolumn
+        div.caption 타임라인
+        div.timeline(topic='나경원')
+          mixin timeline('left')
+
+      div.rightcolumn
+        div.caption 타임라인
+        div.timeline(topic='박원순')
+          mixin timeline('right')
+      div.clear
+
+div#params(style='display: none;')
+  input(type='hidden', name='event_id', value=event_id)
+
+div#floating
+  div#tooltip-pong.rounded-corner5(style='display:none;')
+    span.bold pong~
+    하고 이 이슈의
+    span.bold 관심도
+    를 올려주세요!
+  div#menu.rounded-corner5(style='display:none;')
+    ul
+      a(href='/aboutus.html', target='_blank')
+        li.rounded-corner5 About us
+      div.separator
+      a(href='#profile-panel')
+        li.rounded-corner5 프로필
+      a(href='#pledge-panel')
+        li.rounded-corner5 공약
+      a(href='#timeline-panel')
+        li.rounded-corner5 타임라인
+
+//- feedback widget
+style(type='text/css')
+  @import url('http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css');
+script(type='text/javascript', src='http://getbarometer.s3.amazonaws.com/assets/barometer/javascripts/barometer.js')
+script(type='text/javascript')
+  BAROMETER.load('wcL6dMdEn5teaF8G2j7W3');
+
+each jsfile in jsfiles
+  script(type='text/javascript', src=jsfile)
+
+//- vim: ts=8 sts=2 sw=2 expandtab

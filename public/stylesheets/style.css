@@ -92,7 +92,7 @@ a:hover {
 	cursor: pointer;
 }
 
-.addevent input,textarea {
+.timeline-addevent input,textarea {
 	margin: 5px 0;
 	border: 1px solid #aaa;
 	border-radius: 2px;
@@ -100,28 +100,28 @@ a:hover {
 	-webkit-border-radius: 2px;
 }
 
-.addevent input[name="year"] {
+.timeline-addevent input[name="year"] {
 	width: 4em;
 }
 
-.addevent input[name="month"] {
+.timeline-addevent input[name="month"] {
 	width: 2em;
 }
 
-.addevent input[name="day"] {
+.timeline-addevent input[name="day"] {
 	width: 2em;
 }
 
-.addevent input[name="title"] {
+.timeline-addevent input[name="title"] {
 	width: 298px;
 }
 
-.addevent textarea[name="text"] {
+.timeline-addevent textarea[name="text"] {
 	width: 333px;
 	resize: none;
 }
 
-.addevent .charleft {
+.timeline-addevent .charleft {
 	width: 333px;
 	text-align: right;
 	font-size: 9px;
@@ -129,24 +129,24 @@ a:hover {
 	margin-top: -5px;
 }
 
-.addevent .charleft.exceed {
+.timeline-addevent .charleft.exceed {
 	color: red;
 }
 
-.addevent .img-link {
+.timeline-addevent .img-link {
 	height: 1em;
 	vertical-align: middle;
 }
 
-.addevent input[name="link"] {
+.timeline-addevent input[name="link"] {
 	width: 310px;
 }
 
-.addevent input[name="passwd"] {
+.timeline-addevent input[name="passwd"] {
 	width: 10em;
 }
 
-.addevent input.submit {
+.timeline-addevent input.submit {
 	width: 100%;
 	background: whitesmoke;
 	padding: 3px 0;
@@ -267,14 +267,6 @@ a:hover {
 	text-align: left;
 }
 
-.leftcolumn .timeline {
-	border-right: 5px solid #d5d5d5;
-}
-
-.rightcolumn .timeline {
-	border-left: 5px solid #d5d5d5;
-}
-
 .caption {
 	width: 80%;
 	text-align: center;
@@ -297,12 +289,11 @@ a:hover {
 	border-bottom: 2px solid #159301;
 }
 
-.left {
-	float: left;
+.leftcolumn .timeline-events {
+	border-right: 5px solid #d5d5d5;
 }
-
-.right {
-	float: right;
+.rightcolumn .timeline-events {
+	border-left: 5px solid #d5d5d5;
 }
 
 .event-container {
@@ -327,9 +318,20 @@ a:hover {
 	margin-left: 8px;
 }
 
+.img-close {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+}
+
 .event .img-close {
-	display: none;
+	visibility: hidden;
 	z-index: 3;
+}
+
+.event:hover .img-close {
+	visibility: visible;
+	cursor: pointer;
 }
 
 .event-container[event_id] .event:hover {
@@ -337,15 +339,8 @@ a:hover {
 	cursor: default;
 }
 
-.event:hover .img-close {
-	position: absolute;
-	display: block;
-	cursor: pointer;
-}
-
-.addevent .event .form-addevent:hover {
+.timeline-addevent form:hover {
 	background: white;
-	cursor: auto;
 }
 
 .leftcolumn .img-close {
@@ -358,9 +353,8 @@ a:hover {
 	left: 7px;
 }
 
-.addevent .img-close {
-	top: 7px;
-	left: auto !important;
+.rightcolumn .timeline-addevent .img-close {
+	left: auto;
 	right: 7px;
 }
 
@@ -370,6 +364,23 @@ a:hover {
 
 .event .extra {
 	width: 30%;
+	text-align: center;
+}
+
+.leftcolumn .event .extra {
+	float: right;
+}
+
+.leftcolumn .event .content {
+	float: left;
+}
+
+.rightcolumn .event .extra {
+	float: left;
+}
+
+.rightcolumn .event .content {
+	float: right;
 }
 
 .event .title {
@@ -415,26 +426,26 @@ a:hover {
 }
 
 .event .date {
-	text-align: center;
+	text-a  ;
 	width: 100%;
 	display: block;
 }
 
-.event .content.left {
+.leftcolumn .event .content {
 	padding-right: 3%;
 }
 
-.event .content.right {
+.rightcolumn .event .content {
 	padding-left: 3%;
 	text-align: right;
 }
 
-.event .extra.left {
-	border-right: 1px solid #aaa;
+.leftcolumn .event .extra {
+	border-left: 1px solid #aaa;
 }
 
-.event .extra.right {
-	border-left: 1px solid #aaa;
+.rightcolumn .event .extra {
+	border-right: 1px solid #aaa;
 }
 
 .event .link {
