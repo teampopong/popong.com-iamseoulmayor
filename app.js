@@ -13,6 +13,7 @@ require('express-namespace');
 
 var app = module.exports = express.createServer();
 var MemoryStore = connect.session.MemoryStore;
+var debug = false;
 
 // Configuration
 
@@ -31,10 +32,12 @@ app.configure(function(){
 
 app.configure('development', function(){
 	app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+	debug = true;
 });
 
 app.configure('production', function(){
 	app.use(express.errorHandler()); 
+	debug = false;
 });
 
 // Code
@@ -122,14 +125,20 @@ var getSortedEventsByTopic = (function () {
 	return function (topic) {
 		var sortedEvents = sortedEventsList[topic];
 
-		// 캐시 생성 이후에 변하지 않았으면
-		if (sortedEvents && sortedEvents.nextIdWhenLastSorted == db.nextId) {
+		// 개발모드가 아니고 캐시 생성 이후에 변하지 않았으면
+		if (!debug && sortedEvents && sortedEvents.nextIdWhenLastSorted == db.nextId) {
+		
 			return sortedEvents.events;
 
 		// 새로 캐시를 생성해야 한다면
 		} else {
-			sortedEvents = _.sortBy(getEventsByTopic(topic), function (event) {
-				return -(new Date(event.date)).getTime();
+			sortedEvents = getEventsByTopic(topic);
+			sortedEvents.sort(function (ev1, ev2) {
+				if (ev1.like != ev2.like) // like를 우선 정렬
+					return ev2.like - ev1.like;
+				else // like가 같으면 날짜 역순 정렬
+				    return (new Date(ev2.date)).getTime() - (new Date(ev1.date)).getTime();
+				return 0;
 			});
 
 			sortedEventsList[topic] = {

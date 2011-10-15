@@ -120,6 +120,7 @@ a:hover {
 	margin-right: 13px;
 	padding: 5px 10px;
 	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.2);
+	position: relative;
 }
 .timeline-addevent:hover {
 	background-color: #e3eefd;
@@ -378,7 +379,7 @@ a:hover {
 
 .leftcolumn .close {
 	top: 7px;
-	right: 20px;
+	right: 13px;
 }
 
 .rightcolumn .close {
@@ -386,9 +387,11 @@ a:hover {
 	left: 7px;
 }
 
+.leftcolumn .timeline-addevent .close,
 .rightcolumn .timeline-addevent .close {
 	left: auto;
-	right: 7px;
+	top: 5px;
+	right: 10px;
 }
 
 .event .content {
