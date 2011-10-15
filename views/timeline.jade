@@ -39,19 +39,42 @@ div#container.rounded-corner5
         div.caption 프로필
         div.event-container.profile
           div.event
-            img.img-close(src="/images/x.png")
-            a(href='/images/nakw.png', target='_blank')
-              img.profile-content(src='/images/nakw.png')
-            span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
+            //- h2 나경원
+            dl
+              dt 출생
+              dd 1963년 12월 6일 (서울특별시)
+              dt 소속
+              dd 한나라당 (최고위원), 한나라당 (공천개혁특별위원회 위원장), 한국장애인부모회후원회 (공동대표)
+              dt 가족
+              dd 배우자 김재호
+              dt 학력
+              dd 서울대학교 대학원 법학 석사
+              dt 수상
+              dd 2011년 아시아 소사이어티 코리아 여성 리더상
+            span.notice ※ 프로필은 공개된 인물정보를 바탕으로 하였습니다.
+            a.button(href='http://naseoul.com/board/na02.php', target='_blank') 더 자세히 보기
 
       div.rightcolumn
         div.caption 프로필
         div.event-container.profile
           div.event
-            img.img-close(src="/images/x.png")
-            a(href='/images/wonsoonpark.jpg', target='_blank')
-              img.profile-content(src='/images/wonsoonpark.jpg')
-            span.notice ※ 프로필은 후보 공식 홈페이지에서 가져왔습니다.
+            //- h2 박원순
+            dl
+              dt 출생
+              dd 1956년 3월 26일 (경상남도 창녕)
+              dt 소속
+              dd 한나라당 (최고위원), 한나라당 (공천개혁특별위원회 위원장), 한국장애인부모회후원회 (공동대표)
+              dt 학력
+              dd 단국대학교 사학 학사
+              dt 수상
+              dd
+                | 2009년 제15회 불교인권상
+                br
+                | 2006년 필리핀 막사이사이상 공공봉사부문
+              dt 경력
+              dd 희망제작소 상임이사 (2006년 3월 ~ 2011년 9월)
+            span.notice ※ 프로필은 공개된 인물정보를 바탕으로 하였습니다.
+            a.button(href='http://wonsoon.com/3335', target='_blank') 더 자세히 보기
       div.clear
 
     div#pledge-panel
@@ -100,3 +123,5 @@ script(type='text/javascript')
 
 each jsfile in jsfiles
   script(type='text/javascript', src=jsfile)
+
+//- vim: ts=8 sts=2 sw=2 expandtab

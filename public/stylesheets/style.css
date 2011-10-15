@@ -9,8 +9,9 @@ body {
 
 	background: #f5f5f5;
 
-	font-family: "나눔고딕", "맑은 고딕" sans-serif;
-	font-size: 90%;
+	font-family: "NanumGothic", "나눔고딕", "Malgun Gothic", "맑은 고딕" sans-serif;
+	font-size: 11pt;
+	line-height: 1.4;
 }
 
 #container {
@@ -35,11 +36,44 @@ body {
 	position: relative;
 	float:right;
 	color: #555;
-	font-size: 8px;
+	font-size: 8pt;
 }
 
-.profile .notice {
-	float: none;
+.icon {
+	margin-left: 3px;
+	width: 15px;
+	height: 15px;
+	border: 0;
+}
+
+.button {
+	padding: 3px 5px;
+	margin: 0 4px;
+	display: inline-block;
+	border: 1px solid #ccc;
+	background: #eee;
+	background-image: linear-gradient(bottom, #E2E2E2 0%, #EEEEEE 30%, #F5F5F5 80%);
+	background-image: -o-linear-gradient(bottom, #E2E2E2 0%, #EEEEEE 30%, #F5F5F5 80%);
+	background-image: -moz-linear-gradient(bottom, #E2E2E2 0%, #EEEEEE 30%, #F5F5F5 80%);
+	background-image: -webkit-linear-gradient(bottom, #E2E2E2 0%, #EEEEEE 30%, #F5F5F5 80%);
+	background-image: -ms-linear-gradient(bottom, #E2E2E2 0%, #EEEEEE 30%, #F5F5F5 80%);
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	color: #222;
+	text-decoration: none;
+	font-size: 90%;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+}
+.button:hover {
+	border-color: #aaa;
+	background: #f5f5f5;
+	background-image: linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
+	background-image: -o-linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
+	background-image: -moz-linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
+	background-image: -webkit-linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
+	background-image: -ms-linear-gradient(bottom, #E0E0E0 0%, #EEEEEE 30%, #FAFAFA 80%);
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,0.4);
 }
 
 .button-addevent {
@@ -173,19 +207,40 @@ body {
 #member-panel div.name {
 	display: inline-block;
 	font-weight: bold;
-	font-size: 110%;
+	font-size: 160%;
 	margin: 20px 0 5px 5px;
-}
-
-#member-panel .name .icon {
-	margin-left: 3px;
-	width: 15px;
-	height: 15px;
-	border: 0;
 }
 
 #profile-panel {
 	padding-top: 40px;
+}
+
+.profile .event {
+	padding: 10px;
+}
+
+.profile h2 {
+	font-size: 120%;
+}
+
+.profile dt {
+	width: 3.2em;
+	float: left;
+	color: #999;
+}
+
+.profile dd {
+	margin-left: 3.3em;
+	margin-bottom: 0.3em;
+}
+
+.profile .notice {
+	float: none;
+}
+
+.profile .button {
+	margin-left: 0.5em;
+	font-size: 80%;
 }
 
 #pledge-panel {
