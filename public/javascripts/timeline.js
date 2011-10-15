@@ -49,7 +49,7 @@ function expandEvent(event) {
 
 function scrollTo(top, callback) {
 	callback = callback || (function () {});
-	$('body').animate({
+	$('body,html').animate({
 		scrollTop: top - HEIGHT_MEMBER_PANEL
 	}, 300, callback);
 }
