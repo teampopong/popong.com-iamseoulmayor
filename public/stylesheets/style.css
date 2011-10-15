@@ -461,6 +461,10 @@ a:hover {
 	color: #159301;
 }
 
+.pledge {
+	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.1);
+}
+
 .pledge .like {
 	margin: 20px 0 15px;
 }
