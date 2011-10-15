@@ -753,6 +753,21 @@ a:hover {
 	left:0;
 }
 
+#we-need-designer {
+	position: fixed;
+	top: 0;
+	right: 10px;
+	margin: 0 auto;
+	z-index: 50;
+}
+#we-need-designer a {
+	display: block;
+	background: url(/images/we-need-designer.png) no-repeat 0 0;
+	width: 200px;
+	height: 62px;
+	text-indent: -20000em;
+}
+
 #tooltip-pong {
 	position: absolute;
 	border: 1px solid #aaa;
