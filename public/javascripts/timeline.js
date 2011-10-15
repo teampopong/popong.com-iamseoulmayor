@@ -56,7 +56,8 @@ function scrollTo(top, immediate, callback) {
 	callback = callback || (function () {});
 
 	if (immediate) {
-		$('body,html').scrollTop(top - HEIGHT_MEMBER_PANEL).then(callback);
+		$('body,html').scrollTop(top - HEIGHT_MEMBER_PANEL);
+		callback();
 	} else {
 		$('body,html').animate({
 			scrollTop: top - HEIGHT_MEMBER_PANEL
@@ -111,12 +112,12 @@ $('.event').not('.timeline-addevent .event').hover(function () {
 	$(this).prev('.prong').children('.prong-lt').removeClass('hover');
 });
 
-$('.event .button-pong').click(function (evt) {
+$('.button-pong').click(function (evt) {
 	stopPropagation(evt);
 
 	var $this = $(this);
 	requestPong($this.attr('target_id'), function (numPonged) {
-		$this.parents('.event').find('.like').text(numPonged);
+		$this.parents('.event,.pledge').find('.like').text(numPonged);
 	});
 });
 
