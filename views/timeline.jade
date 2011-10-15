@@ -1,7 +1,7 @@
 mixin timeline_addevent(column, topic)
   //- event input box
   div.timeline-addevent
-    div.button-addevent 중요 이슈를 직접 등록해 주세요!
+    div.button-addevent 후보 관련 이슈 직접 등록하기
     form.form-addevent(style='display: none;', method='post', action='/iamseoulmayor/event')
       input(type='hidden', name='topic', value=topic)
       img.img-close(src="/images/x.png")
