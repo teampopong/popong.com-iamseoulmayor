@@ -9,4 +9,4 @@ npm으로 [express](http://expressjs.com/), [jade](http://jade-lang.com/),
 [underscore.string](http://epeli.github.com/underscore.string/),
 [connect](http://senchalabs.github.com/connect/) 를 설치한다.
 
-    npm install express jade underscore underscore.string connect
+    npm install express jade underscore underscore.string connect express-namespace
