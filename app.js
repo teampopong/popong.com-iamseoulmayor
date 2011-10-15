@@ -7,6 +7,7 @@ var express = require('express');
 var _ = require('underscore');
 _.mixin(require('underscore.string'));
 var fs = require('fs');
+var assert = require('assert');
 var connect = require('connect');
 require('express-namespace');
 
