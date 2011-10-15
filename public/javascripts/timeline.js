@@ -47,11 +47,21 @@ function expandEvent(event) {
 	$('.event').not(event).removeClass('expand');
 }
 
-function scrollTo(top, callback) {
+function scrollTo(top, immediate, callback) {
+	if (immediate && immediate instanceof Function) {
+		callback = immediate;
+		immediate = false;
+	}
+	immediate = immediate || false;
 	callback = callback || (function () {});
-	$('body,html').animate({
-		scrollTop: top - HEIGHT_MEMBER_PANEL
-	}, 300, callback);
+
+	if (immediate) {
+		$('body,html').scrollTop(top - HEIGHT_MEMBER_PANEL).then(callback);
+	} else {
+		$('body,html').animate({
+			scrollTop: top - HEIGHT_MEMBER_PANEL
+		}, 300, callback);
+	}
 }
 
 function focusEvent(event_id) {
@@ -59,7 +69,7 @@ function focusEvent(event_id) {
 		var sel = _.sprintf('.event-container[event_id="%s"]', event_id);
 		var $event = $(sel);
 		if ($event.size() > 0) {
-			scrollTo($event.offset().top, function () {
+			scrollTo($event.offset().top, true, function () {
 				expandEvent($event.children('.event'));
 			});
 		}
@@ -85,7 +95,7 @@ $(window).load(function () {
 	if (params.event_id) {
 		focusEvent(params.event_id);
 	} else {
-		scrollTo($('#timeline-panel').offset().top);
+		scrollTo($('#timeline-panel').offset().top, true);
 	}
 });
 
