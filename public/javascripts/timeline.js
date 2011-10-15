@@ -227,8 +227,12 @@ $('.event-container[event_id] .img-close').click(function (evt) {
 $('#menu a').click(function (evt) {
 	stopPropagation(evt);
 
-	var target = $(this).attr('href');
-	scrollTo($(target).offset().top);
+	var target = $(this).attr('href'),
+		$target = $(target);
+
+	if ($target.size()) {
+		scrollTo($target.offset().top);
+	}
 });
 
 $('.button-twitter').click(function (evt) {
