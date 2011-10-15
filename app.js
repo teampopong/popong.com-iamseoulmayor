@@ -79,6 +79,11 @@ function getEventsByTopic(topic) {
 	});
 }
 
+function getDateRepr(date) {
+	assert.ok(date instanceof Date);
+	return _.sprintf("%04d%02d%02d", date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
+}
+
 var getPledges = (function () {
 	var pledges;
 
@@ -120,28 +125,34 @@ var getPledges = (function () {
 })();
 
 var getSortedEventsByTopic = (function () {
-	var sortedEventsList = [];
+	var sortedEventsSet = {'date': [], 'like': []};
+	var prevSortBy = null;
 
-	return function (topic) {
-		var sortedEvents = sortedEventsList[topic];
+	return function (topic, sortBy) {
+		// TODO: MongoDB 등의 데이터베이스 사용하기 (JSON 인터페이스라 비교적 쉽게 쓸 수 있을... 듯?)
+		//       현재는 데이터량이 작아서 상관 없겠지만, 메모리에 sort 방식에 따른 중복 copy를 들고 있는 비효율성 문제가 있음.
+		var sortedEvents = sortedEventsSet[sortBy][topic];
 
-		// 개발모드가 아니고 캐시 생성 이후에 변하지 않았으면
+		// 캐시 사용 가능 여부 체크
 		if (!debug && sortedEvents && sortedEvents.nextIdWhenLastSorted == db.nextId) {
-		
+
 			return sortedEvents.events;
 
-		// 새로 캐시를 생성해야 한다면
 		} else {
 			sortedEvents = getEventsByTopic(topic);
 			sortedEvents.sort(function (ev1, ev2) {
-				if (ev1.like != ev2.like) // like를 우선 정렬
-					return ev2.like - ev1.like;
-				else // like가 같으면 날짜 역순 정렬
-				    return (new Date(ev2.date)).getTime() - (new Date(ev1.date)).getTime();
+				// 날짜의 대소관계만 비교하기 위해 YYYYMMDD 형태의 숫자로 변환
+				var date1 = parseInt(getDateRepr(new Date(ev1.date)));
+				var date2 = parseInt(getDateRepr(new Date(ev2.date)));
+				if (sortBy == 'date') {  // 날짜를 우선 정렬
+					return (date1 != date2) ? (date2 - date1) : (ev2.like - ev1.like);
+				} else {  // like를 우선 정렬
+					return (ev1.like != ev2.like) ? (ev2.like - ev1.like) : (date2 - date1);
+				}
 				return 0;
 			});
 
-			sortedEventsList[topic] = {
+			sortedEventsSet[sortBy][topic] = {
 				events: sortedEvents,
 				nextIdWhenLastSorted: db.nextId
 			};
@@ -286,6 +297,11 @@ app.get('/', function(req, res) {
 
 app.namespace('/iamseoulmayor', function () {
 	app.get('/(event/:id)?', function(req, res) {
+		var sortBy = req.param('sortby', 'date');
+		if (!(sortBy == 'date' || sortBy == 'like')) {
+			res.send('Invalid parameters.', 400);
+			return;
+		}
 		res.render('index', {
 			title: '나는 서울 시장이다!',
 			style: '/stylesheets/style.css',
@@ -293,10 +309,11 @@ app.namespace('/iamseoulmayor', function () {
 				, '/javascripts/underscore.string.js'
 				, '/javascripts/timeline.js'
 				, 'http://platform.twitter.com/widgets.js'],
-			left_events: getSortedEventsByTopic('나경원'),
-			right_events: getSortedEventsByTopic('박원순'),
+			left_events: getSortedEventsByTopic('나경원', sortBy),
+			right_events: getSortedEventsByTopic('박원순', sortBy),
 			pledges: getPledges(),
-			event_id: req.params.id || ''
+			event_id: req.params.id || '',
+			query_string: req.query  // redirection 처리할 때 parameter 보존용
 		});
 	});
 
@@ -337,7 +354,7 @@ app.namespace('/iamseoulmayor', function () {
 		});
 	});
 
-	app.post('/event', function(req, res) {
+	app.post('/event', function(req, res) { // AJAX handler
 		try {
 			validateEvent(req.body);
 		} catch (message) {
@@ -361,15 +378,17 @@ app.namespace('/iamseoulmayor', function () {
 		});
 		updateCount(5);
 
-		// TODO: return redirection when called without AJAX.
-		// TODO: return the following json response when called with AJAX.
-		res.json({
-			success: 1,
-			event_id: newid
-		});
+		if (req.isXMLHttpRequest) {
+			res.json({
+				success: 1,
+				event_id: newid
+			});
+		} else {
+			res.redirect('/' + req.query);
+		}
 	});
 
-	app.del('/event', function(req, res) {
+	app.del('/event', function(req, res) { // AJAX handler
 		var event = getEvent(req.body.id);
 		if (!event) {
 			res.json({
@@ -396,7 +415,7 @@ app.namespace('/iamseoulmayor', function () {
 		});
 	});
 
-	app.post('/like', function(req, res) {
+	app.post('/like', function(req, res) { // AJAX handler
 		if (_.isUndefined(req.session.liked)) {
 			req.session.liked = {};
 		}
@@ -412,7 +431,7 @@ app.namespace('/iamseoulmayor', function () {
 		if (req.session.liked[req.body.id]) {
 			res.json({
 				success: 0,
-				message: '이미 추천했습니다'
+				message: '이미 추천했습니다.'
 			});
 			return;
 		}

@@ -2,7 +2,7 @@ mixin timeline_addevent(column, topic)
   //- event input box
   div.timeline-addevent
     div.button-addevent 후보 관련 이슈 직접 등록하기
-    form.form-addevent(style='display: none;', method='post', action='/iamseoulmayor/event')
+    form.form-addevent(style='display: none;', method='post', action='/iamseoulmayor/event' + query_string)
       input(type='hidden', name='topic', value=topic)
       span.close
       input(type='text', name='year')
@@ -14,7 +14,7 @@ mixin timeline_addevent(column, topic)
       br
       제목&nbsp;
       input(type='text', name='title', maxlength='20')
-      textarea(name='text', rows='3', title='시민들이 현명한 투표를 할 수 있도록, 나경원 의원의 선거 관련 이슈를 직접 등록해 주세요')
+      textarea(name='text', rows='3', placeholder='시민들이 현명한 투표를 할 수 있도록, ' + topic + ' 의원의 선거 관련 이슈를 직접 등록해 주세요.')
       div.charleft 140
       img.img-link(src='/images/link_chain.jpg')
       &nbsp;
