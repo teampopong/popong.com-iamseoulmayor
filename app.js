@@ -313,6 +313,7 @@ app.namespace('/iamseoulmayor', function () {
 			right_events: getSortedEventsByTopic('박원순', sortBy),
 			pledges: getPledges(),
 			event_id: req.params.id || '',
+			sort_by: sortBy,
 			query_string: req.query  // redirection 처리할 때 parameter 보존용
 		});
 	});
