@@ -41,7 +41,12 @@ app.configure('production', function(){
 var VALIDATE_CYCLE = 25; // like 캐시 validation 주기
 var BACKUP_CYCLE = 1;
 var MAX_TEXT_LENGTH = 140;
-var MASTER_PASSWD = _(fs.readFileSync('master_passwd', 'utf-8')).trim();
+try {
+	var MASTER_PASSWD = _(fs.readFileSync('master_passwd', 'utf-8')).trim();
+} catch (e) {
+	console.error('A master password is required. Create "./master_passwd" file.');
+	process.exit(1);
+}
 
 var defaultDb = {
 	nextId: 1,
@@ -356,5 +361,9 @@ app.namespace('/iamseoulmayor', function () {
 	*/
 });
 
-app.listen(3000);
+var port = 3000;
+if (process.argv.length > 2) {
+	port = parseInt(process.argv[2]);
+}
+app.listen(port);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
