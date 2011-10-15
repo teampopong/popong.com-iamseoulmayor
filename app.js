@@ -75,6 +75,46 @@ function getEventsByTopic(topic) {
 	});
 }
 
+var getPledges = (function () {
+	var pledges;
+
+	function setupPledges() {
+		_.each(['나경원', '박원순'], function (name) {
+			_.each(['일자리', '교육', '시정', '주택', '경제', '여성,보육',
+				'복지', '안전', '소상공인', '참여,소통'], function (domain) {
+
+				var newid = getNextId();
+				db.events.push({
+					id: name+'_'+domain,
+					topic: '공약',
+					like: 0
+				});
+			});
+		});
+	}
+
+	return function () {
+		if (_.isUndefined(pledges)) {
+			if (!getEventsByTopic('공약').length) {
+				setupPledges();
+			}
+
+			pledges = _(db.events).chain()
+				.filter(function (event) {
+					return event.topic == '공약';
+				})
+				.groupBy(function (event) {
+					return event.id;
+				}).value();
+			_.each(pledges, function (pledge, id) {
+				pledges[id] = pledge[0];
+			});
+		}
+
+		return pledges;
+	}
+})();
+
 var getSortedEventsByTopic = (function () {
 	var sortedEventsList = [];
 
@@ -237,6 +277,7 @@ app.namespace('/iamseoulmayor', function () {
 				, 'http://platform.twitter.com/widgets.js'],
 			left_events: getSortedEventsByTopic('나경원'),
 			right_events: getSortedEventsByTopic('박원순'),
+			pledges: getPledges(),
 			event_id: req.params.id || ''
 		});
 	});
