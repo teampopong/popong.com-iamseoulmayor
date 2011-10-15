@@ -8,10 +8,14 @@ input#backup(type="button", value="백업")
 input#import(type="button", value="불러오기")
 
 div#popup-import(style="display:none;")
-  form#form-import(action="/import", method="post")
+  form#form-import(action="/iamseoulmayor/admin/import", method="post")
+    input(type='hidden', name='key', value=key)
     textarea(name="db")=backup
     br
     input#submit-import(type="button", value="등록")
+
+form#form-backup(action="/iamseoulmayor/admin/backup", method="post")
+  input(type='hidden', name='key', value=key)
 
 hr
 
@@ -41,6 +45,6 @@ script
   };
   document.getElementById('backup').onclick = function () {
     if (confirm('정말 백업하시겠습니까?')) {
-      location.href = '/backup';
+      document.getElementById('form-backup').submit();
     }
   };

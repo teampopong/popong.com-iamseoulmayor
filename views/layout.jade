@@ -1,8 +1,10 @@
 !!! 5
 html
   head
-    title= title
-    link(rel='stylesheet', href=style)
+    if typeof title != 'undefined'
+      title= title
+    if typeof style != 'undefined'
+      link(rel='stylesheet', href=style)
 
     //- google analytics
     script(type='text/javascript')
