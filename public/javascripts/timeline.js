@@ -297,4 +297,10 @@ $('.like, .button-pong, #tooltip-pong').mousemove(function (evt) {
 	tooltip.css('left', evt.pageX + 10);
 });
 
+$('#button-recruit').click(function (evt) {
+	stopPropagation(evt);
+	window.open('/recruit.html', 'we-need-designer', "menubar=0");
+	return false;
+});
+
 })();
