@@ -831,8 +831,3 @@ a:hover {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
-
-.super {
-	font-size: 75%;
-	vertical-align: super;
-}
