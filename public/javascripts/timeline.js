@@ -299,7 +299,7 @@ $('.like, .button-pong, #tooltip-pong').mousemove(function (evt) {
 
 $('#button-recruit').click(function (evt) {
 	stopPropagation(evt);
-	window.open('/recruit.html', 'we-need-designer', "menubar=0");
+	window.open('/recruit.html', 'we-need-designer', "width=1020, height=420, menubar=0");
 	return false;
 });
 
