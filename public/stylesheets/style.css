@@ -468,10 +468,6 @@ a:hover {
 	color: #159301;
 }
 
-.pledge {
-	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.1);
-}
-
 .pledge .like {
 	margin: 20px 0 15px;
 }
@@ -717,12 +713,13 @@ a:hover {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.1);
 }
 
 .pledge .content {
 	float: left;
 	width: 75%;
-	padding: 5px;
+	padding: 2%;
 }
 
 .lefttd .pledge .content {
@@ -735,8 +732,7 @@ a:hover {
 
 .pledge .extra {
 	float: left;
-	width: 19%;
-	padding: 5px;
+	width: 20%;
 }
 
 #pledge-panel h2 {
