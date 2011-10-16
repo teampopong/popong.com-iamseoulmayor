@@ -107,9 +107,9 @@ $('.event').click(function () {
 });
 
 $('.event').not('.timeline-addevent .event').hover(function () {
-	$(this).prev('.prong').children('.prong-lt').addClass('hover');
+	$(this).prev('.prong').addClass('hover');
 }, function () {
-	$(this).prev('.prong').children('.prong-lt').removeClass('hover');
+	$(this).prev('.prong').removeClass('hover');
 });
 
 $('.button-pong').click(function (evt) {
