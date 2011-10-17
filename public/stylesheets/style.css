@@ -431,11 +431,19 @@ a:hover {
 }
 
 .event .title {
+	display: block;
 	font-size: 12pt;
 	font-weight: bold;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	text-align: left;
+}
+
+.event.expand .title {
+	white-space: normal;
+	word-wrap: break-word;
+	height: auto;
 }
 
 .event .text {
