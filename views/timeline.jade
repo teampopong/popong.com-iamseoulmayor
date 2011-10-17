@@ -1,7 +1,8 @@
 mixin timeline_addevent(column, topic)
   //- event input box
   div.timeline-addevent
-    div.button-addevent 후보 관련 이슈 직접 등록하기
+    div.button-addevent 후보 관련 이슈 직접 등록하기&nbsp;&nbsp;&nbsp;
+      span.helvetica >
     form.form-addevent(style='display: none;', method='post', action='/iamseoulmayor/event' + query_string)
       input(type='hidden', name='topic', value=topic)
       span.close

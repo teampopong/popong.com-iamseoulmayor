@@ -672,6 +672,10 @@ a:hover {
 	padding: 0 5px 10px 5px;
 }
 
+#pledge-panel td.lasttd {
+	padding-bottom: 0;
+}
+
 #pledge-panel td {
 	width: 420px;
 	vertical-align: top;
@@ -799,6 +803,10 @@ a:hover {
 #menu .separator {
 	border-top: 1px solid #777;
 	margin: 5px 0;
+}
+
+.helvetica {
+	font-family: Helvetica, sans-serif
 }
 
 .rounded-corner3 {
