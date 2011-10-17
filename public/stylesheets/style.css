@@ -252,8 +252,12 @@ a:hover {
 }
 
 #member-panel img.photo {
-	height: 50px;
+	height: 150px;
 	margin-left: 30px;
+}
+
+#member-panel img.photo.small {
+	height: 75px;
 }
 
 #member-panel div.name {

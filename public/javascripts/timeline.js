@@ -65,6 +65,27 @@ function scrollTo(top, immediate, callback) {
 	}
 }
 
+function resizeMemberPanel() {
+	HEIGHT_MEMBER_PANEL = $('#member-panel').height();
+	$('#spaceholder').css('height', HEIGHT_MEMBER_PANEL+'px');
+
+	var menu = $('#menu');
+	menu.css('top', HEIGHT_MEMBER_PANEL+'px');
+	if (!menu.is(':visible')) {
+		menu.fadeIn();
+	}
+}
+
+function resizeProfileImage() {
+	var windowHeight = $(window).height();
+	if (windowHeight > 800) {
+		$('#member-panel img.photo').removeClass('small');
+	} else {
+		$('#member-panel img.photo').addClass('small');
+	}
+	resizeMemberPanel();
+}
+
 function focusEvent(event_id) {
 	if (event_id.length) {
 		var sel = _.sprintf('.event-container[event_id="%s"]', event_id);
@@ -79,9 +100,7 @@ function focusEvent(event_id) {
 
 // on DOM load
 $(function () {
-	HEIGHT_MEMBER_PANEL = $('#member-panel').height();
-	$('#spaceholder').css('height', HEIGHT_MEMBER_PANEL+'px');
-	$('#menu').css('top', HEIGHT_MEMBER_PANEL+'px').fadeIn();
+	resizeProfileImage();
 });
 
 // on full load
@@ -301,6 +320,12 @@ $('#button-recruit').click(function (evt) {
 	stopPropagation(evt);
 	window.open('/recruit.html', 'we-need-designer', "width=1020, height=420, menubar=0");
 	return false;
+});
+
+var resizeTimer;
+$(window).resize(function () {
+	clearTimeout(resizeTimer);
+	resizeTimer = setTimeout(resizeProfileImage, 100);
 });
 
 })();
