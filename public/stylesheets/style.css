@@ -475,6 +475,7 @@ a:hover {
 
 .pledge .like {
 	margin: 20px 0 15px;
+	line-height: normal;
 }
 
 .lefttd .pledge .like {
@@ -707,6 +708,7 @@ a:hover {
 
 #pledge-panel h2 {
 	margin: 5px 0 15px;
+	font-size: 14pt;
 }
 
 #pledge-panel ul {
