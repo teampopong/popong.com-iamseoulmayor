@@ -291,23 +291,35 @@ $('.button-facebook').click(function (evt) {
 });
 
 // pong 지수 설명
+var tooltipPongTimer;
 $('.like, .button-pong').mouseover(function (evt) {
+	clearTimeout(tooltipPongTimer);
+
 	$(this).addClass('hover');
+
 	var tooltip = $('#tooltip-pong');
 	tooltip.css('top', evt.pageY - tooltip.height() + 10);
 	tooltip.css('left', evt.pageX + 10);
+
 	if (!tooltip.is(':visible')) {
 		tooltip.fadeIn('fast');
 	}
+
 }).mouseout(function () {
 	var $this = $(this);
-	$this.removeClass('hover');
-	var tooltip = $('#tooltip-pong');
-	setTimeout(function () {
+	clearTimeout(tooltipPongTimer);
+
+	function hideTooltipPong() {
 		if (!$this.hasClass('hover')) {
 			$('#tooltip-pong').hide();
+		} else {
+			tooltipPongTimer = setTimeout(hideTooltipPong, 50);
 		}
-	}, 20);
+	}
+
+	$this.removeClass('hover');
+
+	tooltipPongTimer = setTimeout(hideTooltipPong, 50);
 });
 
 $('.like, .button-pong, #tooltip-pong').mousemove(function (evt) {
