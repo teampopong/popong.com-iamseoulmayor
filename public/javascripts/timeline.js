@@ -292,7 +292,7 @@ $('.button-facebook').click(function (evt) {
 	var title = $(this).parents('.event').find('.title').text();
 	var text = $(this).parents('.event').find('.text').text();
 	var image = 'http://www.popong.com'
-		+ ($(this).parents('.leftcolumn')
+		+ ($(this).parents('.leftcolumn').size()
 			? $('#member-panel .photo').first().attr('src')
 			: $('#member-panel .photo').last().attr('src'));
 
