@@ -279,15 +279,32 @@ $('.button-twitter').click(function (evt) {
 			+ '" #popong';
 	var w = window.open(url, "twitter", "width=600, height=255, menubar=0");
 	w.focus();
+
+	return false;
 });
 
 $('.button-facebook').click(function (evt) {
 	stopPropagation(evt);
 
+	// TODO: refactoring
 	var id = $(this).parents('.event-container').attr('event_id');
-	var url = 'http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id;
+	var name = $(this).parents('.timeline').attr('topic');
+	var title = $(this).parents('.event').find('.title').text();
+	var text = $(this).parents('.event').find('.text').text();
+	var image = 'http://www.popong.com'
+		+ ($(this).parents('.leftcolumn')
+			? $('#member-panel .photo').first().attr('src')
+			: $('#member-panel .photo').last().attr('src'));
+
+	var url = 'http://www.facebook.com/sharer/sharer.php?s=100'
+		+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id
+		+ '&p[title]='+title
+		+ '&p[summary]='+text
+		+ '&p[images][0]='+image;
 	var w = window.open(url, "Facebook", "width=600, height=400, menubar=0");
 	w.focus();
+
+	return false;
 });
 
 // pong 지수 설명
