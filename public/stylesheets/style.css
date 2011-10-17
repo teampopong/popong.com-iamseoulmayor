@@ -220,6 +220,7 @@ a:hover {
 	position: fixed;
 	top: 0;
 	margin: 0 auto;
+	width: 960px;
 
 	background: #f9f9f9;
 	border-bottom: 1px solid #aaa;
@@ -485,7 +486,6 @@ a:hover {
 }
 
 .event .date {
-	text-a  ;
 	width: 100%;
 	display: block;
 }
