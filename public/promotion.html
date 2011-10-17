@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script type="text/javascript" src="/javascripts/jquery-1.6.2.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			.question, #result {
+				position: relative;
+				display: none;
+				width: 960px;
+				height: 480px;
+
+				margin: 40px auto;
+				padding: 10px;
+
+				background: white;
+				border: 1px solid #555;
+				border-radius: 10px;
+				-moz-border-radius: 10px;
+				-webkit-border-radius: 10px;
+			}
+
+			.question.active {
+				display: block;
+			}
+
+			.category {
+				font-size: 20pt;
+				font-weight: bold;
+				height: 60px;
+			}
+
+			.button {
+				padding: 5px;
+
+				background: whitesmoke;
+				border: 1px solid #999;
+				border-radius: 10px;
+				-moz-border-radius: 10px;
+				-webkit-border-radius: 10px;
+
+				font-size: 12pt;
+
+				cursor: pointer;
+			}
+
+			.button:hover {
+				background: #e9e9e9;
+			}
+
+			.pledge-container {
+				width: 920px;
+				margin: 0 auto;
+			}
+
+			.pledge {
+				display: inline-block;
+				width: 400px;
+
+				vertical-align: middle;
+				margin: auto 0;
+				padding: 10px;
+
+				border: 1px solid #999;
+				border-radius: 10px;
+				-moz-border-radius: 10px;
+				-webkit-border-radius: 10px;
+
+				line-height: 1.5em;
+
+				cursor: pointer;
+			}
+
+			.pledge:hover {
+				background: whitesmoke;
+			}
+
+			.pledge ul {
+				padding-left: 20px;
+			}
+
+			.pledge li {
+				margin: 10px 0;
+			}
+
+			.vs {
+				display: inline-block;
+				width: 60px;
+
+				font-size: 20pt;
+				font-weight: bold;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="template-question" class="question">
+			<div class="category"></div>
+			<span class="button-back button">뒤로가기</span>
+			<div class="pledge-container">
+				<div class="pledge left"><ul></ul></div>
+				<span class="vs">vs.</span>
+				<div class="pledge right"><ul></ul></div>
+			</div>
+		</div>
+		<div id="result">
+			<span class="button-home button">처음으로</span>
+		</div>
+
+		<script>
+			var scores = [];
+
+			function getCurrentQuestion() {
+				return $('.question:visible');
+			}
+
+			function prev() {
+				var question = getCurrentQuestion();
+				if (question.prev('.question').size()) {
+					question.hide();
+					question.prev().fadeIn();
+				} else {
+					alert('뒤로 갈 수 없습니다!');
+				}
+			}
+
+			function next() {
+				var question = getCurrentQuestion();
+				if (question.next('.question').size()) {
+					question.hide();
+					question.next().fadeIn();
+				} else {
+					var left = 0, right = 0;
+					for (var i = 0; i < scores.length; i++) {
+						if (scores[i] < 0) {
+							left++;
+						} else {
+							right++;
+						}
+					}
+
+					question.hide();
+					$('#result').append('<span>나경원측: '+left+'점, 박원순측: '+right+'점</span>');
+					$('#result').fadeIn();
+				}
+			}
+
+			function choose(score) {
+				var idx = parseInt(getCurrentQuestion().attr('id').substr(1));
+				scores[idx] = score;
+			}
+
+			$.getJSON('/pledges.json', function (pledges) {
+				$.each(pledges, function (idx, item) {
+					var question = $('#template-question').clone().removeAttr('id').attr('id', 'q'+idx);
+					question.children('.category').text(item.category);
+
+					var ul;
+					ul = question.find('.pledge.left ul');
+					$.each(item[0], function (idx, item) {
+						ul.append('<li>'+item+'</li>');
+					});
+
+					ul = question.find('.pledge.right ul');
+					$.each(item[1], function (idx, item) {
+						ul.append('<li>'+item+'</li>');
+					});
+
+					$('body').append(question);
+				});
+
+				$('#q0').addClass('active');
+
+				$('.pledge').click(function (event) {
+					var chosen = $(this).hasClass('left') ? -1 : 1;
+					choose(chosen);
+
+					next();
+				});
+
+				$('.button-back').click(function (event) {
+					prev();
+				});
+
+				$('.button-home').click(function (event) {
+					location.reload();
+				});
+			});
+		</script>
+	</body>
+</html>
