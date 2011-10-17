@@ -435,6 +435,7 @@ a:hover {
 	font-weight: bold;
 	overflow: hidden;
 	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .event .text {
