@@ -2,55 +2,144 @@
 <html>
 	<head>
 		<title></title>
-		<script type="text/javascript" src="/javascripts/jquery-1.6.2.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 		<style>
 			* {
 				margin: 0;
 				padding: 0;
 			}
 
+			#container {
+				margin-top: 60px;
+			}
+
+			#container2 {
+				padding-bottom: 0;
+			}
+
+			#content {
+				padding: 30px 50px;
+			}
+
 			.question, #result {
 				position: relative;
 				display: none;
-				width: 960px;
-				height: 480px;
-
-				margin: 40px auto;
-				padding: 10px;
-
-				background: white;
-				border: 1px solid #555;
-				border-radius: 10px;
-				-moz-border-radius: 10px;
-				-webkit-border-radius: 10px;
 			}
 
 			.question.active {
 				display: block;
 			}
 
-			.category {
-				font-size: 20pt;
+			.pledge-header, .result-header {
+				margin-bottom: 20px;
+			}
+
+			.start-text, .result-container, .result-text, .result-footer {
+				margin: 20px auto;
+				text-align: center;
+			}
+
+			.start-text, .result-text {
 				font-weight: bold;
-				height: 60px;
+				font-size: 16pt;
+				line-height: 1.5em;
+			}
+
+			.result-name {
+				font-size: 18pt;
+			}
+
+			.result-name.left {
+				color: #0ad;
+			}
+
+			.result-name.right {
+				color: #159301;
+			}
+
+			.result-footer .button {
+				display: block;
+
+				width: 200px;
+				margin: 5px 0;
+
+				text-align: center;
+			}
+
+			.result-photo {
+				height: 200px;
 			}
 
 			.button {
-				padding: 5px;
-
-				background: whitesmoke;
-				border: 1px solid #999;
 				border-radius: 10px;
 				-moz-border-radius: 10px;
 				-webkit-border-radius: 10px;
 
-				font-size: 12pt;
+				font-size: 11pt;
 
 				cursor: pointer;
 			}
 
-			.button:hover {
-				background: #e9e9e9;
+			.question .button-home, .button-back, .position-indicator {
+				float: right;
+			}
+
+			.button-start {
+				display: block;
+				width: 150px;
+				margin: 0 auto;
+
+				text-align: center;
+				font-size: 14pt;
+			}
+
+			.position-indicator {
+				margin: 0 20px;
+			}
+
+			.dot {
+				display: inline-block;
+
+				width: 10px;
+				height: 10px;
+				margin: 0 2px;
+
+				border: 1px solid #555;
+				border-radius: 10px;
+				-moz-border-radius: 10px;
+				-webkit-border-radius: 10px;
+			}
+
+			.dot.now {
+				background: #e5e5e5;
+				border-color: #e5e5e5;
+			}
+
+			.dot.prev {
+				background: #555;
+				border-color: #555;
+
+				cursor: pointer;
+			}
+
+			.rect {
+				display: inline-block;
+
+				width: 30px;
+				height: 50px;
+				margin-left: -1px;
+
+				border: 1px solid #777;
+			}
+
+			.rect.left {
+				background: #0cf;
+				border-color: #09b;
+			}
+
+			.rect.right {
+				background: #159301;
+				border-color: #160;
 			}
 
 			.pledge-container {
@@ -60,13 +149,11 @@
 
 			.pledge {
 				display: inline-block;
-				width: 400px;
+				width: 360px;
 
 				vertical-align: middle;
-				margin: auto 0;
 				padding: 10px;
 
-				border: 1px solid #999;
 				border-radius: 10px;
 				-moz-border-radius: 10px;
 				-webkit-border-radius: 10px;
@@ -96,57 +183,150 @@
 				font-weight: bold;
 				text-align: center;
 			}
+
+			.result-indicator .vs {
+				vertical-align: bottom;
+			}
+
+			.column {
+				display: inline-block;
+				vertical-align: top;
+				margin-right: 20px;
+			}
+
+			.no-underline {
+				text-decoration: none;
+			}
+
+			h1 {
+				font-size: 20pt;
+				margin-bottom: 20px;
+			}
+
+			h2 {
+				font-size: 18pt;
+				display: inline-block;
+			}
 		</style>
 	</head>
 	<body>
+		<div id="container" class="rounded-corner5">
+		<div id="container2">
+		<div id="content">
+			<div id="start">
+				<h1>애정선거!</h1>
+				<p class="start-text">
+					애매~한 서울시장 후보,<br>
+					간단한 질문에 답하면<br>
+					내 성향에 맞는 후보를 알려드립니다!
+				</p>
+				<div class="button-start button">Start</div>
+			</div>
+			<div id="result">
+				<div class="result-header">
+					<h2>분석 결과</h2>
+				</div>
+				<div class="result-container">
+					<p class="result-text">
+						당신과 더욱 잘 맞는 서울시장 후보는<br>
+						<span style="display:inline-block; width:10em;">&nbsp;</span>
+						아마도 <strong class="result-name"></strong>?
+					</p>
+					<div class="result-indicator"></div>
+				</div>
+				<div class="result-footer">
+					<div class="column"><img class="result-photo rounded-corner5"></img></div>
+					<div class="column">
+						<a class="no-underline" href="http://www.popong.com/iamseoulmayor#pledge-panel" target="_blank"><div class="button">공약 알아보러 가기</div></a>
+						<span class="button-home button">다시 하기</span>
+						<!--div class="button">친구에게 추천하기</div-->
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
 		<div id="template-question" class="question">
-			<div class="category"></div>
-			<span class="button-back button">뒤로가기</span>
+			<div class="pledge-header">
+				<h2 class="category"></h2>
+				<span class="button-back button">뒤로가기</span>
+				<span class="button-home button">처음으로</span>
+				<div class="position-indicator"></div>
+			</div>
 			<div class="pledge-container">
 				<div class="pledge left"><ul></ul></div>
 				<span class="vs">vs.</span>
 				<div class="pledge right"><ul></ul></div>
 			</div>
 		</div>
-		<div id="result">
-			<span class="button-home button">처음으로</span>
-		</div>
 
+		<script type="text/javascript" src="/javascripts/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
 		<script>
 			var scores = [];
+			var pledges = [];
 
 			function getCurrentQuestion() {
 				return $('.question:visible');
 			}
 
+			function getCurrentPageNo() {
+				return parseInt(getCurrentQuestion().attr('id').substr(1));
+			}
+
+			function showStart() {
+				$('.question').hide();
+				$('#result').hide();
+				$('#start').fadeIn();
+			}
+
+			function showResult() {
+				var left = _.filter(scores, function(x){ return x < 0; }).length,
+					right = _.filter(scores, function(x){ return x > 0; }).length;
+
+				var resultIndicator = $('.result-indicator').empty();
+				_(left).times(function () {
+					var rect = $('<div class="rect left">&nbsp;</div>').appendTo(resultIndicator);
+				});
+				_(right).times(function () {
+					var rect = $('<div class="rect right">&nbsp;</div>').appendTo(resultIndicator);
+				});
+
+				$('.result-name')
+					.text(left > right ? '나경원' : '박원순')
+					.removeClass('left right')
+					.addClass(left > right ? 'left' : 'right');
+
+				$('.result-photo').attr('src', left > right
+					? '/images/_EB_82_98_EA_B2_BD_EC_9B_90.jpg'
+					: '/images/_EB_B0_95_EC_9B_90_EC_88_9C.jpg');
+
+				getCurrentQuestion().hide();
+				$('#result').fadeIn();
+			}
+
+			function to(pageNo) {
+				$('#start').hide();
+				$('#result').hide();
+				getCurrentQuestion().hide();
+				$('#q'+pageNo).fadeIn();
+			}
+
 			function prev() {
-				var question = getCurrentQuestion();
-				if (question.prev('.question').size()) {
-					question.hide();
-					question.prev().fadeIn();
+				var currentPageNo = getCurrentPageNo();
+				if (currentPageNo > 0) {
+					to(currentPageNo - 1);
 				} else {
 					alert('뒤로 갈 수 없습니다!');
 				}
 			}
 
 			function next() {
-				var question = getCurrentQuestion();
-				if (question.next('.question').size()) {
-					question.hide();
-					question.next().fadeIn();
+				var currentPageNo = getCurrentPageNo();
+				if (currentPageNo < pledges.length - 1) {
+					to(currentPageNo + 1);
 				} else {
-					var left = 0, right = 0;
-					for (var i = 0; i < scores.length; i++) {
-						if (scores[i] < 0) {
-							left++;
-						} else {
-							right++;
-						}
-					}
-
-					question.hide();
-					$('#result').append('<span>나경원측: '+left+'점, 박원순측: '+right+'점</span>');
-					$('#result').fadeIn();
+					showResult();
 				}
 			}
 
@@ -156,26 +336,40 @@
 			}
 
 			$.getJSON('/pledges.json', function (pledges) {
+				window.pledges = pledges;
+
 				$.each(pledges, function (idx, item) {
 					var question = $('#template-question').clone().removeAttr('id').attr('id', 'q'+idx);
-					question.children('.category').text(item.category);
+					question.find('.category').text(item.category);
 
-					var ul;
-					ul = question.find('.pledge.left ul');
+					// pledges of 나경원
+					var left_ul = question.find('.pledge.left ul');
 					$.each(item[0], function (idx, item) {
-						ul.append('<li>'+item+'</li>');
+						left_ul.append('<li>'+item+'</li>');
 					});
 
-					ul = question.find('.pledge.right ul');
+					// pledges of 박원순
+					var right_ul = question.find('.pledge.right ul');
 					$.each(item[1], function (idx, item) {
-						ul.append('<li>'+item+'</li>');
+						right_ul.append('<li>'+item+'</li>');
 					});
 
-					$('body').append(question);
+					// position indicator
+					var positionIndicator = question.find('.position-indicator');
+					for (var i = 0; i < pledges.length; i++) {
+						var dot = $('<div class="dot">&nbsp;</div>').appendTo(positionIndicator);
+						dot.attr('idx', i);
+						if (i < idx) {
+							dot.addClass('prev');
+						} else if (i == idx) {
+							dot.addClass('now');
+						}
+					}
+
+					$('#content').append(question);
 				});
 
-				$('#q0').addClass('active');
-
+				///// event handlers /////
 				$('.pledge').click(function (event) {
 					var chosen = $(this).hasClass('left') ? -1 : 1;
 					choose(chosen);
@@ -183,12 +377,20 @@
 					next();
 				});
 
+				$('.button-start').click(function (event) {
+					to(0);
+				});
+
 				$('.button-back').click(function (event) {
 					prev();
 				});
 
 				$('.button-home').click(function (event) {
-					location.reload();
+					showStart();
+				});
+
+				$('.dot.prev').click(function (event) {
+					to($(this).attr('idx'));
 				});
 			});
 		</script>
