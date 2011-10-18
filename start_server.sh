@@ -6,4 +6,4 @@
 #
 # ./start_server.sh 3001
 #  - run server on port 3001
-nohup node app.js $1 >> server.log 2>&1 &
+NODE_ENV=production nohup node app.js $1 >> server.log 2>&1 &

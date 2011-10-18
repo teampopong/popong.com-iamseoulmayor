@@ -307,8 +307,7 @@ app.namespace('/iamseoulmayor', function () {
 			style: '/stylesheets/style.css',
 			jsfiles: ['/javascripts/jquery-1.6.2.min.js'
 				, '/javascripts/underscore.string.js'
-				, '/javascripts/timeline.js'
-				, 'http://platform.twitter.com/widgets.js'],
+				, '/javascripts/timeline.js'],
 			left_events: getSortedEventsByTopic('나경원', sortBy),
 			right_events: getSortedEventsByTopic('박원순', sortBy),
 			pledges: getPledges(),
