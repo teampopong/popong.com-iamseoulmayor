@@ -111,10 +111,16 @@ div#floating
     &nbsp;가는 글이라면?
     strong PONG
     을 클릭해 SCORE를 올려 주세요!
+  div#tooltip-promotion.rounded-corner5(style='display:none;')
+    strong.red 새 기능!
+    br
+    애매~한 서울시장 후보, 간단한 질문에 답하면 내 성향에 맞는 후보를 알려드립니다!
   div#menu.rounded-corner5(style='display:none;')
     ul
       a(href='/aboutus.html', target='_blank')
         li.rounded-corner5 About us
+      a.button-promotion(href='/promotion.html', target='_blank')
+        li.button-bright.rounded-corner5 애정선거!
       div.separator
       a(href='#profile-panel')
         li.rounded-corner5 프로필

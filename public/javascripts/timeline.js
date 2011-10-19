@@ -137,6 +137,21 @@ $(function () {
 	}
 });
 
+function showNewFeatureNotice() {
+	var promotionOffset = $('.button-promotion').offset();
+	var tooltip = $('#tooltip-promotion');
+	tooltip.css('top', promotionOffset.top - tooltip.height()/2)
+		.css('left', promotionOffset.left - tooltip.width() - 10)
+		.fadeIn()
+		.click(function (event) {
+			stopPropagation(event);
+			tooltip.hide();
+		});
+	setTimeout(function () {
+		tooltip.fadeOut();
+	}, 3000);
+}
+
 // on full load
 $(window).load(function () {
 	// load parameters passed
@@ -153,6 +168,8 @@ $(window).load(function () {
 	} else {
 		scrollTo($('#timeline-panel').offset().top, true);
 	}
+
+	showNewFeatureNotice();
 });
 
 // events
@@ -383,7 +400,13 @@ $('.like, .button-pong, #tooltip-pong').mousemove(function (evt) {
 
 $('#button-recruit').click(function (evt) {
 	stopPropagation(evt);
-	window.open('/recruit.html', 'we-need-designer', "width=1020, height=420, menubar=0");
+	window.open($(this).attr('href'), 'we-need-designer', "width=1020, height=420, menubar=0");
+	return false;
+});
+
+$('.button-promotion').click(function (evt) {
+	stopPropagation(evt);
+	window.open($(this).attr('href'), 'promotion', "width=1020, height=600, menubar=0");
 	return false;
 });
 
