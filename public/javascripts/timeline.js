@@ -4,11 +4,42 @@
 var MAX_TEXT_LENGTH = 140;
 var HEIGHT_MEMBER_PANEL;
 
+// http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript/901144#901144
+function getParameterByName(name){
+	name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	var regexS = "[\\?&]" + name + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(window.location.href);
+
+	if(results == null) {
+		return "";
+	} else {
+		return decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+}
+
 // functions
 function stopPropagation(e) {
 	e = e || window.event;
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
+}
+
+function sortEventsByLikeScore() {
+
+	function _sortEventsByLikeScore(container, events) {
+		var sortedEvents = events.toArray().sort(function (ev1, ev2) {
+			var like1 = parseInt($('.like', ev1).text()),
+				like2 = parseInt($('.like', ev2).text());
+			var date1 = $('.date', ev1).text(),
+				date2 = $('.date', ev2).text();
+			return (like1 != like2) ? (like2 - like1) : (date2 - date1);
+		});
+		$(sortedEvents).appendTo(container);
+	}
+
+	_sortEventsByLikeScore($('.timeline-left .timeline-events'), $('.timeline-left .event-container'));
+	_sortEventsByLikeScore($('.timeline-right .timeline-events'), $('.timeline-right .event-container'));
 }
 
 function requestPong(id, callback) {
@@ -101,7 +132,25 @@ function focusEvent(event_id) {
 // on DOM load
 $(function () {
 	resizeProfileImage();
+	if (getParameterByName('sortby') === 'like') {
+		sortEventsByLikeScore();
+	}
 });
+
+function showNewFeatureNotice() {
+	var promotionOffset = $('.button-promotion').offset();
+	var tooltip = $('#tooltip-promotion');
+	tooltip.css('top', promotionOffset.top - tooltip.height()/2)
+		.css('left', promotionOffset.left - tooltip.width() - 10)
+		.fadeIn()
+		.click(function (event) {
+			stopPropagation(event);
+			tooltip.hide();
+		});
+	setTimeout(function () {
+		tooltip.fadeOut();
+	}, 3000);
+}
 
 // on full load
 $(window).load(function () {
@@ -119,6 +168,8 @@ $(window).load(function () {
 	} else {
 		scrollTo($('#timeline-panel').offset().top, true);
 	}
+
+	showNewFeatureNotice();
 });
 
 // events
@@ -349,7 +400,13 @@ $('.like, .button-pong, #tooltip-pong').mousemove(function (evt) {
 
 $('#button-recruit').click(function (evt) {
 	stopPropagation(evt);
-	window.open('/recruit.html', 'we-need-designer', "width=1020, height=420, menubar=0");
+	window.open($(this).attr('href'), 'we-need-designer', "width=1020, height=420, menubar=0");
+	return false;
+});
+
+$('.button-promotion').click(function (evt) {
+	stopPropagation(evt);
+	window.open($(this).attr('href'), 'promotion', "width=1020, height=600, menubar=0");
 	return false;
 });
 

@@ -23,9 +23,9 @@ app.configure(function(){
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser());
-	// session longs for two weeks
+	// session longs for 24 hours
 	app.use(express.session({ secret: 'keyboard cat',
-		store: new MemoryStore({ maxAge: 1000*60*60*24*7*2 })}));
+		store: new MemoryStore({ maxAge: 1000*60*60*24 })}));
 	app.use(express.static(__dirname + '/public'));
 	app.use(app.router);
 });
@@ -431,7 +431,7 @@ app.namespace('/iamseoulmayor', function () {
 		if (req.session.liked[req.body.id]) {
 			res.json({
 				success: 0,
-				message: '이미 추천했습니다.'
+				message: '1일 1PONG!\n내일 다시 PONG해주세요~! :D'
 			});
 			return;
 		}
@@ -442,6 +442,10 @@ app.namespace('/iamseoulmayor', function () {
 			host: getClientAddress(req)
 		});
 		updateCount();
+		// XXX: 원래는 like가 증가해도 sortedEvent 캐시를 지워야 하지만
+		// 현재 클라이언트 JavaScript로 정렬 처리 중.
+		// 클라이언트에 큰 부하가 되지 않으니,
+		// 서버 부하를 줄이기 위해 cache 클리어하지 않음
 
 		// 세션에 추천 정보 기록
 		req.session.liked[req.body.id] = true;
