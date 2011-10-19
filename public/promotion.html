@@ -343,14 +343,16 @@
 					question.find('.category').text(item.category);
 
 					// pledges of 나경원
+					var left_pledges = _.shuffle(item[0]).slice(0, 2);
 					var left_ul = question.find('.pledge.left ul');
-					$.each(item[0], function (idx, item) {
+					$.each(left_pledges, function (idx, item) {
 						left_ul.append('<li>'+item+'</li>');
 					});
 
 					// pledges of 박원순
+					var right_pledges = _.shuffle(item[1]).slice(0, 2);
 					var right_ul = question.find('.pledge.right ul');
-					$.each(item[1], function (idx, item) {
+					$.each(right_pledges, function (idx, item) {
 						right_ul.append('<li>'+item+'</li>');
 					});
 
