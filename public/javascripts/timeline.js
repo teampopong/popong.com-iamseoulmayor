@@ -4,11 +4,42 @@
 var MAX_TEXT_LENGTH = 140;
 var HEIGHT_MEMBER_PANEL;
 
+// http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript/901144#901144
+function getParameterByName(name){
+	name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	var regexS = "[\\?&]" + name + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(window.location.href);
+
+	if(results == null) {
+		return "";
+	} else {
+		return decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+}
+
 // functions
 function stopPropagation(e) {
 	e = e || window.event;
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
+}
+
+function sortEventsByLikeScore() {
+
+	function _sortEventsByLikeScore(container, events) {
+		var sortedEvents = events.toArray().sort(function (ev1, ev2) {
+			var like1 = parseInt($('.like', ev1).text()),
+				like2 = parseInt($('.like', ev2).text());
+			var date1 = $('.date', ev1).text(),
+				date2 = $('.date', ev2).text();
+			return (like1 != like2) ? (like2 - like1) : (date2 - date1);
+		});
+		$(sortedEvents).appendTo(container);
+	}
+
+	_sortEventsByLikeScore($('.timeline-left .timeline-events'), $('.timeline-left .event-container'));
+	_sortEventsByLikeScore($('.timeline-right .timeline-events'), $('.timeline-right .event-container'));
 }
 
 function requestPong(id, callback) {
@@ -101,6 +132,9 @@ function focusEvent(event_id) {
 // on DOM load
 $(function () {
 	resizeProfileImage();
+	if (getParameterByName('sortby') === 'like') {
+		sortEventsByLikeScore();
+	}
 });
 
 // on full load
