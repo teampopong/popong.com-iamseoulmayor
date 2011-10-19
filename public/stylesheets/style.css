@@ -482,6 +482,13 @@ a:hover {
 	color: #159301;
 }
 
+.pledge {
+	user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+}
+
 .pledge .like {
 	margin: 20px 0 15px;
 	line-height: normal;
