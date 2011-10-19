@@ -136,6 +136,10 @@
 	border-color: #160;
 }
 
+.category {
+	color: blueViolet;
+}
+
 .pledge-container {
 	width: 920px;
 	margin: 0 auto;

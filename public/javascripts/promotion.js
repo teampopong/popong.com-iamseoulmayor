@@ -1,6 +1,10 @@
 var scores = [];
 var pledges = [];
 
+function randInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function getCurrentQuestion() {
 	return $('.question:visible');
 }
@@ -75,8 +79,21 @@ $.getJSON('/pledges.json', function (pledges) {
 	window.pledges = pledges;
 
 	$.each(pledges, function (idx, item) {
-		var question = $('#template-question').clone().removeAttr('id').attr('id', 'q'+idx);
+		var question = $('#template-question')
+			.clone()
+			.removeAttr('id')
+			.attr('id', 'q'+idx);
 		question.find('.category').text(item.category);
+
+		// 1/2의 확률로 좌우를 바꿈
+		var swap = randInt(0, 1) == 1;
+		if (swap) {
+			var t;
+			t = item[0], item[0] = item[1], item[1] = t;
+		}
+
+		question.find('.pledge.left').attr('score', swap ? 1 : -1);
+		question.find('.pledge.right').attr('score', swap ? -1 : 1);
 
 		// pledges of 나경원
 		var left_pledges = _.shuffle(item[0]).slice(0, 2);
@@ -109,8 +126,8 @@ $.getJSON('/pledges.json', function (pledges) {
 
 	///// event handlers /////
 	$('.pledge').click(function (event) {
-		var chosen = $(this).hasClass('left') ? -1 : 1;
-		choose(chosen);
+		var score = parseInt($(this).attr('score'));
+		choose(score);
 
 		next();
 	});
@@ -125,6 +142,25 @@ $.getJSON('/pledges.json', function (pledges) {
 
 	$('.button-home').click(function (event) {
 		showStart();
+	});
+
+	$('.button-share-twitter').click(function (event) {
+		var url = 'http://twitter.com/share'
+				+ '?url=http%3A%2F%2Fwww.popong.com%2Fpromotion.html'
+				+ '&via=PopongC&text=애매~한 서울시장 후보, 간단한 질문에 답하면 내 성향에 맞는 후보를 알려드립니다! ^^ %23PopongC';
+		var w = window.open(url, "twitter", "width=600, height=255, menubar=0");
+		w.focus();
+	});
+
+	$('.button-share-fb').click(function (event) {
+		var img = $('.result-photo').attr('src');
+		var url = 'http://www.facebook.com/sharer/sharer.php?s=100'
+			+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fpromotion.html'
+			+ '&p[title]=나는 서울 시장이다! 내 성향에 맞는 후보는?'
+			+ '&p[summary]=애매~한 서울시장 후보, 간단한 질문에 답하면 내 성향에 맞는 후보를 알려드립니다! ^^'
+			+ '&p[images][0]=http%3A%2F%2Fwww.popong.com'+img;
+		var w = window.open(url, "Facebook", "width=600, height=400, menubar=0");
+		w.focus();
 	});
 
 	$('.dot.prev').click(function (event) {
