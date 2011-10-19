@@ -114,6 +114,8 @@ $(window).load(function () {
 
 	if (params.event_id) {
 		focusEvent(params.event_id);
+	} else if (window.location.hash) {
+		scrollTo($(window.location.hash).offset().top, true);
 	} else {
 		scrollTo($('#timeline-panel').offset().top, true);
 	}
