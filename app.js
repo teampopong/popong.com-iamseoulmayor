@@ -145,7 +145,7 @@ var getSortedEventsByTopic = (function () {
 				var date1 = parseInt(getDateRepr(new Date(ev1.date)));
 				var date2 = parseInt(getDateRepr(new Date(ev2.date)));
 				if (sortBy == 'date') {  // 날짜를 우선 정렬
-					return (date1 != date2) ? (date2 - date1) : (ev2.like - ev1.like);
+					return (date1 != date2) ? (date2 - date1) : (ev2.id - ev1.id);
 				} else {  // like를 우선 정렬
 					return (ev1.like != ev2.like) ? (ev2.like - ev1.like) : (date2 - date1);
 				}
