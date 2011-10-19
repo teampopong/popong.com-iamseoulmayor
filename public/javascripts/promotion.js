@@ -71,6 +71,7 @@ function choose(score) {
 }
 
 $.getJSON('/pledges.json', function (pledges) {
+	pledges = _.shuffle(pledges);
 	window.pledges = pledges;
 
 	$.each(pledges, function (idx, item) {
