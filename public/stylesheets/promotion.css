@@ -1,0 +1,203 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#container {
+	margin-top: 60px;
+}
+
+#container2 {
+	padding-bottom: 0;
+}
+
+#content {
+	padding: 30px 50px;
+}
+
+.question, #result {
+	position: relative;
+	display: none;
+}
+
+.question.active {
+	display: block;
+}
+
+.pledge-header, .result-header {
+	margin-bottom: 20px;
+}
+
+.start-text, .result-container, .result-text, .result-footer {
+	margin: 20px auto;
+	text-align: center;
+}
+
+.start-text, .result-text {
+	font-weight: bold;
+	font-size: 16pt;
+	line-height: 1.5em;
+}
+
+.result-name {
+	font-size: 18pt;
+}
+
+.result-name.left {
+	color: #0ad;
+}
+
+.result-name.right {
+	color: #159301;
+}
+
+.result-footer .button {
+	display: block;
+
+	width: 200px;
+	margin: 5px 0;
+
+	text-align: center;
+}
+
+.result-photo {
+	height: 200px;
+}
+
+.button {
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+
+	font-size: 11pt;
+
+	cursor: pointer;
+}
+
+.question .button-home, .button-back, .position-indicator {
+	float: right;
+}
+
+.button-start {
+	display: block;
+	width: 150px;
+	margin: 0 auto;
+
+	text-align: center;
+	font-size: 14pt;
+}
+
+.position-indicator {
+	margin: 0 20px;
+}
+
+.dot {
+	display: inline-block;
+
+	width: 10px;
+	height: 10px;
+	margin: 0 2px;
+
+	border: 1px solid #555;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+.dot.now {
+	background: #e5e5e5;
+	border-color: #e5e5e5;
+}
+
+.dot.prev {
+	background: #555;
+	border-color: #555;
+
+	cursor: pointer;
+}
+
+.rect {
+	display: inline-block;
+
+	width: 30px;
+	height: 50px;
+	margin-left: -1px;
+
+	border: 1px solid #777;
+}
+
+.rect.left {
+	background: #0cf;
+	border-color: #09b;
+}
+
+.rect.right {
+	background: #159301;
+	border-color: #160;
+}
+
+.pledge-container {
+	width: 920px;
+	margin: 0 auto;
+}
+
+.pledge {
+	display: inline-block;
+	width: 360px;
+
+	vertical-align: middle;
+	padding: 10px;
+
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+
+	line-height: 1.5em;
+
+	cursor: pointer;
+}
+
+.pledge:hover {
+	background: whitesmoke;
+}
+
+.pledge ul {
+	padding-left: 20px;
+}
+
+.pledge li {
+	margin: 10px 0;
+}
+
+.vs {
+	display: inline-block;
+	width: 60px;
+
+	font-size: 20pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+.result-indicator .vs {
+	vertical-align: bottom;
+}
+
+.column {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 20px;
+}
+
+.no-underline {
+	text-decoration: none;
+}
+
+h1 {
+	font-size: 20pt;
+	margin-bottom: 20px;
+}
+
+h2 {
+	font-size: 18pt;
+	display: inline-block;
+}
