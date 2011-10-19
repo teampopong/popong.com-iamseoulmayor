@@ -753,23 +753,22 @@ a:hover {
 	text-indent: -20000em;
 }
 
-#tooltip-pong {
+#tooltip-pong, #tooltip-promotion {
 	position: absolute;
 	border: 1px solid #aaa;
 	background: #ffffe0;
-	width: 10em;
 	padding: 5px;
 	color: #555;
+	cursor: default;
+}
+
+#tooltip-pong {
+	width: 12em;
 	z-index: 15;
 }
 
 #tooltip-promotion {
-	position: absolute;
-	border: 1px solid #aaa;
-	background: #ffffe0;
 	width: 20em;
-	padding: 5px;
-	color: #555;
 	z-index: 51;
 }
 
