@@ -150,6 +150,10 @@ $.getJSON('/pledges.json', function (pledges) {
 		showStart();
 	});
 
+	$('.button-retry').click(function (event) {
+		location.reload();
+	});
+
 	$('.button-share-twitter').click(function (event) {
 		var url = 'http://twitter.com/share'
 				+ '?url=http%3A%2F%2Fwww.popong.com%2Fpromotion.html'
