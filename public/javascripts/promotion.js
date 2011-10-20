@@ -65,6 +65,10 @@ function next() {
 	if (currentPageNo < pledges.length - 1) {
 		to(currentPageNo + 1);
 	} else {
+		$.get('/promotion_log.html', {
+			categories: JSON.stringify(_.pluck(pledges, 'category')),
+			scores: JSON.stringify(scores)
+		}, function () {});
 		showResult();
 	}
 }
