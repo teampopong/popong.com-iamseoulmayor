@@ -83,9 +83,13 @@ $.getJSON('/pledges.json', function (pledges) {
 	window.pledges = pledges;
 
 	$.each(pledges, function (idx, item) {
-		var question = $('#template-question')
-			.clone()
-			.removeAttr('id')
+		// NOTE: IE6/7에서 실제 문서에 속하지 않은 DOM element를
+		// append하지 못하는 버그가 있어서 다소 더럽게 workaround.
+		$('#content').append('<div></div>');
+		var question = $('#content').children('div').last();
+		question
+			.addClass('question')
+			.html($('#template-question').html())
 			.attr('id', 'q'+idx);
 		question.find('.category').text(item.category);
 
@@ -124,8 +128,6 @@ $.getJSON('/pledges.json', function (pledges) {
 				dot.addClass('now');
 			}
 		}
-
-		$('#content').append(question);
 	});
 
 	///// event handlers /////
