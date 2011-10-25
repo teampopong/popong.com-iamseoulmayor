@@ -158,8 +158,8 @@ $.getJSON('/pledges.json', function (pledges) {
 		var name = $('.result-name').text();
 		var url = 'http://twitter.com/share'
 			+ '?url=http%3A%2F%2Fwww.popong.com%2Fpromotion.html'
-			+ '&via=PopongC&text=애정선거가 정해준 나에게 맞는 서울시장 후보는 '
-	  		+ name + '입니다! 당신도 한 번 해보세요! %23PopongC';
+			+ '&via=PopongC&text=' + encodeURI('애정선거가 정해준 나에게 맞는 서울시장 후보는 ')
+	  		+ encodeURI(name) + encodeURI('입니다! 당신도 한 번 해보세요!') + ' %23PopongC';
 		var w = window.open(url, "twitter", "width=600, height=255, menubar=0");
 		w.focus();
 	});
@@ -169,9 +169,9 @@ $.getJSON('/pledges.json', function (pledges) {
 		var img = $('.result-photo').attr('src');
 		var url = 'http://www.facebook.com/sharer/sharer.php?s=100'
 			+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fpromotion.html'
-			+ '&p[title]=나는 서울 시장이다! 내 성향에 맞는 후보는?'
-			+ '&p[summary]=애정선거가 정해준 나에게 맞는 서울시장 후보는 '
-			+ name + '입니다! 당신도 한 번 해보세요!'
+			+ '&p[title]=' + encodeURI('나는 서울 시장이다! 내 성향에 맞는 후보는?')
+			+ '&p[summary]=' + encodeURI('애정선거가 정해준 나에게 맞는 서울시장 후보는 ')
+			+ encodeURI(name) + encodeURI('입니다! 당신도 한 번 해보세요!')
 			+ '&p[images][0]=http%3A%2F%2Fwww.popong.com'+img;
 		var w = window.open(url, "Facebook", "width=600, height=400, menubar=0");
 		w.focus();
