@@ -45,7 +45,7 @@ a:hover {
 	position: absolute;
 	display: block;
 	cursor: pointer;
-	background: url(/images/close-16x16.png) no-repeat 0 0;
+	background: url(../images/close-16x16.png) no-repeat 0 0;
 	width: 16px;
 	height: 16px;
 	opacity: 0.5;
@@ -241,6 +241,16 @@ a:hover {
 
 	padding: 5px 0;
 	border-bottom: 1px solid #e0e0e0;
+}
+
+#member-panel #logo-img-wrapper {
+	padding: 5px 0;
+	text-align: center;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+#member-panel #logo-img {
+	height: 40px;
 }
 
 #member-panel #logo iframe.twitter-share-button {
@@ -652,20 +662,20 @@ a:hover {
 
 .leftcolumn .prong {
 	right: 0;
-	background: transparent url('/images/prong_gt.png');
+	background: transparent url('../images/prong_gt.png');
 }
 
 .leftcolumn .prong.hover {
-	background: transparent url('/images/prong_gt_hover.png');
+	background: transparent url('../images/prong_gt_hover.png');
 }
 
 .rightcolumn .prong {
 	left: 0;
-	background: transparent url('/images/prong_lt.png');
+	background: transparent url('../images/prong_lt.png');
 }
 
 .rightcolumn .prong.hover {
-	background: transparent url('/images/prong_lt_hover.png');
+	background: transparent url('../images/prong_lt_hover.png');
 }
 
 #pledge-panel table {
@@ -754,7 +764,7 @@ a:hover {
 }
 #we-need-designer a {
 	display: block;
-	background: url(/images/we-need-designer.png) no-repeat 0 0;
+	background: url(../images/we-need-designer.png) no-repeat 0 0;
 	width: 200px;
 	height: 62px;
 	text-indent: -20000em;

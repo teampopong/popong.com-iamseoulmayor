@@ -291,170 +291,164 @@ function getBackupDb() {
 
 // Routes
 
-app.get('/', function(req, res) {
-	res.redirect('/iamseoulmayor');
+app.get('/(event/:id)?', function(req, res) {
+    var sortBy = req.param('sortby', 'date');
+    if (!(sortBy == 'date' || sortBy == 'like')) {
+        res.send('Invalid parameters.', 400);
+        return;
+    }
+    res.render('index', {
+        title: '나는 서울 시장이다!',
+        style: '/iamseoulmayor/stylesheets/style.css',
+        jsfiles: ['/iamseoulmayor/javascripts/jquery-1.6.2.min.js'
+            , '/iamseoulmayor/javascripts/underscore.string.js'
+            , '/iamseoulmayor/javascripts/timeline.js'],
+        left_events: getSortedEventsByTopic('나경원', sortBy),
+        right_events: getSortedEventsByTopic('박원순', sortBy),
+        pledges: getPledges(),
+        event_id: req.params.id || '',
+        sort_by: sortBy,
+        query_string: req.query  // redirection 처리할 때 parameter 보존용
+    });
 });
 
-app.namespace('/iamseoulmayor', function () {
-	app.get('/(event/:id)?', function(req, res) {
-		var sortBy = req.param('sortby', 'date');
-		if (!(sortBy == 'date' || sortBy == 'like')) {
-			res.send('Invalid parameters.', 400);
-			return;
-		}
-		res.render('index', {
-			title: '나는 서울 시장이다!',
-			style: '/stylesheets/style.css',
-			jsfiles: ['/javascripts/jquery-1.6.2.min.js'
-				, '/javascripts/underscore.string.js'
-				, '/javascripts/timeline.js'],
-			left_events: getSortedEventsByTopic('나경원', sortBy),
-			right_events: getSortedEventsByTopic('박원순', sortBy),
-			pledges: getPledges(),
-			event_id: req.params.id || '',
-			sort_by: sortBy,
-			query_string: req.query  // redirection 처리할 때 parameter 보존용
-		});
-	});
+app.namespace('/admin', function () {
+    app.get('/', function(req, res){
+        res.render('admin_notlogged');
+    });
 
-	app.namespace('/admin', function () {
-		app.get('/', function(req, res){
-			res.render('admin_notlogged');
-		});
+    app.post('/', function (req, res) {
+        if (req.body.key == MASTER_PASSWD) {
+            var backup = getBackupDb();
 
-		app.post('/', function (req, res) {
-			if (req.body.key == MASTER_PASSWD) {
-				var backup = getBackupDb();
+            res.render('admin', {
+                title: '관리자',
+                style: '/iamseoulmayor/stylesheets/admin.css',
+                key: req.body.key,
+                db: JSON.stringify(db, null, 2),
+                backup: JSON.stringify(backup, null, 2)
+            });
+        } else {
+            res.redirect('/admin');
+        }
+    });
 
-				res.render('admin', {
-					title: '관리자',
-					style: '/stylesheets/admin.css',
-					key: req.body.key,
-					db: JSON.stringify(db, null, 2),
-					backup: JSON.stringify(backup, null, 2)
-				});
-			} else {
-				res.redirect('/iamseoulmayor/admin');
-			}
-		});
+    app.post('/backup', function(req, res) {
+        if (req.body.key == MASTER_PASSWD) {
+            backupDb();
+        }
+        res.redirect('/admin', 303);
+    });
 
-		app.post('/backup', function(req, res) {
-			if (req.body.key == MASTER_PASSWD) {
-				backupDb();
-			}
-			res.redirect('/iamseoulmayor/admin', 303);
-		});
+    app.post('/import', function(req, res) {
+        if (req.body.db && req.body.key == MASTER_PASSWD) {
+            console.log('importing database...');
+            db = JSON.parse(req.body.db);
+        }
+        res.redirect('/admin', 303);
+    });
+});
 
-		app.post('/import', function(req, res) {
-			if (req.body.db && req.body.key == MASTER_PASSWD) {
-				console.log('importing database...');
-				db = JSON.parse(req.body.db);
-			}
-			res.redirect('/iamseoulmayor/admin', 303);
-		});
-	});
+app.post('/event', function(req, res) { // AJAX handler
+    try {
+        validateEvent(req.body);
+    } catch (message) {
+        res.json({
+            success: 0,
+            message: message
+        });
+        return;
+    }
 
-	app.post('/event', function(req, res) { // AJAX handler
-		try {
-			validateEvent(req.body);
-		} catch (message) {
-			res.json({
-				success: 0,
-				message: message
-			});
-			return;
-		}
+    var newid = getNextId();
+    db.events.push({
+        id: newid,
+        title: req.body.title,
+        topic: req.body.topic,
+        date: req.body.date,
+        text: req.body.text,
+        passwd: req.body.passwd,
+        link: getAbsoluteUrl(req.body.link),
+        like: 0
+    });
+    updateCount(5);
 
-		var newid = getNextId();
-		db.events.push({
-			id: newid,
-			title: req.body.title,
-			topic: req.body.topic,
-			date: req.body.date,
-			text: req.body.text,
-			passwd: req.body.passwd,
-			link: getAbsoluteUrl(req.body.link),
-			like: 0
-		});
-		updateCount(5);
+    if (req.isXMLHttpRequest) {
+        res.json({
+            success: 1,
+            event_id: newid
+        });
+    } else {
+        res.redirect('/' + req.query);
+    }
+});
 
-		if (req.isXMLHttpRequest) {
-			res.json({
-				success: 1,
-				event_id: newid
-			});
-		} else {
-			res.redirect('/' + req.query);
-		}
-	});
+app.del('/event', function(req, res) { // AJAX handler
+    var event = getEvent(req.body.id);
+    if (!event) {
+        res.json({
+            success: 0,
+            message: '잘못된 이벤트 ID입니다.'
+        });
+        return;
+    }
+    if (req.body.passwd != event.passwd
+        && req.body.passwd != MASTER_PASSWD) {
+        res.json({
+            success: 0,
+            message: '비밀번호가 잘못되었습니다.'
+        });
+        return;
+    }
 
-	app.del('/event', function(req, res) { // AJAX handler
-		var event = getEvent(req.body.id);
-		if (!event) {
-			res.json({
-				success: 0,
-				message: '잘못된 이벤트 ID입니다.'
-			});
-			return;
-		}
-		if (req.body.passwd != event.passwd
-			&& req.body.passwd != MASTER_PASSWD) {
-			res.json({
-				success: 0,
-				message: '비밀번호가 잘못되었습니다.'
-			});
-			return;
-		}
+    event.deleted = 1;
+    getNextId(); // to clear sortedEvents cache
+    updateCount(5);
 
-		event.deleted = 1;
-		getNextId(); // to clear sortedEvents cache
-		updateCount(5);
+    res.json({
+        success: 1
+    });
+});
 
-		res.json({
-			success: 1
-		});
-	});
+app.post('/like', function(req, res) { // AJAX handler
+    if (_.isUndefined(req.session.liked)) {
+        req.session.liked = {};
+    }
 
-	app.post('/like', function(req, res) { // AJAX handler
-		if (_.isUndefined(req.session.liked)) {
-			req.session.liked = {};
-		}
+    if (!getEvent(req.body.id)) {
+        res.json({
+            success: 0,
+            message: '잘못된 이벤트입니다.'
+        });
+    }
 
-		if (!getEvent(req.body.id)) {
-			res.json({
-				success: 0,
-				message: '잘못된 이벤트입니다.'
-			});
-		}
+    // 이미 추천한 이슈
+    if (req.session.liked[req.body.id]) {
+        res.json({
+            success: 0,
+            message: '1일 1PONG!\n내일 다시 PONG해주세요~! :D'
+        });
+        return;
+    }
 
-		// 이미 추천한 이슈
-		if (req.session.liked[req.body.id]) {
-			res.json({
-				success: 0,
-				message: '1일 1PONG!\n내일 다시 PONG해주세요~! :D'
-			});
-			return;
-		}
+    db.likes.push({
+        id: req.body.id,
+        regdate: (new Date()).getTime(),
+        host: getClientAddress(req)
+    });
+    updateCount();
+    // XXX: 원래는 like가 증가해도 sortedEvent 캐시를 지워야 하지만
+    // 현재 클라이언트 JavaScript로 정렬 처리 중.
+    // 클라이언트에 큰 부하가 되지 않으니,
+    // 서버 부하를 줄이기 위해 cache 클리어하지 않음
 
-		db.likes.push({
-			id: req.body.id,
-			regdate: (new Date()).getTime(),
-			host: getClientAddress(req)
-		});
-		updateCount();
-		// XXX: 원래는 like가 증가해도 sortedEvent 캐시를 지워야 하지만
-		// 현재 클라이언트 JavaScript로 정렬 처리 중.
-		// 클라이언트에 큰 부하가 되지 않으니,
-		// 서버 부하를 줄이기 위해 cache 클리어하지 않음
+    // 세션에 추천 정보 기록
+    req.session.liked[req.body.id] = true;
 
-		// 세션에 추천 정보 기록
-		req.session.liked[req.body.id] = true;
-
-		res.json({
-			success: 1,
-			numLiked: getNumLiked(req.body.id)
-		});
-	});
+    res.json({
+        success: 1,
+        numLiked: getNumLiked(req.body.id)
+    });
 });
 
 var port = 3000;

@@ -78,7 +78,7 @@ function choose(score) {
 	scores[idx] = score;
 }
 
-$.getJSON('/pledges.json', function (pledges) {
+$.getJSON('pledges.json', function (pledges) {
 	pledges = _.shuffle(pledges);
 	window.pledges = pledges;
 

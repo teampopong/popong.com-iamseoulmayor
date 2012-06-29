@@ -17,7 +17,7 @@ mixin timeline_addevent(column, topic)
       input(type='text', name='title', maxlength='20')
       textarea(name='text', rows='3', placeholder='시민들이 현명한 투표를 할 수 있도록, ' + topic + ' 후보의 선거 관련 이슈를 직접 등록해 주세요.')
       div.charleft 140
-      img.img-link(src='/images/link_chain.jpg')
+      img.img-link(src='images/link_chain.jpg')
       &nbsp;
       input(type='text', name='link', placeholder='출처(필수)')
       br
@@ -41,10 +41,10 @@ mixin timeline_events(column, events)
             div.share
               //- twitter button
               a.button-twitter(href='#')
-                img(src='/images/img_button_twitter.png')
+                img(src='images/img_button_twitter.png')
               //- facebook button
               a.button-facebook(href='#')
-                img(src='/images/img_button_facebook.gif')
+                img(src='images/img_button_facebook.gif')
           div.extra
             span.like= event.like
             div.button-pong-wrapper.rounded-corner5
