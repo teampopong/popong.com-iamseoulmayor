@@ -137,21 +137,6 @@ $(function () {
 	}
 });
 
-function showNewFeatureNotice() {
-	var promotionOffset = $('.button-promotion').offset();
-	var tooltip = $('#tooltip-promotion');
-	tooltip.css('top', promotionOffset.top - tooltip.height()/2)
-		.css('left', promotionOffset.left - tooltip.width() - 10)
-		.fadeIn()
-		.click(function (event) {
-			stopPropagation(event);
-			tooltip.hide();
-		});
-	setTimeout(function () {
-		tooltip.fadeOut();
-	}, 3000);
-}
-
 // on full load
 $(window).load(function () {
 	// load parameters passed
@@ -168,8 +153,6 @@ $(window).load(function () {
 	} else {
 		scrollTo($('#timeline-panel').offset().top, true);
 	}
-
-	showNewFeatureNotice();
 });
 
 // events
