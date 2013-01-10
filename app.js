@@ -350,6 +350,8 @@ app.namespace('/admin', function () {
 });
 
 app.post('/event', function(req, res) { // AJAX handler
+    res.json(expired()); return;
+
     try {
         validateEvent(req.body);
     } catch (message) {
@@ -411,6 +413,8 @@ app.del('/event', function(req, res) { // AJAX handler
 });
 
 app.post('/like', function(req, res) { // AJAX handler
+    res.json(expired()); return;
+
     if (_.isUndefined(req.session.liked)) {
         req.session.liked = {};
     }
@@ -420,6 +424,7 @@ app.post('/like', function(req, res) { // AJAX handler
             success: 0,
             message: '잘못된 이벤트입니다.'
         });
+        return;
     }
 
     // 이미 추천한 이슈
@@ -450,6 +455,13 @@ app.post('/like', function(req, res) { // AJAX handler
         numLiked: getNumLiked(req.body.id)
     });
 });
+
+function expired() {
+    return {
+        success: 0,
+        message: '선거 기간이 지났습니다. 이용해 주셔서 감사합니다.^^'
+    };
+}
 
 var port = 3000;
 if (process.argv.length > 2) {
