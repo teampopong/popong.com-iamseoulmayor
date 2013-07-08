@@ -34,6 +34,13 @@ a:hover {
 	font-size: 8pt;
 }
 
+.alert {
+    text-align: center;
+    margin: 7px;
+    font-size: 9pt;
+    color: rgb(216, 78, 78);
+}
+
 .icon {
 	margin-left: 3px;
 	width: 15px;
