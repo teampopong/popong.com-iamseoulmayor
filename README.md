@@ -1,6 +1,7 @@
 # Seoul 프로젝트 개발 환경 구성
 
-## Linux:
+## Configuration
+### Linux:
 - APT로 [nodejs](http://nodejs.org/)와 [npm](http://npmjs.org/)을 설치한다.
 
         apt-get install nodejs npm
@@ -12,10 +13,13 @@
 
         npm install express jade underscore underscore.string connect express-namespace
 
-## Mac OS X:
+### Mac OS X:
 - Install [Homebrew](http://mxcl.github.com/homebrew/)
 - Install node.js and node.js packages with npm.js
 
         brew install nodejs
         curl https://npmjs.org/install.sh | sh
         npm link
+
+## License
+[Apache 2.0](www.apache.org/licenses/LICENSE-2.0.html)
