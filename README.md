@@ -1,6 +1,8 @@
 # Seoul 프로젝트 개발 환경 구성
 
 ## Configuration
+- node v0.4.12
+
 ### Linux:
 - APT로 [nodejs](http://nodejs.org/)와 [npm](http://npmjs.org/)을 설치한다.
 
