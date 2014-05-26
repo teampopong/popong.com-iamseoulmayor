@@ -37,11 +37,29 @@ div#container.rounded-corner5
       div.clear
       include profiles
 
+    div#statements-panel
+      div.sort
+        if sort_by == 'date'
+          a.button(href='?sortby=like') Pong 순으로 정렬하기
+        else
+          a.button(href='?sortby=date') 날짜 순으로 정렬하기
+      include statements
+      div.leftcolumn
+        div.caption 최근 발언
+        div.statements(topic='정몽준')
+          mixin statements('left', '정몽준', left_events)
+
+      div.rightcolumn
+        div.caption 최근 발언
+        div.statements(topic='박원순')
+          mixin statements('right', '박원순', right_events)
+      div.clear
+
     div#pledge-panel
       div.leftcolumn
-        div.caption 5대 공약
+        div.caption 주요 공약
       div.rightcolumn
-        div.caption 5대 공약
+        div.caption 주요 공약
       div.clear
       include pledges
       div.leftcolumn.notice
@@ -61,24 +79,6 @@ div#container.rounded-corner5
         a(href='/data/20140522182246093_1.pdf', target='_blank') 공약집
         보기
 
-    div#timeline-panel
-      div.sort
-        if sort_by == 'date'
-          a.button(href='?sortby=like') Pong 순으로 정렬하기
-        else
-          a.button(href='?sortby=date') 날짜 순으로 정렬하기
-      include timeline
-      div.leftcolumn
-        div.caption 타임라인
-        div.timeline(topic='정몽준')
-          mixin timeline('left', '정몽준', left_events)
-
-      div.rightcolumn
-        div.caption 타임라인
-        div.timeline(topic='박원순')
-          mixin timeline('right', '박원순', right_events)
-      div.clear
-
 div#params(style='display: none;')
   input(type='hidden', name='event_id', value=event_id)
 
@@ -90,17 +90,15 @@ div#floating
     을 클릭해 SCORE를 올려 주세요!
   div#menu.rounded-corner5(style='display:none;')
     ul
-      a(href='aboutus.html', target='_blank')
-        li.rounded-corner5 About us
-      a.button-promotion(href='promotion.html', target='_blank')
-        li.button-bright.rounded-corner5 애정선거!
+      a(href='http://popong.com', target='_blank')
+        li.button-bright.rounded-corner5 About us
       div.separator
       a(href='#profile-panel')
         li.rounded-corner5 프로필
+      a(href='#statements-panel')
+        li.rounded-corner5 최근 발언
       a(href='#pledge-panel')
-        li.rounded-corner5 공약
-      a(href='#timeline-panel')
-        li.rounded-corner5 타임라인
+        li.rounded-corner5 주요 공약
 
 //- feedback widget
 style(type='text/css')

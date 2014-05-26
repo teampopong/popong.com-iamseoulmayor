@@ -93,13 +93,6 @@ a:hover {
 	color: #222;
 }
 
-.button-addevent {
-	text-align: center;
-	padding: 3px 0;
-	font-weight: bold;
-	cursor: pointer;
-}
-
 /* Layout/page-specific styles */
 
 #container {
@@ -122,90 +115,6 @@ a:hover {
 
 	border-left: 10px solid #00ccff;
 	border-right: 10px solid #159301;
-}
-
-.timeline-addevent {
-	border: 1px solid #5f8fab;
-	background-color: #cfe8f8;
-	border-radius: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	margin-right: 13px;
-	padding: 5px 10px;
-	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.2);
-	position: relative;
-}
-.timeline-addevent:hover {
-	background-color: #e2f2fc;
-}
-.rightcolumn .timeline-addevent {
-	border-color: #83ab5f;
-	background-color: #ddf8cf;
-	margin-left: 13px;
-	margin-right: 0;
-}
-.rightcolumn .timeline-addevent:hover {
-	background-color: #ecfde3;
-}
-
-.timeline-addevent input,textarea {
-	margin: 5px 0;
-	border: 1px solid #aaa;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
-
-.timeline-addevent input[name="year"] {
-	width: 4em;
-}
-
-.timeline-addevent input[name="month"] {
-	width: 2em;
-}
-
-.timeline-addevent input[name="day"] {
-	width: 2em;
-}
-
-.timeline-addevent input[name="title"] {
-	width: 298px;
-}
-
-.timeline-addevent textarea[name="text"] {
-	width: 333px;
-	resize: none;
-}
-
-.timeline-addevent .charleft {
-	width: 333px;
-	text-align: right;
-	font-size: 9px;
-	font-weight: bold;
-	margin-top: -5px;
-}
-
-.timeline-addevent .charleft.exceed {
-	color: red;
-}
-
-.timeline-addevent .img-link {
-	height: 1em;
-	vertical-align: middle;
-}
-
-.timeline-addevent input[name="link"] {
-	width: 310px;
-}
-
-.timeline-addevent input[name="passwd"] {
-	width: 10em;
-}
-
-.timeline-addevent input.submit {
-	width: 100%;
-	padding: 3px 0;
-	cursor: pointer;
 }
 
 .leftcolumn {
@@ -320,16 +229,16 @@ a:hover {
 	padding-top: 40px;
 }
 
-#timeline-panel {
+#statements-panel {
 	padding-top: 80px;
 }
 
-#timeline-panel .sort {
+#statements-panel .sort {
 	text-align: center;
 	margin-bottom: -22px;
 }
 
-.timeline {
+.statements {
 	position: relative;
 	width: 100%;
 	text-align: left;
@@ -354,10 +263,10 @@ a:hover {
 	border-bottom: 2px solid #159301;
 }
 
-.leftcolumn .timeline-events {
+.leftcolumn .statements-events {
 	border-right: 5px solid #d5d5d5;
 }
-.rightcolumn .timeline-events {
+.rightcolumn .statements-events {
 	border-left: 5px solid #d5d5d5;
 }
 
@@ -411,13 +320,6 @@ a:hover {
 .rightcolumn .close {
 	top: 7px;
 	left: 7px;
-}
-
-.leftcolumn .timeline-addevent .close,
-.rightcolumn .timeline-addevent .close {
-	left: auto;
-	top: 5px;
-	right: 10px;
 }
 
 .event .content {
