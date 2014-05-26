@@ -97,7 +97,7 @@ function scrollTo(top, immediate, callback) {
 }
 
 function resizeMemberPanel() {
-	HEIGHT_MEMBER_PANEL = $('#member-panel').height();
+	HEIGHT_MEMBER_PANEL = $('#members').height();
 	$('#spaceholder').css('height', HEIGHT_MEMBER_PANEL+'px');
 
 	var menu = $('#menu');
@@ -110,9 +110,9 @@ function resizeMemberPanel() {
 function resizeProfileImage() {
 	var windowHeight = $(window).height();
 	if (windowHeight > 800) {
-		$('#member-panel img.photo').removeClass('small');
+		$('#members img.photo').removeClass('small');
 	} else {
-		$('#member-panel img.photo').addClass('small');
+		$('#members img.photo').addClass('small');
 	}
 	resizeMemberPanel();
 }
@@ -151,7 +151,7 @@ $(window).load(function () {
 	} else if (window.location.hash) {
 		scrollTo($(window.location.hash).offset().top, true);
 	} else {
-		scrollTo($('#timeline-panel').offset().top, true);
+		scrollTo($('#statements').offset().top, true);
 	}
 });
 
@@ -161,7 +161,7 @@ $('.event').click(function () {
 	expandEvent(this);
 });
 
-$('.event').not('.timeline-addevent .event').hover(function () {
+$('.event').not('.statement-addevent .event').hover(function () {
 	$(this).prev('.prong').addClass('hover');
 }, function () {
 	$(this).prev('.prong').removeClass('hover');
@@ -329,8 +329,8 @@ $('.button-facebook').click(function (evt) {
 	var text = $(this).parents('.event').find('.text').text();
 	var image = 'http://www.popong.com'
 		+ ($(this).parents('.leftcolumn').size()
-			? $('#member-panel .photo').first().attr('src')
-			: $('#member-panel .photo').last().attr('src'));
+			? $('#members .photo').first().attr('src')
+			: $('#members .photo').last().attr('src'));
 
 	var url = 'http://www.facebook.com/sharer/sharer.php?s=100'
 		+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fevent%2F'+id

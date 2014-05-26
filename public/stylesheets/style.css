@@ -133,7 +133,7 @@ a:hover {
 	clear: both;
 }
 
-#member-panel {
+#members {
 	position: fixed;
 	top: 0;
 	margin: 0 auto;
@@ -147,14 +147,14 @@ a:hover {
 	z-index: 20;
 }
 
-#member-panel #logo {
+#members #logo {
 	margin: 0 auto 5px;
 
 	color: #3E3E3E;
 	font-weight: normal;
 }
 
-#member-panel #logo h1 {
+#members #logo h1 {
 	font-size: 16pt;
 	text-align: center;
 
@@ -162,37 +162,37 @@ a:hover {
 	border-bottom: 1px solid #e0e0e0;
 }
 
-#member-panel #logo-img-wrapper {
+#members #logo-img-wrapper {
 	padding: 5px 0;
 	text-align: center;
 	border-bottom: 1px solid #e0e0e0;
 }
 
-#member-panel #logo-img {
+#members #logo-img {
 	height: 40px;
 }
 
-#member-panel #logo iframe.twitter-share-button {
+#members #logo iframe.twitter-share-button {
 	margin-left: 3px;
 	vertical-align: bottom;
 }
 
-#member-panel #logo .twitter-feedback {
+#members #logo .twitter-feedback {
 	font-size: 9pt;
 }
 
-#member-panel img.photo {
+#members img.photo {
         border: 2px solid #eee;
         display: block;
 	height: 150px;
         margin: 10px auto;
 }
 
-#member-panel img.photo.small {
+#members img.photo.small {
 	height: 75px;
 }
 
-#member-panel div.name {
+#members div.name {
 	display: inline-block;
 	font-weight: bold;
 	font-size: 160%;
@@ -201,7 +201,7 @@ a:hover {
         width: 100%;
 }
 
-#profile-panel {
+#profiles {
 	padding-top: 40px;
 }
 
@@ -225,20 +225,17 @@ a:hover {
 }
 
 
-#pledge-panel {
+#pledges,
+#statements {
 	padding-top: 40px;
 }
 
-#statements-panel {
-	padding-top: 80px;
-}
-
-#statements-panel .sort {
+#statements .sort {
 	text-align: center;
 	margin-bottom: -22px;
 }
 
-.statements {
+.statement {
 	position: relative;
 	width: 100%;
 	text-align: left;
@@ -263,10 +260,10 @@ a:hover {
 	border-bottom: 2px solid #159301;
 }
 
-.leftcolumn .statements-events {
+.leftcolumn .statement-events {
 	border-right: 5px solid #d5d5d5;
 }
-.rightcolumn .statements-events {
+.rightcolumn .statement-events {
 	border-left: 5px solid #d5d5d5;
 }
 
@@ -616,26 +613,26 @@ table th {
 	padding: 5px;
 }
 
-#profile-panel table td {
+#profiles table td {
         text-align: center;
 }
-#profile-panel table td ul {
+#profiles table td ul {
         list-style-type: none;
 }
 
-#pledge-panel tr {
+#pledges tr {
         vertical-align: top;
 }
 
-#pledge-panel table th {
+#pledges table th {
         padding-top: 20px;
 }
 
-#pledge-panel .lefttd {
+#pledges .lefttd {
         padding-right: 0;
 }
 
-#pledge-panel .righttd {
+#pledges .righttd {
         padding-left: 0;
 }
 
@@ -658,16 +655,16 @@ table th {
 	width: 15%;
 }
 
-#pledge-panel h2 {
+#pledges h2 {
 	margin: 5px 0 15px;
 	font-size: 13pt;
 }
 
-#pledge-panel ul {
+#pledges ul {
 	padding-left: 20px;
 }
 
-#pledge-panel li {
+#pledges li {
 	margin: 5px 0;
 }
 
@@ -794,11 +791,11 @@ table th {
         font-size: 10pt;
 }
 
-#pledge-panel .box li {
+#pledges .box li {
         margin: 0;
 }
 
-#pledge-panel .timespan {
+#pledges .timespan {
         color: gray;
         font-size: 10pt;
         margin-top: -12px;

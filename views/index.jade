@@ -2,7 +2,7 @@
 
 div#container.rounded-corner5
   div#container2
-    div#member-panel
+    div#members
       div#logo
         // logo
         div#logo-img-wrapper
@@ -28,7 +28,7 @@ div#container.rounded-corner5
 
     div#spaceholder(style='height:112px') &nbsp;
 
-    div#profile-panel
+    div#profiles
       div.leftcolumn
         div.caption 프로필
 
@@ -37,7 +37,7 @@ div#container.rounded-corner5
       div.clear
       include profiles
 
-    div#statements-panel
+    div#statements
       div.sort
         if sort_by == 'date'
           a.button(href='?sortby=like') Pong 순으로 정렬하기
@@ -46,16 +46,16 @@ div#container.rounded-corner5
       include statements
       div.leftcolumn
         div.caption 최근 발언
-        div.statements(topic='정몽준')
+        div.statement(topic='정몽준')
           mixin statements('left', '정몽준', left_events)
 
       div.rightcolumn
         div.caption 최근 발언
-        div.statements(topic='박원순')
+        div.statement(topic='박원순')
           mixin statements('right', '박원순', right_events)
       div.clear
 
-    div#pledge-panel
+    div#pledges
       div.leftcolumn
         div.caption 주요 공약
       div.rightcolumn
@@ -93,11 +93,11 @@ div#floating
       a(href='http://popong.com', target='_blank')
         li.button-bright.rounded-corner5 About us
       div.separator
-      a(href='#profile-panel')
+      a(href='#profiles')
         li.rounded-corner5 프로필
-      a(href='#statements-panel')
+      a(href='#statements')
         li.rounded-corner5 최근 발언
-      a(href='#pledge-panel')
+      a(href='#pledges')
         li.rounded-corner5 주요 공약
 
 //- feedback widget

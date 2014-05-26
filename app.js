@@ -41,7 +41,6 @@ app.configure('production', function(){
 });
 
 // Code
-
 var VALIDATE_CYCLE = 25; // like 캐시 validation 주기
 var BACKUP_CYCLE = 1;
 var MAX_TEXT_LENGTH = 140;
@@ -303,7 +302,7 @@ app.get('/(event/:id)?', function(req, res) {
         jsfiles: ['/javascripts/jquery-1.6.2.min.js'
             , '/javascripts/underscore.string.js'
             , '/javascripts/timeline.js'],
-        left_events: getSortedEventsByTopic('나경원', sortBy),
+        left_events: getSortedEventsByTopic('정몽준', sortBy),
         right_events: getSortedEventsByTopic('박원순', sortBy),
         pledges: getPledges(),
         event_id: req.params.id || '',
@@ -350,7 +349,6 @@ app.namespace('/admin', function () {
 });
 
 app.post('/event', function(req, res) { // AJAX handler
-    res.json(expired()); return;
 
     try {
         validateEvent(req.body);
@@ -413,7 +411,6 @@ app.del('/event', function(req, res) { // AJAX handler
 });
 
 app.post('/like', function(req, res) { // AJAX handler
-    res.json(expired()); return;
 
     if (_.isUndefined(req.session.liked)) {
         req.session.liked = {};
@@ -455,13 +452,6 @@ app.post('/like', function(req, res) { // AJAX handler
         numLiked: getNumLiked(req.body.id)
     });
 });
-
-function expired() {
-    return {
-        success: 0,
-        message: '선거 기간이 지났습니다. 이용해 주셔서 감사합니다.^^'
-    };
-}
 
 var port = 3000;
 if (process.argv.length > 2) {
