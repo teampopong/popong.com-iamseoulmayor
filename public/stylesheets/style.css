@@ -809,3 +809,8 @@ table th {
 .bottom30 {
         margin-bottom: 30px;
 }
+
+.disqus {
+    margin: 80px auto 30px;
+    width : 90%;
+}
