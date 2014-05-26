@@ -299,10 +299,10 @@ app.get('/(event/:id)?', function(req, res) {
     }
     res.render('index', {
         title: '나는 서울 시장이다!',
-        style: '/iamseoulmayor/stylesheets/style.css',
-        jsfiles: ['/iamseoulmayor/javascripts/jquery-1.6.2.min.js'
-            , '/iamseoulmayor/javascripts/underscore.string.js'
-            , '/iamseoulmayor/javascripts/timeline.js'],
+        style: '/stylesheets/style.css',
+        jsfiles: ['/javascripts/jquery-1.6.2.min.js'
+            , '/javascripts/underscore.string.js'
+            , '/javascripts/timeline.js'],
         left_events: getSortedEventsByTopic('나경원', sortBy),
         right_events: getSortedEventsByTopic('박원순', sortBy),
         pledges: getPledges(),
@@ -323,7 +323,7 @@ app.namespace('/admin', function () {
 
             res.render('admin', {
                 title: '관리자',
-                style: '/iamseoulmayor/stylesheets/admin.css',
+                style: '/stylesheets/admin.css',
                 key: req.body.key,
                 db: JSON.stringify(db, null, 2),
                 backup: JSON.stringify(backup, null, 2)

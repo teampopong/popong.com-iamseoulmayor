@@ -43,7 +43,7 @@ function sortEventsByLikeScore() {
 }
 
 function requestPong(id, callback) {
-	$.post('/iamseoulmayor/like', {
+	$.post('/like', {
 		id: id
 	}, function (res) {
 		if (res.success) {
@@ -55,7 +55,7 @@ function requestPong(id, callback) {
 }
 
 function requestDeleteEvent(id, passwd, callback) {
-	$.post('/iamseoulmayor/event', {
+	$.post('/event', {
 		_method: 'delete',
 		id: id,
 		passwd: passwd
@@ -240,9 +240,9 @@ $('.timeline-addevent form').submit((function () {
 			return false;
 		}
 
-		$.post('/iamseoulmayor/event', data, function (res) {
+		$.post('/event', data, function (res) {
 			if (res.success) {
-				location.href = _.sprintf('/iamseoulmayor/event/%s', res.event_id);
+				location.href = _.sprintf('/event/%s', res.event_id);
 			} else {
 				alert(res.message || '');
 			}
@@ -309,7 +309,7 @@ $('.button-twitter').click(function (evt) {
 	var title = $(this).parents('.event').find('.title').text();
 
 	var url = 'http://twitter.com/share'
-			+ '?url=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id
+			+ '?url=http%3A%2F%2Fwww.popong.com%2Fevent%2F'+id
 			+ '&via=PopongC&text=나는 서울 시장이다!::'+name
 			+ ', "'+title
 			+ '" #popong';
@@ -333,7 +333,7 @@ $('.button-facebook').click(function (evt) {
 			: $('#member-panel .photo').last().attr('src'));
 
 	var url = 'http://www.facebook.com/sharer/sharer.php?s=100'
-		+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id
+		+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fevent%2F'+id
 		+ '&p[title]='+title
 		+ '&p[summary]='+text
 		+ '&p[images][0]='+image;
