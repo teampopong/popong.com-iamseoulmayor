@@ -309,7 +309,7 @@ $('.button-twitter').click(function (evt) {
 	var title = $(this).parents('.event').find('.title').text();
 
 	var url = 'http://twitter.com/share'
-			+ '?url=http%3A%2F%2Fwww.popong.com%2Fevent%2F'+id
+			+ '?url=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id
 			+ '&via=PopongC&text=나는 서울 시장이다!::'+name
 			+ ', "'+title
 			+ '" #popong';
@@ -333,7 +333,7 @@ $('.button-facebook').click(function (evt) {
 			: $('#members .photo').last().attr('src'));
 
 	var url = 'http://www.facebook.com/sharer/sharer.php?s=100'
-		+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fevent%2F'+id
+		+ '&p[url]=http%3A%2F%2Fwww.popong.com%2Fiamseoulmayor%2Fevent%2F'+id
 		+ '&p[title]='+title
 		+ '&p[summary]='+text
 		+ '&p[images][0]='+image;
