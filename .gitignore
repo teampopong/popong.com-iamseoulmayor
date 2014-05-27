@@ -2,3 +2,4 @@ db
 master_passwd
 node_modules
 server.log
+*.swp
