@@ -87,9 +87,8 @@ var getPledges = (function () {
 	var pledges;
 
 	function setupPledges() {
-		_.each(['나경원', '박원순'], function (name) {
-			_.each(['일자리', '교육', '시정', '주택', '경제', '여성,보육',
-				'복지', '안전', '소상공인', '참여,소통'], function (domain) {
+		_.each(['정몽준', '박원순'], function (name) {
+			_.each(['경제', '안전', '주택', '복지'], function (domain) {
 
 				var newid = getNextId();
 				db.events.push({
