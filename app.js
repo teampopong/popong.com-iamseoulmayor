@@ -139,6 +139,10 @@ var getSortedEventsByTopic = (function () {
 
 		} else {
 			sortedEvents = getEventsByTopic(topic);
+            if (!sortedEvents.length) {
+                loadStatements(topic);
+                sortedEvents = getEventsByTopic(topic);
+            }
 			sortedEvents.sort(function (ev1, ev2) {
 				// 날짜의 대소관계만 비교하기 위해 YYYYMMDD 형태의 숫자로 변환
 				var date1 = parseInt(getDateRepr(new Date(ev1.date)));
@@ -288,6 +292,32 @@ function getBackupDb() {
 	return backup;
 }
 
+function loadStatements(topic) {
+    var statements = {};
+    try {
+        statements = JSON.parse(
+                fs.readFileSync('db/statements.json'));
+    } catch (err) {
+        console.error('db/statements.json not found.');
+        process.exit(1);
+    }
+
+    statements = statements[topic];
+    _.each(statements, function (statement) {
+        var newid = getNextId();
+        db.events.push({
+            id: newid,
+            topic: topic,
+            title: statement['text'].substring(0, 20),
+            text: statement['text'],
+            like: 0,
+            link: _.sprintf('http://pokr.kr/meeting/%s/dialog#%s',
+                            statement['meeting_id'],
+                            statement['statement_id'])
+        });
+    });
+}
+
 // Routes
 
 app.get('/(event/:id)?', function(req, res) {
@@ -345,68 +375,6 @@ app.namespace('/admin', function () {
             db = JSON.parse(req.body.db);
         }
         res.redirect('/admin', 303);
-    });
-});
-
-app.post('/event', function(req, res) { // AJAX handler
-
-    try {
-        validateEvent(req.body);
-    } catch (message) {
-        res.json({
-            success: 0,
-            message: message
-        });
-        return;
-    }
-
-    var newid = getNextId();
-    db.events.push({
-        id: newid,
-        title: req.body.title,
-        topic: req.body.topic,
-        date: req.body.date,
-        text: req.body.text,
-        passwd: req.body.passwd,
-        link: getAbsoluteUrl(req.body.link),
-        like: 0
-    });
-    updateCount(5);
-
-    if (req.isXMLHttpRequest) {
-        res.json({
-            success: 1,
-            event_id: newid
-        });
-    } else {
-        res.redirect('/' + req.query);
-    }
-});
-
-app.del('/event', function(req, res) { // AJAX handler
-    var event = getEvent(req.body.id);
-    if (!event) {
-        res.json({
-            success: 0,
-            message: '잘못된 이벤트 ID입니다.'
-        });
-        return;
-    }
-    if (req.body.passwd != event.passwd
-        && req.body.passwd != MASTER_PASSWD) {
-        res.json({
-            success: 0,
-            message: '비밀번호가 잘못되었습니다.'
-        });
-        return;
-    }
-
-    event.deleted = 1;
-    getNextId(); // to clear sortedEvents cache
-    updateCount(5);
-
-    res.json({
-        success: 1
     });
 });
 
