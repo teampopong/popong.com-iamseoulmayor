@@ -689,7 +689,7 @@ table th {
 	text-indent: -20000em;
 }
 
-#tooltip-pong, #tooltip-promotion {
+#tooltip-pong {
 	position: absolute;
 	border: 1px solid #aaa;
 	background: #ffffe0;
@@ -701,11 +701,6 @@ table th {
 #tooltip-pong {
 	width: 12em;
 	z-index: 15;
-}
-
-#tooltip-promotion {
-	width: 20em;
-	z-index: 51;
 }
 
 #menu {

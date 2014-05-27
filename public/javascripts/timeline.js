@@ -387,12 +387,6 @@ $('#button-recruit').click(function (evt) {
 	return false;
 });
 
-$('.button-promotion').click(function (evt) {
-	stopPropagation(evt);
-	window.open($(this).attr('href'), 'promotion', "width=1020, height=600, menubar=0");
-	return false;
-});
-
 var resizeTimer;
 $(window).resize(function () {
 	clearTimeout(resizeTimer);
