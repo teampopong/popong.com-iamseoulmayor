@@ -5,9 +5,10 @@
   , "dependencies": {
       "express": "== 2.4.6"
 	, "express-namespace": "== 0.0.3"
-	, "connect": ">= 1.7"
-	, "underscore": ">= 1.2"
-	, "underscore.string": ">= 1.1"
+	, "connect": "== 1.9.2"
+	, "underscore": "== 1.6.0"
+	, "underscore.string": "== 2.3.3"
     , "jade": "== 0.16.2"
+    , "zlib": "== 1.0.5"
   }
 }
